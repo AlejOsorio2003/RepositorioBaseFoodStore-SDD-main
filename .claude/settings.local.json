@@ -1,0 +1,19 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(python -m venv .venv)",
+      "Bash(.venv/Scripts/pip install *)",
+      "Bash(.venv/Scripts/alembic init *)",
+      "Bash(DATABASE_URL=\"postgresql+psycopg://x:x@localhost/x\" SECRET_KEY=\"x\" .venv/Scripts/python -c \"import app.core.all_models; print\\('OK — modelos importados'\\)\")",
+      "Bash(DATABASE_URL=\"postgresql+psycopg://x:x@localhost/x\" SECRET_KEY=\"xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx\" .venv/Scripts/python -c \"from app.main import app; print\\('OK — FastAPI app importa correctamente'\\)\")",
+      "Bash(npm create *)",
+      "Bash(npx create-vite@latest frontend --template react-ts)",
+      "PowerShell(npm create *)",
+      "Bash(npm install *)",
+      "Bash(npx tsc *)",
+      "Bash(openspec instructions *)",
+      "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f\\\\\"Total: {d['progress']['total']} | Completas: {d['progress']['complete']} | Pendientes: {d['progress']['remaining']}\\\\\"\\)\")",
+      "Bash(openspec status *)"
+    ]
+  }
+}
