@@ -13,7 +13,8 @@
       "Bash(npx tsc *)",
       "Bash(openspec instructions *)",
       "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f\\\\\"Total: {d['progress']['total']} | Completas: {d['progress']['complete']} | Pendientes: {d['progress']['remaining']}\\\\\"\\)\")",
-      "Bash(openspec status *)"
+      "Bash(openspec status *)",
+      "Bash(openspec new *)"
     ]
   }
 }

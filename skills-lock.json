@@ -1,11 +1,35 @@
 {
   "version": 1,
   "skills": {
+    "auth-security": {
+      "source": "majiayu000/claude-arsenal",
+      "sourceType": "github",
+      "skillPath": "skills/auth-security/SKILL.md",
+      "computedHash": "b3ccf87173fdb651152eb881974bee85dcae1946aac5de08fd3e87b0f319096c"
+    },
     "fastapi-python": {
       "source": "mindrally/skills",
       "sourceType": "github",
       "skillPath": "fastapi-python/SKILL.md",
       "computedHash": "4521c6090735152b7b8df670cefe5c1c6d1dcaa115de67bb96e74ebf802d4f24"
+    },
+    "sqlmodel": {
+      "source": "salmanferozkhan/cloud-and-fast-api",
+      "sourceType": "github",
+      "skillPath": ".claude/skills/sqlmodel/SKILL.md",
+      "computedHash": "10ad2869db9b13b49f7aa8a7f39d8f9a521fdabd4f0fe835a4686f4ff39c704d"
+    },
+    "tanstack-form": {
+      "source": "tanstack-skills/tanstack-skills",
+      "sourceType": "github",
+      "skillPath": "plugins/tanstack-form/skills/tanstack-form/SKILL.md",
+      "computedHash": "6d00fa22960ef5c45d14906f8f05d91870de658effb8c76bacc69d60a1000098"
+    },
+    "tanstack-query-best-practices": {
+      "source": "deckardger/tanstack-agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/tanstack-query/SKILL.md",
+      "computedHash": "addf4358803d7746f7fe0475a3370d835775217e00dd5fc7bbd8a7d6c53d81e5"
     },
     "vercel-react-best-practices": {
       "source": "vercel-labs/agent-skills",
