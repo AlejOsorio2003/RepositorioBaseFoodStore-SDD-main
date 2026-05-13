@@ -1,7 +1,9 @@
 import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
-interface UserInfo {
+import { api } from '@/shared/api/axios'
+
+export interface AuthUser {
   id: number
   email: string
   nombre: string
@@ -11,22 +13,76 @@ interface UserInfo {
 
 interface AuthState {
   accessToken: string | null
-  user: UserInfo | null
-  setAuth: (token: string, user: UserInfo) => void
+  refreshToken: string | null
+  user: AuthUser | null
+  login: (email: string, password: string) => Promise<void>
+  logout: () => Promise<void>
+  refreshTokenAction: () => Promise<void>
+  setAuth: (token: string, refreshToken: string, user: AuthUser) => void
   clearAuth: () => void
+}
+
+function parseJwt(token: string): AuthUser | null {
+  try {
+    const payload = JSON.parse(atob(token.split('.')[1]))
+    return {
+      id: Number(payload.sub),
+      email: payload.email ?? '',
+      nombre: payload.nombre ?? '',
+      apellido: payload.apellido ?? '',
+      roles: payload.roles ?? [],
+    }
+  } catch {
+    return null
+  }
 }
 
 export const useAuthStore = create<AuthState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       accessToken: null,
+      refreshToken: null,
       user: null,
-      setAuth: (accessToken, user) => set({ accessToken, user }),
-      clearAuth: () => set({ accessToken: null, user: null }),
+
+      login: async (email: string, password: string) => {
+        const res = await api.post('/auth/login', { email, password })
+        const { access_token, refresh_token } = res.data
+        const user = parseJwt(access_token)
+        if (!user) throw new Error('Error al decodificar el token')
+        set({ accessToken: access_token, refreshToken: refresh_token, user })
+      },
+
+      logout: async () => {
+        const refreshToken = get().refreshToken
+        if (refreshToken) {
+          try {
+            await api.post('/auth/logout', { refresh_token: refreshToken })
+          } catch {
+            // Idempotente — ignorar errores
+          }
+        }
+        set({ accessToken: null, refreshToken: null, user: null })
+      },
+
+      refreshTokenAction: async () => {
+        const refreshToken = get().refreshToken
+        if (!refreshToken) throw new Error('No hay refresh token')
+        const res = await api.post('/auth/refresh', { refresh_token: refreshToken })
+        const { access_token, refresh_token } = res.data
+        const user = parseJwt(access_token)
+        if (!user) throw new Error('Error al decodificar el token')
+        set({ accessToken: access_token, refreshToken: refresh_token, user })
+      },
+
+      setAuth: (accessToken, refreshToken, user) =>
+        set({ accessToken, refreshToken, user }),
+
+      clearAuth: () =>
+        set({ accessToken: null, refreshToken: null, user: null }),
     }),
     {
       name: 'auth',
-      partialize: (state) => ({ accessToken: state.accessToken }),
+      partialize: (state) => ({ refreshToken: state.refreshToken }),
     },
   ),
 )

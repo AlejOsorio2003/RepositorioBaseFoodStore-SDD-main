@@ -3,9 +3,12 @@ from collections.abc import AsyncGenerator
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from slowapi import _rate_limit_exceeded_handler
+from slowapi.middleware import SlowAPIMiddleware
 
 from app.core.config import settings
 from app.core.error_handler import register_error_handlers
+from app.core.rate_limit import limiter
 
 from app.auth.router import router as auth_router
 from app.usuarios.router import router as usuarios_router
@@ -34,6 +37,10 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.state.limiter = limiter
+app.add_middleware(SlowAPIMiddleware)
+app.add_exception_handler(429, _rate_limit_exceeded_handler)
 
 register_error_handlers(app)
 
