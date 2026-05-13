@@ -1,78 +1,198 @@
 # Mapa de Cambios — FoodStore
 
-## CH-00: Setup Infraestructura Base
-**Fecha:** 2026-04-28 | **Estado:** Completado y archivado
+**Última actualización:** 2026-05-13
+**Metodología:** Spec-Driven Development (SDD) v5.0
+**Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
-### 1. Backend — Scaffold inicial
-- [x] 1.1 Crear `backend/requirements.txt` con todas las dependencias pinadas
-- [x] 1.2 Crear `backend/.env.example` con todas las variables de entorno documentadas
-- [x] 1.3 Crear la estructura de directorios feature-first (`app/core/`, `app/auth/`, `app/usuarios/`, `app/categorias/`, `app/productos/`, `app/pedidos/`, `app/pagos/`, `app/admin/`, `app/db/`)
-- [x] 1.4 Crear `backend/app/__init__.py` y `__init__.py` en cada subdirectorio
+---
 
-### 2. Backend — Configuración y base de datos
-- [x] 2.1 Crear `backend/app/core/config.py` con clase `Settings(BaseSettings)`
-- [x] 2.2 Crear `backend/app/core/database.py` con engine SQLModel y dependencia `get_session`
-- [x] 2.3 Inicializar Alembic y configurar `alembic/env.py`
+## Tabla de Estado
 
-### 3. Backend — Modelos SQLModel (ERD v5)
-- [x] 3.1 Crear `backend/app/core/base_model.py` con `TimestampMixin` y `SoftDeleteMixin`
-- [x] 3.2 Crear modelos Identity & Access: `Rol`, `Usuario`, `UsuarioRol`, `RefreshToken`
-- [x] 3.3 Crear modelo `DireccionEntrega` con FK a `Usuario`
-- [x] 3.4 Crear modelos Catálogo: `Categoria`, `Producto`, `Ingrediente`, `ProductoCategoria`, `ProductoIngrediente`, `FormaPago`
-- [x] 3.5 Crear modelos Ventas: `EstadoPedido`, `Pedido`, `DetallePedido`, `HistorialEstadoPedido`, `Pago`
-- [x] 3.6 Crear `backend/app/core/all_models.py` para registrar todos los modelos en `SQLModel.metadata`
+| ID | Change | Estado | Inicio | Evidencia |
+|----|--------|--------|--------|-----------|
+| CH-00 | Setup Infraestructura Base | ✅ Hecho (archivado 2026-04-28) | 2026-04-28 | `openspec/changes/archive/2026-04-28-setup-infraestructura-base/` |
+| CH-01 | Autenticación JWT + RBAC | 🔄 En progreso | 2026-05-11 | `openspec/changes/us-001-auth/` |
+| CH-02 | Reestructuración — Alineación a nueva estructura | ⏳ Pendiente | — | — |
+| CH-03 | Categorías — Backend | ⏳ Pendiente | — | — |
+| CH-04 | Categorías — Frontend | ⏳ Pendiente | — | — |
+| CH-05 | Productos — Backend | ⏳ Pendiente | — | — |
+| CH-06 | Productos — CatalogPage Frontend | ⏳ Pendiente | — | — |
+| CH-07 | Ingredientes + Alérgenos | ⏳ Pendiente | — | — |
+| CH-08 | Direcciones de Entrega | ⏳ Pendiente | — | — |
+| CH-09 | Usuarios — Backend CRUD + Perfil | ⏳ Pendiente | — | — |
+| CH-10 | Pedidos — Backend FSM + Audit Trail | ⏳ Pendiente | — | — |
+| CH-11 | Pedidos — Carrito + Checkout Frontend | ⏳ Pendiente | — | — |
+| CH-12 | Pagos — Backend MercadoPago + Webhooks | ⏳ Pendiente | — | — |
+| CH-13 | Pagos — Frontend sdk-react + Tokenización | ⏳ Pendiente | — | — |
+| CH-14 | Admin — Backend Dashboard + Métricas | ⏳ Pendiente | — | — |
+| CH-15 | Admin — Frontend Dashboard + Gestión | ⏳ Pendiente | — | — |
 
-### 4. Backend — Migración inicial y seed
-- [x] 4.1 Generar migración inicial con `alembic revision --autogenerate -m "initial_schema"`
-- [x] 4.2 Ejecutar `alembic upgrade head` y verificar las 16 tablas
-- [x] 4.3 Crear `backend/app/db/seed.py` con roles, usuarios, estados de pedido, formas de pago y categorías
-- [x] 4.4 Verificar idempotencia del seed
+---
 
-### 5. Backend — Capa core (Repository y UoW)
-- [x] 5.1 Crear `backend/app/core/repository.py` con `BaseRepository[T]` genérico
-- [x] 5.2 Crear `backend/app/core/uow.py` con clase `UnitOfWork`
-- [x] 5.3 Crear dependencia `get_uow` en `backend/app/core/dependencies.py`
+## Grafo de Dependencias
 
-### 6. Backend — Seguridad y manejo de errores
-- [x] 6.1 Crear `backend/app/core/security.py` con utilidades JWT y bcrypt
-- [x] 6.2 Crear dependencia `get_current_user`
-- [x] 6.3 Crear factory `require_role(roles)`
-- [x] 6.4 Crear `backend/app/core/exceptions.py` con excepciones de dominio
-- [x] 6.5 Crear manejador RFC 7807 en `backend/app/core/error_handler.py`
+```
+CH-00: Infraestructura Base  ✅ ARCHIVADO
+  │
+  └─► CH-01: Auth JWT + RBAC  🔄 EN PROGRESO
+        │   POST /auth/register|login|refresh|logout
+        │   Refresh tokens opacos + rotación + replay detection
+        │   Rate limiting slowapi · LoginPage · RegisterPage
+        │
+        ├─► CH-02: Reestructuración ─────────────────────────────┐
+        │         Alineación de directorios y módulos             │
+        │         a la nueva estructura del proyecto              │
+        │                                                         │
+        ├─► CH-03: Categorías Backend                            │
+        │     │   GET /categorias (árbol CTE recursivo)           │
+        │     │   CRUD admin · soft delete con validación         │
+        │     │                                                   │
+        │     └─► CH-04: Categorías Frontend                     │
+        │               Navegación por categorías · filtros       │
+        │               integración en CatalogPage                │
+        │                                                         │
+        ├─► CH-07: Ingredientes + Alérgenos ─────────────────┐   │
+        │         CRUD /ingredientes · campo es_alergeno      │   │
+        │         Asociación ProductoIngrediente              │   │
+        │                                                     │   │
+        │   CH-03 + CH-07                                     │   │
+        │     └─► CH-05: Productos Backend ◄──────────────────┘   │
+        │               GET /productos · stock · disponibilidad    │
+        │               PATCH stock (Gestor de Stock)              │
+        │                                                          │
+        │               └─► CH-06: CatalogPage Frontend           │
+        │                         Listado · filtros · detalle      │
+        │                         CartPage (agregar al carrito)    │
+        │                                                          │
+        ├─► CH-08: Direcciones de Entrega                         │
+        │         CRUD /usuarios/{id}/direcciones                  │
+        │         PATCH /principal                                  │
+        │                                                          │
+        ├─► CH-09: Usuarios Backend CRUD + Perfil                 │
+        │         GET|PATCH /usuarios/me                           │
+        │         GET /usuarios · PATCH rol (Admin)                │
+        │                                                          │
+        │   CH-06 + CH-08                                         │
+        │     └─► CH-10: Pedidos Backend FSM + Audit Trail        │
+        │               POST /pedidos · PATCH /estado             │
+        │               FSM 6 estados · historial append-only      │
+        │               snapshot de dirección y precios            │
+        │                                                          │
+        │               └─► CH-11: Carrito + Checkout Frontend    │
+        │                         CartPage · CheckoutPage          │
+        │                         cartStore completo               │
+        │                         creación de pedido + confirmación│
+        │                                                          │
+        │               └─► CH-12: Pagos Backend                  │
+        │                     │   POST /pagos · SDK MercadoPago    │
+        │                     │   POST /webhooks/ipn               │
+        │                     │   Tarjeta · Rapipago · Pago Fácil  │
+        │                     │   idempotency_key · external_ref   │
+        │                     │                                    │
+        │                     └─► CH-13: Pagos Frontend            │
+        │                               @mercadopago/sdk-react     │
+        │                               tokenización PCI-compliant │
+        │                               flujo de pago integrado    │
+        │                                                          │
+        │   CH-11 + CH-13                                         │
+        │     └─► OrdersPage (seguimiento de estados en tiempo    │
+        │               real — parte de CH-11)                     │
+        │                                                          │
+        └── CH-01 + CH-09 + CH-10 + CH-12 ───────────────────────┘
+              └─► CH-14: Admin Backend Dashboard
+                    │   GET /admin/metricas · ventas · stock
+                    │   Gestión de pedidos por Gestor de Pedidos
+                    │   Gestión de stock por Gestor de Stock
+                    │
+                    └─► CH-15: Admin Frontend Dashboard
+                              recharts (ventas · pedidos · stock)
+                              CRUD de productos · categorías
+                              Tabla de pedidos + cambio de estado
+                              Tabla de usuarios + cambio de rol
+```
 
-### 7. Backend — App principal y verificación
-- [x] 7.1 Crear `backend/app/main.py` con CORS, error handler y endpoint `GET /health`
-- [x] 7.2 Crear routers placeholder vacíos por módulo
-- [x] 7.3 Verificar arranque: health check 200, Swagger UI disponible
+---
 
-### 8. Frontend — Scaffold inicial
-- [x] 8.1 Crear proyecto Vite con `react-ts`
-- [x] 8.2 Instalar dependencias: TanStack Query v5, Zustand, Axios, React Router, Tailwind, Recharts, MercadoPago SDK
-- [x] 8.3 Configurar TypeScript strict y path alias `@/*`
-- [x] 8.4 Crear `frontend/.env.example`
-- [x] 8.5 Crear `frontend/src/env.d.ts` con `ImportMetaEnv`
+## Cambios Activos
 
-### 9. Frontend — Tailwind CSS
-- [x] 9.1 Configurar `tailwind.config.ts` con colores del design system (primary `#721016`, secondary `#D95D2B`, background `#fef9ef`)
-- [x] 9.2 Reemplazar `index.css` con directivas `@tailwind`
+### CH-01 — `us-001-auth` · Autenticación JWT + RBAC
 
-### 10. Frontend — Estructura FSD
-- [x] 10.1 Crear estructura Feature-Sliced Design: `app/`, `pages/`, `widgets/`, `features/`, `entities/`, `shared/`
-- [x] 10.2 Crear barriles `index.ts` en `shared/api/`, `shared/store/`, `shared/ui/`, `shared/lib/`, `shared/types/`
-- [x] 10.3 Crear páginas placeholder: `LoginPage`, `RegisterPage`, `CatalogPage`, `CartPage`, `CheckoutPage`, `OrdersPage`, `AdminPage`, `NotFoundPage`
+**Iniciado:** 2026-05-11 | **Artefactos:** `openspec/changes/us-001-auth/`
 
-### 11. Frontend — Stores Zustand
-- [x] 11.1 Crear `authStore`: `accessToken`, `user`, `setAuth`, `clearAuth` con persist
-- [x] 11.2 Crear `cartStore`: `items`, `addItem`, `removeItem`, `updateQuantity`, `clearCart` con persist
-- [x] 11.3 Crear `paymentStore`: `status`, `preferenceId`, `setPayment`, `clearPayment` sin persist
-- [x] 11.4 Crear `uiStore`: `theme`, `toggleTheme` con persist
-- [x] 11.5 Crear `src/shared/store/index.ts` re-exportando todos los stores
+**Alcance:**
+- `POST /auth/register`, `POST /auth/login`, `POST /auth/refresh`, `POST /auth/logout`
+- Refresh tokens opacos (UUID v4 → SHA-256 hash en BD), rotación + replay detection
+- `slowapi` rate limiting: 5 req / IP / 15 min sobre login
+- Schemas: `RegisterRequest`, `LoginRequest`, `TokenResponse`, `RefreshRequest`, `LogoutRequest`
+- `LoginPage` y `RegisterPage` con TanStack Form + mutación TanStack Query
+- `authStore`: acciones `login`, `logout`, `refreshToken` + interceptor Axios completo
 
-### 12. Frontend — Axios y TanStack Query
-- [x] 12.1 Crear `src/shared/api/axios.ts` con instancia Axios, interceptores de request (Bearer) y response (401)
-- [x] 12.2 Crear `src/app/providers.tsx` con `QueryClientProvider` (`staleTime: 60_000`, `retry: 1`)
+**Archivos clave:**
+```
+backend/app/auth/router.py              ← implementación completa
+backend/app/auth/schemas.py             ← nuevo
+backend/app/core/security.py            ← + hash_token, create_refresh_token
+backend/app/main.py                     ← + SlowAPIMiddleware
+backend/requirements.txt               ← + slowapi>=0.1.9
+frontend/src/pages/LoginPage.tsx        ← implementación funcional
+frontend/src/pages/RegisterPage.tsx     ← implementación funcional
+frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
+```
 
-### 13. Frontend — Router y App shell
-- [x] 13.1 Crear `src/app/router.tsx` con `createBrowserRouter` y todas las rutas
-- [x] 13.2 Actualizar `src/main.tsx` con `RouterProvider` y providers
-- [x] 13.3 Verificar arranque: `npm run dev`, navegación y `tsc --noEmit`
+**Progreso** (`openspec/changes/us-001-auth/tasks.md`):
+
+| Sección | Total | Hecho |
+|---------|-------|-------|
+| 1. Dependencias y config | 3 | 0 |
+| 2. Primitivas security.py | 2 | 0 |
+| 3. Schemas Pydantic | 5 | 0 |
+| 4. Endpoints auth/router.py | 5 | 0 |
+| 5. Verificación backend | 7 | 0 |
+| 6. Frontend — authStore | 4 | 0 |
+| 7. Frontend — interceptor Axios | 2 | 0 |
+| 8. Frontend — LoginPage | 3 | 0 |
+| 9. Frontend — RegisterPage | 3 | 0 |
+| 10. Verificación frontend | 3 | 0 |
+| **Total** | **37** | **0 / 37** |
+
+---
+
+### CH-02 — Reestructuración · Alineación a nueva estructura del proyecto
+
+**Estado:** ⏳ Pendiente | **Depende de:** CH-01
+
+**Alcance:** Reacomodar directorios, módulos y configuración del proyecto para alinearse con la nueva estructura definida. Incluye actualización de imports, paths y referencias cruzadas entre módulos.
+
+---
+
+## Ya realizado (archivado en OPSX)
+
+### CH-00 — Setup Infraestructura Base
+
+**Archivado:** 2026-04-28 | **Evidencia:** `openspec/changes/archive/2026-04-28-setup-infraestructura-base/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Backend scaffold | `requirements.txt`, `.env.example`, estructura feature-first | ✅ |
+| Configuración y BD | `core/config.py`, `core/database.py`, Alembic init | ✅ |
+| Modelos SQLModel ERD v5 | 16 tablas: Identity & Access, Catálogo, Ventas | ✅ |
+| Migración y seed | `alembic revision --autogenerate`, `upgrade head`, seed idempotente | ✅ |
+| Capa core | `BaseRepository[T]`, `UnitOfWork` context-manager, `get_uow` | ✅ |
+| Seguridad compartida | `security.py` (JWT+bcrypt), `get_current_user`, `require_role`, RFC 7807 | ✅ |
+| App principal | `main.py` (CORS, error handler, `/health`), routers placeholder | ✅ |
+| Frontend scaffold | Vite react-ts, dependencias, TypeScript strict, path alias `@/*` | ✅ |
+| Tailwind CSS | Design system: primary `#721016`, secondary `#D95D2B`, bg `#fef9ef` | ✅ |
+| Estructura FSD | `app/`, `pages/`, `features/`, `entities/`, `shared/` + barriles | ✅ |
+| Stores Zustand | `authStore`, `cartStore`, `paymentStore`, `uiStore` con persist | ✅ |
+| Axios + TanStack Query | Interceptores Bearer/401, `QueryClientProvider` | ✅ |
+| Router y App shell | `createBrowserRouter`, todas las rutas, `main.tsx` | ✅ |
+
+**Capabilities entregadas:** `backend-infra`, `frontend-infra`
+
+---
+
+## Convenciones
+
+- Al iniciar un change: crear con `/opsx:propose` en `openspec/changes/<nombre>/`
+- Al archivar un change: ejecutar `/opsx:archive`, mover fila a "Ya realizado", actualizar `Estado` a `✅ Hecho (archivado YYYY-MM-DD)` y apuntar `Evidencia` a `openspec/changes/archive/YYYY-MM-DD-<nombre>/`
+- Actualizar `Última actualización` y el grafo de dependencias cada vez que cambie el estado de un change
