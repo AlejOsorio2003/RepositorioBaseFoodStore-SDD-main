@@ -41,6 +41,7 @@ class UnitOfWork:
     def _init_repositories(self) -> None:
         from app.auth.models import RefreshToken, Rol, Usuario
         from app.categorias.models import Categoria
+        from app.categorias.repository import CategoriaRepository
         from app.core.repository import BaseRepository
         from app.direcciones.models import DireccionEntrega
         from app.pagos.models import Pago
@@ -51,7 +52,7 @@ class UnitOfWork:
         self.roles: BaseRepository[Rol] = BaseRepository(self.session, Rol)
         self.refresh_tokens: BaseRepository[RefreshToken] = BaseRepository(self.session, RefreshToken)
         self.direcciones: BaseRepository[DireccionEntrega] = BaseRepository(self.session, DireccionEntrega)
-        self.categorias: BaseRepository[Categoria] = BaseRepository(self.session, Categoria)
+        self.categorias: CategoriaRepository = CategoriaRepository(self.session, Categoria)
         self.productos: BaseRepository[Producto] = BaseRepository(self.session, Producto)
         self.ingredientes: BaseRepository[Ingrediente] = BaseRepository(self.session, Ingrediente)
         self.formas_pago: BaseRepository[FormaPago] = BaseRepository(self.session, FormaPago)

@@ -40,7 +40,20 @@
       "Skill(openspec-propose)",
       "Bash(openspec list *)",
       "mcp__plugin_engram_engram__mem_save",
-      "Skill(opsx:propose)"
+      "Skill(opsx:propose)",
+      "Bash(netstat -ano)",
+      "Bash(findstr \":8000\")",
+      "Bash(curl -sv -X POST http://localhost:8000/api/v1/auth/login -H 'Content-Type: application/json' -d '{\"email\":\"admin@foodstore.com\",\"password\":\"admin123\"}')",
+      "Bash(curl -sv -X POST http://localhost:8000/api/v1/categorias -H 'Content-Type: application/json' -H 'Authorization: Bearer test123' -d '{\"nombre\":\"test\",\"slug\":\"test\",\"parent_id\":null}')",
+      "Bash(curl *)",
+      "Bash(python3 -c \"import sys,json; data=json.load\\(sys.stdin\\); print\\(f'Categorias count: {len\\(data\\)}'\\); [print\\(f'  id={c[\\\\\"id\\\\\"]} nombre={c[\\\\\"nombre\\\\\"]}'\\) for c in data[:3]]\")",
+      "Bash(cd \"/mnt/e/Tareas/Cuarto Cuatrimestre/Metodología y Gestion/Parcial/RepositorioBaseFoodStore-SDD-main\")",
+      "Bash(python3 -c ' *)",
+      "Read(//mnt/e/Tareas/**)",
+      "Read(//mnt/**)",
+      "Skill(openspec-archive-change)",
+      "Bash(openspec archive *)",
+      "Bash(Get-ChildItem *)"
     ]
   }
 }

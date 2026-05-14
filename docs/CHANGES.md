@@ -13,8 +13,8 @@
 | CH-00 | Setup Infraestructura Base | ✅ Hecho (archivado 2026-04-28) | 2026-04-28 | `openspec/changes/archive/2026-04-28-setup-infraestructura-base/` |
 | CH-01 | Autenticación JWT + RBAC | 🔄 En progreso | 2026-05-11 | `openspec/changes/us-001-auth/` |
 | CH-02 | Reestructuración — Alineación a nueva estructura | ✅ Hecho (archivado 2026-05-14) | 2026-05-13 | `openspec/changes/archive/2026-05-14-ch-02-restructuracion/` |
-| CH-03 | Categorías — Backend | ⏳ Pendiente | — | — |
-| CH-04 | Categorías — Frontend | ⏳ Pendiente | — | — |
+| CH-03 | Categorías — Backend | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-03-categorias-backend/` |
+| CH-04 | Categorías — Frontend | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-04-categorias-frontend/` |
 | CH-05 | Productos — Backend | ⏳ Pendiente | — | — |
 | CH-06 | Productos — CatalogPage Frontend | ⏳ Pendiente | — | — |
 | CH-07 | Ingredientes + Alérgenos | ⏳ Pendiente | — | — |
@@ -43,11 +43,11 @@ CH-00: Infraestructura Base  ✅ ARCHIVADO
         │         Alineación de directorios y módulos             │
         │         a la nueva estructura del proyecto              │
         │                                                         │
-        ├─► CH-03: Categorías Backend                            │
+        ├─► CH-03: Categorías Backend ✅ ARCHIVADO               │
         │     │   GET /categorias (árbol CTE recursivo)           │
         │     │   CRUD admin · soft delete con validación         │
         │     │                                                   │
-        │     └─► CH-04: Categorías Frontend                     │
+        │     └─► CH-04: Categorías Frontend ✅ ARCHIVADO         │
         │               Navegación por categorías · filtros       │
         │               integración en CatalogPage                │
         │                                                         │
@@ -180,6 +180,35 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Router y App shell | `createBrowserRouter`, todas las rutas, `main.tsx` | ✅ |
 
 **Capabilities entregadas:** `backend-infra`, `frontend-infra`
+
+### CH-04 — Categorías — Frontend
+
+**Archivado:** 2026-05-14 | **Evidencia:** `openspec/changes/archive/2026-05-14-ch-04-categorias-frontend/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Entity | `entities/categoria/` — tipos `Categoria`, `CategoriaWithChildren` + funciones API | ✅ |
+| Feature hooks | `features/categoria-nav/hooks/` — `useCategorias`, `useCategoria` con TanStack Query | ✅ |
+| Feature UI | `features/categoria-nav/ui/CategorySidebar` — árbol raíces/hijos, query param, estilos activos | ✅ |
+| Page | `pages/CatalogPage.tsx` — layout sidebar + contenido, selección por URL | ✅ |
+| Verificación | 5/5 scenarios de browser verificados | ✅ |
+
+**Capabilities entregadas:** `categorias-frontend`
+
+### CH-03 — Categorías — Backend
+
+**Archivado:** 2026-05-14 | **Evidencia:** `openspec/changes/archive/2026-05-14-ch-03-categorias-backend/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Schemas | `CategoriaCreate`, `CategoriaUpdate`, `CategoriaRead`, `CategoriaWithChildren` | ✅ |
+| Repository | `CategoriaRepository` con CTE recursiva para descendientes, soft delete, validación productos | ✅ |
+| Service | CRUD completo con validación 404/409/422, anti-ciclo con `get_descendants` | ✅ |
+| Router | 5 endpoints (GET list, GET by id, POST, PATCH, DELETE) con auth ADMIN | ✅ |
+| UoW | `uow.categorias` tipado como `CategoriaRepository` | ✅ |
+| Verificación | 6/6 tests de integración HTTP pasando (200, 201, 204, 409, 422) | ✅ |
+
+**Capabilities entregadas:** `categorias-backend`
 
 ### CH-02 — Reestructuración · Alineación a nueva estructura del proyecto
 
