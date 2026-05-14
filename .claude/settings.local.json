@@ -54,7 +54,11 @@
       "Skill(openspec-archive-change)",
       "Bash(openspec archive *)",
       "Bash(Get-ChildItem *)",
-      "Bash(git restore *)"
+      "Bash(git restore *)",
+      "Bash(.venv/Scripts/python -c ' *)",
+      "Bash(Get-Content *)",
+      "Bash(pkill -f \"uvicorn app.main:app\")",
+      "Skill(opsx:archive)"
     ]
   }
 }
