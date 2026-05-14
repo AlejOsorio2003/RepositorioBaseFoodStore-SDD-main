@@ -4,6 +4,7 @@ from typing import Optional
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.core.base_model import SoftDeleteMixin, TimestampMixin
+from app.ingredientes.models import Ingrediente  # noqa: F401
 
 
 class Producto(TimestampMixin, SoftDeleteMixin, table=True):
@@ -20,16 +21,6 @@ class Producto(TimestampMixin, SoftDeleteMixin, table=True):
 
     categorias: list["ProductoCategoria"] = Relationship(back_populates="producto")
     ingredientes: list["ProductoIngrediente"] = Relationship(back_populates="producto")
-
-
-class Ingrediente(TimestampMixin, table=True):
-    __tablename__ = "ingredientes"
-
-    id: Optional[int] = Field(default=None, primary_key=True)
-    nombre: str = Field(max_length=100, unique=True, nullable=False)
-    es_alergeno: bool = Field(default=False, nullable=False)
-
-    productos: list["ProductoIngrediente"] = Relationship(back_populates="ingrediente")
 
 
 class ProductoCategoria(SQLModel, table=True):

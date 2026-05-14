@@ -3,7 +3,8 @@ from datetime import datetime, timedelta, timezone
 from fastapi import HTTPException, status
 from sqlmodel import select
 
-from app.auth.models import RefreshToken, Rol, Usuario, UsuarioRol
+from app.auth.models import Rol, Usuario, UsuarioRol
+from app.refreshtokens.models import RefreshToken
 from app.auth.schemas import (
     LoginRequest,
     LogoutRequest,

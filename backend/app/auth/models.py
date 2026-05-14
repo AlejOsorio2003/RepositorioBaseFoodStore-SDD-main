@@ -5,6 +5,9 @@ from sqlmodel import Field, Relationship, SQLModel
 
 from app.core.base_model import SoftDeleteMixin, TimestampMixin
 
+# Compatibilidad temporal — RefreshToken se movió a app.refreshtokens.models
+from app.refreshtokens.models import RefreshToken  # noqa: F401
+
 
 class Rol(TimestampMixin, table=True):
     __tablename__ = "roles"
@@ -42,17 +45,4 @@ class Usuario(TimestampMixin, SoftDeleteMixin, table=True):
     is_active: bool = Field(default=True, nullable=False)
 
     roles: list[UsuarioRol] = Relationship(back_populates="usuario")
-    refresh_tokens: list["RefreshToken"] = Relationship(back_populates="usuario")
-    direcciones: list["DireccionEntrega"] = Relationship(back_populates="usuario")  # type: ignore[name-defined]
 
-
-class RefreshToken(TimestampMixin, table=True):
-    __tablename__ = "refresh_tokens"
-
-    id: Optional[int] = Field(default=None, primary_key=True)
-    usuario_id: int = Field(foreign_key="usuarios.id", nullable=False, index=True)
-    token_hash: str = Field(max_length=64, unique=True, nullable=False)
-    expires_at: datetime = Field(nullable=False)
-    revoked_at: Optional[datetime] = Field(default=None, nullable=True)
-
-    usuario: Optional[Usuario] = Relationship(back_populates="refresh_tokens")

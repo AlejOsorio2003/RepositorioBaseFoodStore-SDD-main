@@ -1,0 +1,2 @@
+class RefreshTokenService:
+    pass

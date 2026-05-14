@@ -10,13 +10,16 @@ from app.core.config import settings
 from app.core.error_handler import register_error_handlers
 from app.core.rate_limit import limiter
 
-from app.auth.router import router as auth_router
-from app.usuarios.router import router as usuarios_router
-from app.categorias.router import router as categorias_router
-from app.productos.router import router as productos_router
-from app.pedidos.router import router as pedidos_router
-from app.pagos.router import router as pagos_router
 from app.admin.router import router as admin_router
+from app.auth.router import router as auth_router
+from app.categorias.router import router as categorias_router
+from app.direcciones.router import router as direcciones_router
+from app.ingredientes.router import router as ingredientes_router
+from app.pagos.router import router as pagos_router
+from app.pedidos.router import router as pedidos_router
+from app.productos.router import router as productos_router
+from app.refreshtokens.router import router as refreshtokens_router
+from app.usuarios.router import router as usuarios_router
 
 
 @asynccontextmanager
@@ -51,6 +54,11 @@ app.include_router(productos_router, prefix="/api/v1/productos", tags=["producto
 app.include_router(pedidos_router, prefix="/api/v1/pedidos", tags=["pedidos"])
 app.include_router(pagos_router, prefix="/api/v1/pagos", tags=["pagos"])
 app.include_router(admin_router, prefix="/api/v1/admin", tags=["admin"])
+
+# Routers con prefix y tags definidos directamente en el APIRouter
+app.include_router(refreshtokens_router)
+app.include_router(ingredientes_router)
+app.include_router(direcciones_router)
 
 
 @app.get("/health", tags=["health"])

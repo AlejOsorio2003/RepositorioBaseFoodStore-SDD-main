@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-13
+**Última actualización:** 2026-05-14
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -12,7 +12,7 @@
 |----|--------|--------|--------|-----------|
 | CH-00 | Setup Infraestructura Base | ✅ Hecho (archivado 2026-04-28) | 2026-04-28 | `openspec/changes/archive/2026-04-28-setup-infraestructura-base/` |
 | CH-01 | Autenticación JWT + RBAC | 🔄 En progreso | 2026-05-11 | `openspec/changes/us-001-auth/` |
-| CH-02 | Reestructuración — Alineación a nueva estructura | ⏳ Pendiente | — | — |
+| CH-02 | Reestructuración — Alineación a nueva estructura | ✅ Hecho (archivado 2026-05-14) | 2026-05-13 | `openspec/changes/archive/2026-05-14-ch-02-restructuracion/` |
 | CH-03 | Categorías — Backend | ⏳ Pendiente | — | — |
 | CH-04 | Categorías — Frontend | ⏳ Pendiente | — | — |
 | CH-05 | Productos — Backend | ⏳ Pendiente | — | — |
@@ -39,7 +39,7 @@ CH-00: Infraestructura Base  ✅ ARCHIVADO
         │   Refresh tokens opacos + rotación + replay detection
         │   Rate limiting slowapi · LoginPage · RegisterPage
         │
-        ├─► CH-02: Reestructuración ─────────────────────────────┐
+        ├─► CH-02: Reestructuración ✅ ARCHIVADO ────────────────┐
         │         Alineación de directorios y módulos             │
         │         a la nueva estructura del proyecto              │
         │                                                         │
@@ -157,14 +157,6 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 
 ---
 
-### CH-02 — Reestructuración · Alineación a nueva estructura del proyecto
-
-**Estado:** ⏳ Pendiente | **Depende de:** CH-01
-
-**Alcance:** Reacomodar directorios, módulos y configuración del proyecto para alinearse con la nueva estructura definida. Incluye actualización de imports, paths y referencias cruzadas entre módulos.
-
----
-
 ## Ya realizado (archivado en OPSX)
 
 ### CH-00 — Setup Infraestructura Base
@@ -188,6 +180,22 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Router y App shell | `createBrowserRouter`, todas las rutas, `main.tsx` | ✅ |
 
 **Capabilities entregadas:** `backend-infra`, `frontend-infra`
+
+### CH-02 — Reestructuración · Alineación a nueva estructura del proyecto
+
+**Archivado:** 2026-05-14 | **Evidencia:** `openspec/changes/archive/2026-05-14-ch-02-restructuracion/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Módulo refreshtokens | `refreshtokens/` con models, schemas, repository, service, router | ✅ |
+| Módulo ingredientes | `ingredientes/` con models, schemas, repository, service, router | ✅ |
+| Módulo direcciones | `direcciones/` con models, schemas, repository, service, router | ✅ |
+| Scaffolding capas faltantes | schemas/repository/service en usuarios, categorias, productos, pedidos, pagos, admin | ✅ |
+| Imports actualizados | `all_models.py`, `main.py`, `auth/models.py`, `auth/service.py`, `productos/models.py`, `usuarios/models.py` | ✅ |
+| Frontend FSD | `widgets/` eliminado, barrels en features/, entities/, shared/ui/, shared/lib/ | ✅ |
+| Tipos base compartidos | `UUID`, `ISODateString`, `PaginatedResponse<T>`, `ApiError` en `shared/types/` | ✅ |
+
+**Capabilities entregadas:** `refreshtokens-module`, `ingredientes-module`, `direcciones-module`, `backend-infra` (modificado), `frontend-infra` (modificado)
 
 ---
 
