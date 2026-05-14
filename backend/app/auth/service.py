@@ -168,7 +168,7 @@ def refresh(data: RefreshRequest, uow: UnitOfWork) -> TokenResponse:
         )
 
     # Token expirado
-    if stored.expires_at < datetime.now(timezone.utc):
+    if stored.expires_at.replace(tzinfo=timezone.utc) < datetime.now(timezone.utc):
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Token inválido",

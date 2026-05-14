@@ -1,11 +1,8 @@
-from typing import TYPE_CHECKING, Optional
+from typing import Optional
 
-from sqlmodel import Field, Relationship
+from sqlmodel import Field, SQLModel
 
 from app.core.base_model import SoftDeleteMixin, TimestampMixin
-
-if TYPE_CHECKING:
-    from app.auth.models import Usuario
 
 
 class DireccionEntrega(TimestampMixin, SoftDeleteMixin, table=True):
@@ -21,5 +18,3 @@ class DireccionEntrega(TimestampMixin, SoftDeleteMixin, table=True):
     provincia: str = Field(max_length=100, nullable=False)
     codigo_postal: str = Field(max_length=10, nullable=False)
     es_principal: bool = Field(default=False, nullable=False)
-
-    usuario: Optional["Usuario"] = Relationship(back_populates="direcciones")

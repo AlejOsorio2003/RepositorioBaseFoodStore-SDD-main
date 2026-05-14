@@ -36,12 +36,12 @@
 ## 6. Verificación backend
 
 - [x] 6.1 Arrancar el servidor con `uvicorn app.main:app --reload` y confirmar que no hay errores de importación
-- [ ] 6.2 Probar `POST /auth/register` desde Swagger (`/docs`) con datos válidos → HTTP 201
-- [ ] 6.3 Probar `POST /auth/login` con credenciales correctas → HTTP 200 con tokens
-- [ ] 6.4 Probar `POST /auth/login` con credenciales incorrectas → HTTP 401 con mensaje genérico
-- [ ] 6.5 Probar `POST /auth/refresh` con el refresh token obtenido → HTTP 200 con nuevos tokens
-- [ ] 6.6 Probar replay attack: usar el refresh token anterior tras un refresh → HTTP 401
-- [ ] 6.7 Probar `POST /auth/logout` → HTTP 204; intentar refresh con el mismo token → HTTP 401
+- [x] 6.2 Probar `POST /auth/register` desde Swagger (`/docs`) con datos válidos → HTTP 201
+- [x] 6.3 Probar `POST /auth/login` con credenciales correctas → HTTP 200 con tokens
+- [x] 6.4 Probar `POST /auth/login` con credenciales incorrectas → HTTP 401 con mensaje genérico
+- [x] 6.5 Probar `POST /auth/refresh` con el refresh token obtenido → HTTP 200 con nuevos tokens
+- [x] 6.6 Probar replay attack: usar el refresh token anterior tras un refresh → HTTP 401
+- [x] 6.7 Probar `POST /auth/logout` → HTTP 204; intentar refresh con el mismo token → HTTP 401
 
 ## 7. Frontend — authStore (frontend/src/shared/store/auth.store.ts)
 
@@ -69,6 +69,6 @@
 
 ## 11. Verificación frontend
 
-- [ ] 11.1 Verificar que el flujo completo registro → login → acceso autenticado funciona en el navegador
-- [ ] 11.2 Verificar que el refresh silencioso reintenta la petición original sin interrumpir la UX
-- [ ] 11.3 Verificar que logout limpia el store y redirige al login
+- [x] 11.1 Verificar que el flujo completo registro → login → acceso autenticado funciona en el navegador
+- [x] 11.2 Verificar que el refresh silencioso reintenta la petición original sin interrumpir la UX
+- [ ] 11.3 Verificar que logout limpia el store y redirige al login (pendiente — no hay botón logout en UI todavía)

@@ -42,10 +42,10 @@ class UnitOfWork:
         from app.auth.models import RefreshToken, Rol, Usuario
         from app.categorias.models import Categoria
         from app.core.repository import BaseRepository
+        from app.direcciones.models import DireccionEntrega
         from app.pagos.models import Pago
         from app.pedidos.models import EstadoPedido, Pedido
         from app.productos.models import FormaPago, Ingrediente, Producto
-        from app.usuarios.models import DireccionEntrega
 
         self.usuarios: BaseRepository[Usuario] = BaseRepository(self.session, Usuario)
         self.roles: BaseRepository[Rol] = BaseRepository(self.session, Rol)

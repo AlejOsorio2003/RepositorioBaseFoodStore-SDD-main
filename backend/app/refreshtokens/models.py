@@ -1,9 +1,9 @@
 from datetime import datetime
 from typing import Optional
 
-from sqlmodel import Field, Relationship, SQLModel
+from sqlmodel import Field, SQLModel
 
-from app.core.base_model import SoftDeleteMixin, TimestampMixin
+from app.core.base_model import TimestampMixin
 
 
 class RefreshToken(TimestampMixin, table=True):
@@ -14,5 +14,3 @@ class RefreshToken(TimestampMixin, table=True):
     token_hash: str = Field(max_length=64, unique=True, nullable=False)
     expires_at: datetime = Field(nullable=False)
     revoked_at: Optional[datetime] = Field(default=None, nullable=True)
-
-    usuario: Optional["Usuario"] = Relationship(back_populates="refresh_tokens")

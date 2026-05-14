@@ -39,7 +39,8 @@
       "Bash(git commit *)",
       "Skill(openspec-propose)",
       "Bash(openspec list *)",
-      "mcp__plugin_engram_engram__mem_save"
+      "mcp__plugin_engram_engram__mem_save",
+      "Skill(opsx:propose)"
     ]
   }
 }
