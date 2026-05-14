@@ -14,7 +14,32 @@
       "Bash(openspec instructions *)",
       "Bash(python -c \"import json,sys; d=json.load\\(sys.stdin\\); print\\(f\\\\\"Total: {d['progress']['total']} | Completas: {d['progress']['complete']} | Pendientes: {d['progress']['remaining']}\\\\\"\\)\")",
       "Bash(openspec status *)",
-      "Bash(openspec new *)"
+      "Bash(openspec new *)",
+      "Bash(engram --version)",
+      "Bash(npm list *)",
+      "Bash(engram *)",
+      "mcp__plugin_engram_engram__mem_context",
+      "Bash(Get-ChildItem -Path \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\" -Directory)",
+      "Bash(Select-Object Name)",
+      "Bash(python *)",
+      "Bash(psql *)",
+      "Bash(where psql *)",
+      "PowerShell(Get-Command *)",
+      "Bash(dir *)",
+      "Bash($VENV *)",
+      "Bash('E:/Tareas/Cuarto Cuatrimestre/Metodología y Gestion/Parcial/RepositorioBaseFoodStore-SDD-main/backend/.venv/Scripts/alembic.exe' revision --autogenerate -m initial_schema)",
+      "Bash('E:/Tareas/Cuarto Cuatrimestre/Metodología y Gestion/Parcial/RepositorioBaseFoodStore-SDD-main/backend/.venv/Scripts/alembic.exe' upgrade head)",
+      "Bash('E:/Tareas/Cuarto Cuatrimestre/Metodología y Gestion/Parcial/RepositorioBaseFoodStore-SDD-main/backend/.venv/Scripts/python.exe' -m app.db.seed)",
+      "Bash($PYTHON *)",
+      "Bash('E:/Tareas/Cuarto Cuatrimestre/Metodología y Gestion/Parcial/RepositorioBaseFoodStore-SDD-main/backend/.venv/Scripts/python.exe' -c ' *)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "mcp__plugin_engram_engram__mem_session_summary",
+      "Bash(git commit *)",
+      "Skill(openspec-propose)",
+      "Bash(openspec list *)",
+      "mcp__plugin_engram_engram__mem_save"
     ]
   }
 }

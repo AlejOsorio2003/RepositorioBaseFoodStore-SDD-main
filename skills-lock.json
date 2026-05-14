@@ -7,11 +7,35 @@
       "skillPath": "skills/auth-security/SKILL.md",
       "computedHash": "b3ccf87173fdb651152eb881974bee85dcae1946aac5de08fd3e87b0f319096c"
     },
+    "documentation-writer": {
+      "source": "github/awesome-copilot",
+      "sourceType": "github",
+      "skillPath": "skills/documentation-writer/SKILL.md",
+      "computedHash": "ee53d65b163cd7eb953a930c95841cfe398cc2c0bd24c06508bbaa07c432be35"
+    },
     "fastapi-python": {
       "source": "mindrally/skills",
       "sourceType": "github",
       "skillPath": "fastapi-python/SKILL.md",
       "computedHash": "4521c6090735152b7b8df670cefe5c1c6d1dcaa115de67bb96e74ebf802d4f24"
+    },
+    "frontend-design": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/frontend-design/SKILL.md",
+      "computedHash": "516bd2154eb843a8240e43d5b285229129853114ad7075a5e141e1c08e408c84"
+    },
+    "postgres": {
+      "source": "planetscale/database-skills",
+      "sourceType": "github",
+      "skillPath": "skills/postgres/SKILL.md",
+      "computedHash": "f0632544d951152bf28c4f5cbb02593af296a3abe75f8949d003718c61a9a90b"
+    },
+    "skill-creator": {
+      "source": "anthropics/skills",
+      "sourceType": "github",
+      "skillPath": "skills/skill-creator/SKILL.md",
+      "computedHash": "7e3c9cd74e9e2b4828527a857170e86310f2dab5ea8030a9043df2c7e6c88857"
     },
     "sqlmodel": {
       "source": "salmanferozkhan/cloud-and-fast-api",

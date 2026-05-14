@@ -16,6 +16,14 @@
       "sessions": 0,
       "memories": 0,
       "prompts": 1
+    },
+    {
+      "id": "87631f54",
+      "created_by": "Usuario",
+      "created_at": "2026-05-14T02:14:20Z",
+      "sessions": 0,
+      "memories": 1,
+      "prompts": 0
     }
   ]
 }

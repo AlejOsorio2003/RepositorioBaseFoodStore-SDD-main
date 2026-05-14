@@ -36,3 +36,8 @@ Thumbs.db
 # Logs
 *.log
 logs/
+
+# Engram — solo ignorar la base de datos local, los chunks sí se commitean
+.engram/*.db
+.engram/*.db-shm
+.engram/*.db-wal
