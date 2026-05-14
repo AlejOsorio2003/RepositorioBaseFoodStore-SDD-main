@@ -1,1 +1,5 @@
 INFO:     127.0.0.1:64085 - "POST /api/v1/ingredientes/ HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:64733 - "GET /docs HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64733 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64742 - "GET /api/v1/categorias/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64794 - "GET /api/v1/categorias/ HTTP/1.1" 200 OK
