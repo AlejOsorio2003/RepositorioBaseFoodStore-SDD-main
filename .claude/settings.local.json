@@ -53,7 +53,8 @@
       "Read(//mnt/**)",
       "Skill(openspec-archive-change)",
       "Bash(openspec archive *)",
-      "Bash(Get-ChildItem *)"
+      "Bash(Get-ChildItem *)",
+      "Bash(git restore *)"
     ]
   }
 }
