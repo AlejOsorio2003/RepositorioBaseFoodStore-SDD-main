@@ -36,13 +36,13 @@
 
 ## 6. Verificación
 
-- [ ] 6.1 Arrancar uvicorn y verificar que no hay errores de startup
-- [ ] 6.2 `GET /api/v1/ingredientes` retorna `200 []` (sin datos iniciales)
-- [ ] 6.3 `POST /api/v1/ingredientes` con token ADMIN crea ingrediente y retorna `201`
-- [ ] 6.4 `POST /api/v1/ingredientes` con nombre duplicado retorna `409`
-- [ ] 6.5 `GET /api/v1/ingredientes?solo_alergenos=true` retorna solo alérgenos
-- [ ] 6.6 `PATCH /api/v1/ingredientes/{id}` actualiza correctamente
-- [ ] 6.7 `DELETE /api/v1/ingredientes/{id}` retorna `204` si sin productos asociados
-- [ ] 6.8 `DELETE` retorna `409` si el ingrediente tiene productos asociados
-- [ ] 6.9 `GET /api/v1/ingredientes/{id}` sin auth retorna `200` (endpoint público)
-- [ ] 6.10 `POST /api/v1/ingredientes` sin token retorna `401`
+- [x] 6.1 Arrancar uvicorn y verificar que no hay errores de startup
+- [x] 6.2 `GET /api/v1/ingredientes` retorna `200 []` (sin datos iniciales)
+- [x] 6.3 `POST /api/v1/ingredientes` con token ADMIN crea ingrediente y retorna `201`
+- [x] 6.4 `POST /api/v1/ingredientes` con nombre duplicado retorna `409`
+- [x] 6.5 `GET /api/v1/ingredientes?solo_alergenos=true` retorna solo alérgenos
+- [x] 6.6 `PATCH /api/v1/ingredientes/{id}` actualiza correctamente
+- [x] 6.7 `DELETE /api/v1/ingredientes/{id}` retorna `204` si sin productos asociados
+- [x] 6.8 `DELETE` retorna `409` si el ingrediente tiene productos asociados
+- [x] 6.9 `GET /api/v1/ingredientes/{id}` sin auth retorna `200` (endpoint público)
+- [x] 6.10 `POST /api/v1/ingredientes` sin token retorna `401`

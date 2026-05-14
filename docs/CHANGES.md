@@ -17,7 +17,7 @@
 | CH-04 | Categorías — Frontend | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-04-categorias-frontend/` |
 | CH-05 | Productos — Backend | ⏳ Pendiente | — | — |
 | CH-06 | Productos — CatalogPage Frontend | ⏳ Pendiente | — | — |
-| CH-07 | Ingredientes + Alérgenos | ⏳ Pendiente | — | — |
+| CH-07 | Ingredientes + Alérgenos | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-07-ingredientes-alergenos/` |
 | CH-08 | Direcciones de Entrega | ⏳ Pendiente | — | — |
 | CH-09 | Usuarios — Backend CRUD + Perfil | ⏳ Pendiente | — | — |
 | CH-10 | Pedidos — Backend FSM + Audit Trail | ⏳ Pendiente | — | — |
@@ -51,7 +51,7 @@ CH-00: Infraestructura Base  ✅ ARCHIVADO
         │               Navegación por categorías · filtros       │
         │               integración en CatalogPage                │
         │                                                         │
-        ├─► CH-07: Ingredientes + Alérgenos ─────────────────┐   │
+        ├─► CH-07: Ingredientes + Alérgenos ✅ ARCHIVADO ───────┐   │
         │         CRUD /ingredientes · campo es_alergeno      │   │
         │         Asociación ProductoIngrediente              │   │
         │                                                     │   │
@@ -180,6 +180,22 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Router y App shell | `createBrowserRouter`, todas las rutas, `main.tsx` | ✅ |
 
 **Capabilities entregadas:** `backend-infra`, `frontend-infra`
+
+### CH-07 — Ingredientes + Alérgenos — Backend
+
+**Archivado:** 2026-05-14 | **Evidencia:** `openspec/changes/archive/2026-05-14-ch-07-ingredientes-alergenos/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Schemas | `IngredienteCreate`, `IngredienteUpdate`, `IngredienteRead`, `ProductoIngredienteRead` | ✅ |
+| Repository | `IngredienteRepository`: `get_by_nombre`, `list_alergenos`, `has_productos_asociados` | ✅ |
+| Service | CRUD completo con 404/409, filtro `solo_alergenos`, bloqueo eliminación con productos | ✅ |
+| Router | 5 endpoints: GET list, GET by id (público), POST, PATCH, DELETE (ADMIN) | ✅ |
+| UoW | `uow.ingredientes` tipado como `IngredienteRepository` | ✅ |
+| Fix auth | `HTTPBearer(auto_error=False)` + `401` manual en `core/dependencies.py` | ✅ |
+| Verificación | 10/10 tests HTTP pasando (200, 201, 204, 401, 404, 409) | ✅ |
+
+**Capabilities entregadas:** `ingredientes-backend`
 
 ### CH-04 — Categorías — Frontend
 

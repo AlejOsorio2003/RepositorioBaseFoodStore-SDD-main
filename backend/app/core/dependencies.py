@@ -8,7 +8,7 @@ from app.core.database import get_session
 from app.core.security import decode_access_token
 from app.core.uow import UnitOfWork
 
-_bearer = HTTPBearer()
+_bearer = HTTPBearer(auto_error=False)
 
 
 def get_uow() -> Generator[UnitOfWork, None, None]:
@@ -17,9 +17,11 @@ def get_uow() -> Generator[UnitOfWork, None, None]:
 
 
 def get_current_user(
-    credentials: HTTPAuthorizationCredentials = Depends(_bearer),
+    credentials: HTTPAuthorizationCredentials | None = Depends(_bearer),
     uow: UnitOfWork = Depends(get_uow),
 ) -> Usuario:
+    if credentials is None:
+        raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="No autenticado")
     try:
         payload = decode_access_token(credentials.credentials)
     except ValueError:
