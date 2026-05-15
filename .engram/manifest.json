@@ -96,6 +96,14 @@
       "sessions": 0,
       "memories": 4,
       "prompts": 0
+    },
+    {
+      "id": "de8fb84e",
+      "created_by": "Usuario",
+      "created_at": "2026-05-15T13:09:13Z",
+      "sessions": 0,
+      "memories": 2,
+      "prompts": 0
     }
   ]
 }
