@@ -49,13 +49,14 @@ class UnitOfWork:
         from app.ingredientes.models import Ingrediente
         from app.ingredientes.repository import IngredienteRepository
         from app.productos.models import FormaPago, Producto
+        from app.productos.repository import ProductoRepository
 
         self.usuarios: BaseRepository[Usuario] = BaseRepository(self.session, Usuario)
         self.roles: BaseRepository[Rol] = BaseRepository(self.session, Rol)
         self.refresh_tokens: BaseRepository[RefreshToken] = BaseRepository(self.session, RefreshToken)
         self.direcciones: BaseRepository[DireccionEntrega] = BaseRepository(self.session, DireccionEntrega)
         self.categorias: CategoriaRepository = CategoriaRepository(self.session, Categoria)
-        self.productos: BaseRepository[Producto] = BaseRepository(self.session, Producto)
+        self.productos: ProductoRepository = ProductoRepository(self.session, Producto)
         self.ingredientes: IngredienteRepository = IngredienteRepository(self.session, Ingrediente)
         self.formas_pago: BaseRepository[FormaPago] = BaseRepository(self.session, FormaPago)
         self.estados_pedido: BaseRepository[EstadoPedido] = BaseRepository(self.session, EstadoPedido)
