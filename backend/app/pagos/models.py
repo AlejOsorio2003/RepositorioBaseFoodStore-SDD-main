@@ -1,6 +1,9 @@
+from __future__ import annotations
+
 from typing import Optional
 from uuid import UUID
 
+from sqlalchemy.orm import Mapped, relationship
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.core.base_model import TimestampMixin
@@ -19,4 +22,4 @@ class Pago(TimestampMixin, table=True):
     monto: Optional[float] = Field(default=None)
     forma_pago_id: Optional[int] = Field(default=None, foreign_key="formas_pago.id")
 
-    pedido: Optional["Pedido"] = Relationship(back_populates="pagos")  # type: ignore[name-defined]
+    pedido: Mapped[Optional["Pedido"]] = Relationship(sa_relationship=relationship("Pedido", back_populates="pagos"))  # type: ignore[name-defined]

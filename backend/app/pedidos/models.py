@@ -1,9 +1,12 @@
+from __future__ import annotations
+
 from datetime import datetime
 from decimal import Decimal
-from typing import TYPE_CHECKING, Optional
+from typing import TYPE_CHECKING, Optional, List
 
 from sqlalchemy import Column, ForeignKey, Integer
 from sqlalchemy.dialects.postgresql import ARRAY, INTEGER
+from sqlalchemy.orm import Mapped, relationship
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.core.base_model import TimestampMixin
@@ -39,9 +42,9 @@ class Pedido(TimestampMixin, table=True):
     costo_envio: Decimal = Field(max_digits=10, decimal_places=2, default=Decimal("50.00"), nullable=False)
     direccion_snapshot: Optional[str] = Field(default=None)
 
-    detalles: list["DetallePedido"] = Relationship(back_populates="pedido")
-    historial: list["HistorialEstadoPedido"] = Relationship(back_populates="pedido")
-    pagos: list["Pago"] = Relationship(back_populates="pedido")
+    detalles: Mapped[List["DetallePedido"]] = Relationship(sa_relationship=relationship("DetallePedido", back_populates="pedido"))
+    historial: Mapped[List["HistorialEstadoPedido"]] = Relationship(sa_relationship=relationship("HistorialEstadoPedido", back_populates="pedido"))
+    pagos: Mapped[List["Pago"]] = Relationship(sa_relationship=relationship("Pago", back_populates="pedido"))
 
 
 class DetallePedido(SQLModel, table=True):
@@ -58,7 +61,7 @@ class DetallePedido(SQLModel, table=True):
         sa_column=Column(ARRAY(INTEGER), nullable=True),
     )
 
-    pedido: Optional[Pedido] = Relationship(back_populates="detalles")
+    pedido: Mapped[Optional[Pedido]] = Relationship(sa_relationship=relationship("Pedido", back_populates="detalles"))
 
 
 class HistorialEstadoPedido(SQLModel, table=True):
@@ -72,4 +75,4 @@ class HistorialEstadoPedido(SQLModel, table=True):
     creado_en: datetime = Field(nullable=False)
     notas: Optional[str] = Field(default=None, max_length=500)
 
-    pedido: Optional[Pedido] = Relationship(back_populates="historial")
+    pedido: Mapped[Optional[Pedido]] = Relationship(sa_relationship=relationship("Pedido", back_populates="historial"))

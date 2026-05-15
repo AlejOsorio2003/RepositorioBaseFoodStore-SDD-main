@@ -39,27 +39,39 @@ class UnitOfWork:
         return self._session
 
     def _init_repositories(self) -> None:
-        from app.auth.models import RefreshToken, Rol, Usuario
+        # Inicializar repositorios para los distintos módulos del dominio
+        from app.core.repository import BaseRepository
+
+        # Auth / Usuarios
+        from app.auth.models import Rol, Usuario
+        from app.usuarios.repository import UsuarioRepository
+        from app.refreshtokens.models import RefreshToken
+        from app.refreshtokens.repository import RefreshTokenRepository
+
+        self.usuarios: UsuarioRepository = UsuarioRepository(self.session, Usuario)
+        self.roles: BaseRepository[Rol] = BaseRepository(self.session, Rol)
+        self.refresh_tokens: RefreshTokenRepository = RefreshTokenRepository(self.session, RefreshToken)
+
+        # Productos / Categorias / Ingredientes
+        from app.productos.models import Producto
+        from app.productos.repository import ProductoRepository
         from app.categorias.models import Categoria
         from app.categorias.repository import CategoriaRepository
-        from app.core.repository import BaseRepository
-        from app.direcciones.models import DireccionEntrega
-        from app.direcciones.repository import DireccionRepository
-        from app.pagos.models import Pago
-        from app.pedidos.models import EstadoPedido, Pedido
         from app.ingredientes.models import Ingrediente
         from app.ingredientes.repository import IngredienteRepository
-        from app.productos.models import FormaPago, Producto
-        from app.productos.repository import ProductoRepository
 
-        self.usuarios: BaseRepository[Usuario] = BaseRepository(self.session, Usuario)
-        self.roles: BaseRepository[Rol] = BaseRepository(self.session, Rol)
-        self.refresh_tokens: BaseRepository[RefreshToken] = BaseRepository(self.session, RefreshToken)
-        self.direcciones: DireccionRepository = DireccionRepository(self.session, DireccionEntrega)
-        self.categorias: CategoriaRepository = CategoriaRepository(self.session, Categoria)
         self.productos: ProductoRepository = ProductoRepository(self.session, Producto)
+        self.categorias: CategoriaRepository = CategoriaRepository(self.session, Categoria)
         self.ingredientes: IngredienteRepository = IngredienteRepository(self.session, Ingrediente)
-        self.formas_pago: BaseRepository[FormaPago] = BaseRepository(self.session, FormaPago)
-        self.estados_pedido: BaseRepository[EstadoPedido] = BaseRepository(self.session, EstadoPedido)
-        self.pedidos: BaseRepository[Pedido] = BaseRepository(self.session, Pedido)
-        self.pagos: BaseRepository[Pago] = BaseRepository(self.session, Pago)
+
+        # Pedidos / Pagos / Direcciones
+        from app.pedidos.models import Pedido
+        from app.pedidos.repository import PedidoRepository
+        from app.pagos.models import Pago
+        from app.pagos.repository import PagoRepository
+        from app.direcciones.models import DireccionEntrega
+        from app.direcciones.repository import DireccionRepository
+
+        self.pedidos: PedidoRepository = PedidoRepository(self.session, Pedido)
+        self.pagos: PagoRepository = PagoRepository(self.session, Pago)
+        self.direcciones: DireccionRepository = DireccionRepository(self.session, DireccionEntrega)

@@ -1,7 +1,10 @@
+from __future__ import annotations
+
 from decimal import Decimal
-from typing import Optional
+from typing import Optional, List
 
 from sqlmodel import Field, Relationship, SQLModel
+from sqlalchemy.orm import Mapped, relationship
 
 from app.core.base_model import SoftDeleteMixin, TimestampMixin
 from app.ingredientes.models import Ingrediente  # noqa: F401
@@ -19,8 +22,12 @@ class Producto(TimestampMixin, SoftDeleteMixin, table=True):
     disponible: bool = Field(default=True, nullable=False)
     imagen_url: Optional[str] = Field(default=None, max_length=500)
 
-    categorias: list["ProductoCategoria"] = Relationship(back_populates="producto")
-    ingredientes: list["ProductoIngrediente"] = Relationship(back_populates="producto")
+    categorias: Mapped[List["ProductoCategoria"]] = Relationship(
+        sa_relationship=relationship("ProductoCategoria", back_populates="producto")
+    )
+    ingredientes: Mapped[List["ProductoIngrediente"]] = Relationship(
+        sa_relationship=relationship("ProductoIngrediente", back_populates="producto")
+    )
 
 
 class ProductoCategoria(SQLModel, table=True):
@@ -33,8 +40,12 @@ class ProductoCategoria(SQLModel, table=True):
         default=None, foreign_key="categorias.id", primary_key=True
     )
 
-    producto: Optional[Producto] = Relationship(back_populates="categorias")
-    categoria: Optional["Categoria"] = Relationship(back_populates="productos")  # type: ignore[name-defined]
+    producto: Mapped[Optional[Producto]] = Relationship(
+        sa_relationship=relationship("Producto", back_populates="categorias")
+    )
+    categoria: Mapped[Optional["Categoria"]] = Relationship(
+        sa_relationship=relationship("Categoria", back_populates="productos")
+    )  # type: ignore[name-defined]
 
 
 class ProductoIngrediente(SQLModel, table=True):
@@ -48,8 +59,12 @@ class ProductoIngrediente(SQLModel, table=True):
     )
     es_removible: bool = Field(default=False, nullable=False)
 
-    producto: Optional[Producto] = Relationship(back_populates="ingredientes")
-    ingrediente: Optional[Ingrediente] = Relationship(back_populates="productos")
+    producto: Mapped[Optional[Producto]] = Relationship(
+        sa_relationship=relationship("Producto", back_populates="ingredientes")
+    )
+    ingrediente: Mapped[Optional[Ingrediente]] = Relationship(
+        sa_relationship=relationship("Ingrediente", back_populates="productos")
+    )
 
 
 class FormaPago(TimestampMixin, table=True):

@@ -180,7 +180,7 @@ def upgrade() -> None:
     sa.Column('nombre_snapshot', sqlmodel.sql.sqltypes.AutoString(length=200), nullable=False),
     sa.Column('precio_snapshot', sa.Numeric(precision=10, scale=2), nullable=False),
     sa.Column('cantidad', sa.Integer(), nullable=False),
-    sa.Column('personalizacion', postgresql.ARRAY(sa.INTEGER()), nullable=True),
+    sa.Column('personalizacion', sa.JSON(), nullable=True),
     sa.ForeignKeyConstraint(['pedido_id'], ['pedidos.id'], ),
     sa.ForeignKeyConstraint(['producto_id'], ['productos.id'], ),
     sa.PrimaryKeyConstraint('id')

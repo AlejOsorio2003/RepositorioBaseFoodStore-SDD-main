@@ -1,5 +1,8 @@
-from typing import Optional
+from __future__ import annotations
 
+from typing import Optional, List
+
+from sqlalchemy.orm import Mapped, relationship
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.core.base_model import SoftDeleteMixin, TimestampMixin
@@ -18,4 +21,4 @@ class Categoria(TimestampMixin, SoftDeleteMixin, table=True):
     )
     orden: int = Field(default=0, nullable=False)
 
-    productos: list["ProductoCategoria"] = Relationship(back_populates="categoria")  # type: ignore[name-defined]
+    productos: Mapped[List["ProductoCategoria"]] = Relationship(sa_relationship=relationship("ProductoCategoria", back_populates="categoria"))  # type: ignore[name-defined]

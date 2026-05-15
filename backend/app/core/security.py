@@ -3,18 +3,25 @@ import uuid
 from datetime import datetime, timedelta, timezone
 from typing import Any
 
-import bcrypt
 from jose import JWTError, jwt
+from passlib.context import CryptContext
 
 from app.core.config import settings
 
 
+# Support both bcrypt and pbkdf2-sha256 (existing DB) while hashing new passwords with bcrypt
+pwd_context = CryptContext(schemes=["bcrypt", "pbkdf2_sha256"], deprecated="auto")
+
+
 def hash_password(plain: str) -> str:
-    return bcrypt.hashpw(plain.encode(), bcrypt.gensalt(rounds=12)).decode()
+    return pwd_context.hash(plain)
 
 
 def verify_password(plain: str, hashed: str) -> bool:
-    return bcrypt.checkpw(plain.encode(), hashed.encode())
+    try:
+        return pwd_context.verify(plain, hashed)
+    except Exception:
+        return False
 
 
 def create_access_token(data: dict[str, Any], expires_delta: timedelta | None = None) -> str:

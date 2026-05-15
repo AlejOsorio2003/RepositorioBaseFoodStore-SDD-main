@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-15 (CH-06 archivado)
+**Última actualización:** 2026-05-15 (CH-08 archivado)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -18,7 +18,7 @@
 | CH-05 | Productos — Backend | ✅ Hecho (archivado 2026-05-15) | 2026-05-15 | `openspec/changes/archive/2026-05-15-ch-05-productos-backend/` |
 | CH-06 | Productos — CatalogPage Frontend | ✅ Hecho (archivado 2026-05-15) | 2026-05-15 | `openspec/changes/archive/2026-05-15-ch-06-productos-catalogpage-frontend/` |
 | CH-07 | Ingredientes + Alérgenos | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-07-ingredientes-alergenos/` |
-| CH-08 | Direcciones de Entrega | ⏳ Pendiente | — | — |
+| CH-08 | Direcciones de Entrega | ✅ Hecho (archivado 2026-05-15) | 2026-05-15 | `openspec/changes/archive/2026-05-15-ch-08-direcciones-entrega/` |
 | CH-09 | Usuarios — Backend CRUD + Perfil | ⏳ Pendiente | — | — |
 | CH-10 | Pedidos — Backend FSM + Audit Trail | ⏳ Pendiente | — | — |
 | CH-11 | Pedidos — Carrito + Checkout Frontend | ⏳ Pendiente | — | — |

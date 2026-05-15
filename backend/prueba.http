@@ -1,0 +1,101 @@
+# const res = await fetch('http://localhost:8000/api/v1/auth/login', {
+#   method: 'POST',
+#   headers: {'Content-Type': 'application/json'},
+#   body: JSON.stringify({ email: 'admin@foodstore.com', password: 'admin123' })
+# });
+# const data = await res.json();
+# console.log(data.access_token); // pegar esto como Bearer token# Prueba HTTP para VS Code REST Client
+# Ajustá la variable `@base` si tu backend corre en otro host/puerto.
+@base = http://localhost:8000/api/v1
+
+### Register - Crear usuario
+POST {{base}}/auth/register
+Content-Type: application/json
+
+{
+  "email": "test@example.com",
+  "password": "admin123",
+  "nombre": "Test",
+  "apellido": "User",
+  "telefono": "123456789"
+}
+
+### Login - Obtener tokens
+POST {{base}}/auth/login
+Content-Type: application/json
+
+{
+  "email": "admin@foodstore.com",
+  "password": "admin123"
+}
+
+### Refresh - Renovar access token
+# Pegar aquí el refresh token recibido en la respuesta del login
+POST {{base}}/auth/refresh
+Content-Type: application/json
+
+{
+  "refresh_token": "18c950cb-79a0-4825-9fea-3b538e88a123"
+}
+
+### Logout - Invalidar refresh token
+POST {{base}}/auth/logout
+Content-Type: application/json
+
+{
+  "refresh_token": "617aa3a8-5423-402f-acf1-7a555ed4251f"
+}
+
+### Listar productos (público)
+GET {{base}}/productos?page=1&size=10
+
+### Obtener producto (detalle)
+# Reemplazá 1 por un id válido
+GET {{base}}/productos/2
+
+### Crear producto (requiere rol ADMIN - usar header Authorization)
+# Primero hacer Login y pegar access token en Authorization
+POST {{base}}/productos
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJhZG1pbkBmb29kc3RvcmUuY29tIiwicm9sZXMiOlsiQURNSU4iXSwiZXhwIjoxNzc4ODg2ODk0fQ.o0YyBSksJUtGd8YELyZnZq03dMwd0JIb19tqlQmX6eI
+
+{
+  "nombre": "Producto prueba",
+  "descripcion": "Descripción corta",
+  "precio_base": 9.9,
+  "stock_cantidad": 10,
+  "disponible": true,
+  "imagen_url": null,
+  "categoria_ids": [],
+  "ingrediente_ids": []
+}
+
+### Cambiar disponibilidad (PATCH) (ADMIN/STOCK)
+PATCH {{base}}/productos/1/disponibilidad
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJhZG1pbkBmb29kc3RvcmUuY29tIiwicm9sZXMiOlsiQURNSU4iXSwiZXhwIjoxNzc4ODg2NDg2fQ.A4rn-rOEVWSBrV68DAN2mS2OTs-7V-Ja-t9aHm6nTvc
+
+{
+  "disponible": false
+}
+
+### Asociar ingrediente a producto (ADMIN)
+POST {{base}}/productos/1/ingredientes
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJhZG1pbkBmb29kc3RvcmUuY29tIiwicm9sZXMiOlsiQURNSU4iXSwiZXhwIjoxNzc4ODg2NDg2fQ.A4rn-rOEVWSBrV68DAN2mS2OTs-7V-Ja-t9aHm6nTvc
+
+{
+  "ingrediente_id": 1,
+  "es_removible": false
+}
+
+### Quitar ingrediente (ADMIN)
+DELETE {{base}}/productos/1/ingredientes/1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxIiwiZW1haWwiOiJhZG1pbkBmb29kc3RvcmUuY29tIiwicm9sZXMiOlsiQURNSU4iXSwiZXhwIjoxNzc4ODg2NDg2fQ.A4rn-rOEVWSBrV68DAN2mS2OTs-7V-Ja-t9aHm6nTvc
+
+
+# Notas:
+# - Reemplazá <ACCESS_TOKEN> y <PONER_REFRESH_TOKEN_AQUI> por los valores reales del login.
+# - Para usar Authorization en REST Client, añade la línea de header comentada y quitala al ejecutar o configura una variable de entorno.
+# - Si tu API corre en otro puerto (ej. 8002), ajustá la variable @base al inicio del archivo.
+

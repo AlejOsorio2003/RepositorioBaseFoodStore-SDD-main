@@ -1,6 +1,9 @@
-from datetime import datetime
-from typing import Optional
+from __future__ import annotations
 
+from datetime import datetime
+from typing import Optional, List
+
+from sqlalchemy.orm import Mapped, relationship
 from sqlmodel import Field, Relationship, SQLModel
 
 from app.core.base_model import SoftDeleteMixin, TimestampMixin
@@ -16,7 +19,7 @@ class Rol(TimestampMixin, table=True):
     nombre: str = Field(max_length=50, unique=True, nullable=False)
     descripcion: Optional[str] = Field(default=None, max_length=255)
 
-    usuarios: list["UsuarioRol"] = Relationship(back_populates="rol")
+    usuarios: Mapped[List["UsuarioRol"]] = Relationship(sa_relationship=relationship("UsuarioRol", back_populates="rol"))
 
 
 class UsuarioRol(SQLModel, table=True):
@@ -29,8 +32,8 @@ class UsuarioRol(SQLModel, table=True):
         default=None, foreign_key="roles.id", primary_key=True
     )
 
-    usuario: Optional["Usuario"] = Relationship(back_populates="roles")
-    rol: Optional[Rol] = Relationship(back_populates="usuarios")
+    usuario: Mapped[Optional["Usuario"]] = Relationship(sa_relationship=relationship("Usuario", back_populates="roles"))
+    rol: Mapped[Optional[Rol]] = Relationship(sa_relationship=relationship("Rol", back_populates="usuarios"))
 
 
 class Usuario(TimestampMixin, SoftDeleteMixin, table=True):
@@ -44,5 +47,5 @@ class Usuario(TimestampMixin, SoftDeleteMixin, table=True):
     telefono: Optional[str] = Field(default=None, max_length=20)
     is_active: bool = Field(default=True, nullable=False)
 
-    roles: list[UsuarioRol] = Relationship(back_populates="usuario")
+    roles: Mapped[List["UsuarioRol"]] = Relationship(sa_relationship=relationship("UsuarioRol", back_populates="usuario"))
 
