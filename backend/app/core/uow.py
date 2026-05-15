@@ -44,6 +44,7 @@ class UnitOfWork:
         from app.categorias.repository import CategoriaRepository
         from app.core.repository import BaseRepository
         from app.direcciones.models import DireccionEntrega
+        from app.direcciones.repository import DireccionRepository
         from app.pagos.models import Pago
         from app.pedidos.models import EstadoPedido, Pedido
         from app.ingredientes.models import Ingrediente
@@ -54,7 +55,7 @@ class UnitOfWork:
         self.usuarios: BaseRepository[Usuario] = BaseRepository(self.session, Usuario)
         self.roles: BaseRepository[Rol] = BaseRepository(self.session, Rol)
         self.refresh_tokens: BaseRepository[RefreshToken] = BaseRepository(self.session, RefreshToken)
-        self.direcciones: BaseRepository[DireccionEntrega] = BaseRepository(self.session, DireccionEntrega)
+        self.direcciones: DireccionRepository = DireccionRepository(self.session, DireccionEntrega)
         self.categorias: CategoriaRepository = CategoriaRepository(self.session, Categoria)
         self.productos: ProductoRepository = ProductoRepository(self.session, Producto)
         self.ingredientes: IngredienteRepository = IngredienteRepository(self.session, Ingrediente)
