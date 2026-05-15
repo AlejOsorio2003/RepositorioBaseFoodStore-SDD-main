@@ -58,7 +58,11 @@
       "Bash(.venv/Scripts/python -c ' *)",
       "Bash(Get-Content *)",
       "Bash(pkill -f \"uvicorn app.main:app\")",
-      "Skill(opsx:archive)"
+      "Skill(opsx:archive)",
+      "Bash(\"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\" -m app.db.seed)",
+      "Bash(.venv/Scripts/python.exe -c \"import app.main; print\\('OK'\\)\")",
+      "Bash(findstr \"\\\\\"dev\\\\\"\")",
+      "Bash(Test-Path *)"
     ]
   }
 }

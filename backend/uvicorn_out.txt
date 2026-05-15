@@ -1,5 +1,18 @@
-INFO:     127.0.0.1:64085 - "POST /api/v1/ingredientes/ HTTP/1.1" 401 Unauthorized
-INFO:     127.0.0.1:64733 - "GET /docs HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64733 - "GET /openapi.json HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64742 - "GET /api/v1/categorias/ HTTP/1.1" 200 OK
-INFO:     127.0.0.1:64794 - "GET /api/v1/categorias/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64948 - "GET /health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64950 - "GET /api/v1/productos HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:64952 - "POST /api/v1/productos HTTP/1.1" 307 Temporary Redirect
+INFO:     127.0.0.1:64954 - "GET /api/v1/productos/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64957 - "POST /api/v1/productos/ HTTP/1.1" 401 Unauthorized
+INFO:     127.0.0.1:64959 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64961 - "POST /api/v1/auth/login HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64963 - "POST /api/v1/productos/ HTTP/1.1" 201 Created
+INFO:     127.0.0.1:64965 - "GET /api/v1/productos/3 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64967 - "GET /api/v1/productos/9999 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64970 - "PATCH /api/v1/productos/3/disponibilidad HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64972 - "GET /api/v1/ingredientes/ HTTP/1.1" 200 OK
+INFO:     127.0.0.1:64974 - "POST /api/v1/productos/3/ingredientes HTTP/1.1" 201 Created
+INFO:     127.0.0.1:64976 - "POST /api/v1/productos/3/ingredientes HTTP/1.1" 409 Conflict
+INFO:     127.0.0.1:64978 - "DELETE /api/v1/productos/3 HTTP/1.1" 204 No Content
+INFO:     127.0.0.1:64980 - "GET /api/v1/productos/3 HTTP/1.1" 404 Not Found
+INFO:     127.0.0.1:64982 - "POST /api/v1/productos/ HTTP/1.1" 201 Created
+INFO:     127.0.0.1:64984 - "PATCH /api/v1/productos/4/disponibilidad HTTP/1.1" 200 OK

@@ -80,6 +80,14 @@
       "sessions": 1,
       "memories": 1,
       "prompts": 4
+    },
+    {
+      "id": "ccf06e5b",
+      "created_by": "Usuario",
+      "created_at": "2026-05-15T08:14:15Z",
+      "sessions": 0,
+      "memories": 1,
+      "prompts": 0
     }
   ]
 }
