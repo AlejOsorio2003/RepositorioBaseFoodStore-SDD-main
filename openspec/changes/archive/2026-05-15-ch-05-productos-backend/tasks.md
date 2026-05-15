@@ -54,13 +54,13 @@
 
 ## 6. Verificación de endpoints
 
-- [ ] 6.1 Reiniciar servidor uvicorn y verificar que no hay errores de importación
-- [ ] 6.2 `GET /api/v1/productos` → 200 con lista paginada (puede ser vacía si no hay datos de seed)
-- [ ] 6.3 `POST /api/v1/productos` sin token → 401
-- [ ] 6.4 `POST /api/v1/productos` con token ADMIN → 201 con producto creado
-- [ ] 6.5 `GET /api/v1/productos/{id}` con id creado → 200 con `ProductoDetail`
-- [ ] 6.6 `GET /api/v1/productos/9999` → 404
-- [ ] 6.7 `PATCH /api/v1/productos/{id}/disponibilidad` con token STOCK → 200
-- [ ] 6.8 `POST /api/v1/productos/{id}/ingredientes` con ingrediente válido → 201
-- [ ] 6.9 `POST /api/v1/productos/{id}/ingredientes` con mismo ingrediente → 409
-- [ ] 6.10 `DELETE /api/v1/productos/{id}` → 204; luego `GET` → 404
+- [x] 6.1 Reiniciar servidor uvicorn y verificar que no hay errores de importación
+- [x] 6.2 `GET /api/v1/productos` → 200 con lista paginada (puede ser vacía si no hay datos de seed)
+- [x] 6.3 `POST /api/v1/productos` sin token → 401
+- [x] 6.4 `POST /api/v1/productos` con token ADMIN → 201 con producto creado
+- [x] 6.5 `GET /api/v1/productos/{id}` con id creado → 200 con `ProductoDetail`
+- [x] 6.6 `GET /api/v1/productos/9999` → 404
+- [x] 6.7 `PATCH /api/v1/productos/{id}/disponibilidad` con token STOCK → 200
+- [x] 6.8 `POST /api/v1/productos/{id}/ingredientes` con ingrediente válido → 201
+- [x] 6.9 `POST /api/v1/productos/{id}/ingredientes` con mismo ingrediente → 409
+- [x] 6.10 `DELETE /api/v1/productos/{id}` → 204; luego `GET` → 404

@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-14
+**Última actualización:** 2026-05-15
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -15,7 +15,7 @@
 | CH-02 | Reestructuración — Alineación a nueva estructura | ✅ Hecho (archivado 2026-05-14) | 2026-05-13 | `openspec/changes/archive/2026-05-14-ch-02-restructuracion/` |
 | CH-03 | Categorías — Backend | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-03-categorias-backend/` |
 | CH-04 | Categorías — Frontend | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-04-categorias-frontend/` |
-| CH-05 | Productos — Backend | ⏳ Pendiente | — | — |
+| CH-05 | Productos — Backend | ✅ Hecho (archivado 2026-05-15) | 2026-05-15 | `openspec/changes/archive/2026-05-15-ch-05-productos-backend/` |
 | CH-06 | Productos — CatalogPage Frontend | ⏳ Pendiente | — | — |
 | CH-07 | Ingredientes + Alérgenos | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-07-ingredientes-alergenos/` |
 | CH-08 | Direcciones de Entrega | ⏳ Pendiente | — | — |
@@ -196,6 +196,21 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Verificación | 10/10 tests HTTP pasando (200, 201, 204, 401, 404, 409) | ✅ |
 
 **Capabilities entregadas:** `ingredientes-backend`
+
+### CH-05 — Productos — Backend
+
+**Archivado:** 2026-05-15 | **Evidencia:** `openspec/changes/archive/2026-05-15-ch-05-productos-backend/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Schemas | `ProductoCreate`, `ProductoUpdate`, `DisponibilidadUpdate`, `ProductoRead`, `ProductoDetail`, `PaginatedProductos`, `ProductoIngredienteCreate/Read`, `CategoriaEnProductoRead`, `IngredienteEnProductoRead` | ✅ |
+| Repository | `list_paginado` (filtros + paginación), `get_by_id_con_relaciones` (eager load), `get_by_slug`, `soft_delete`, pivot CRUD | ✅ |
+| Service | 9 funciones: listar, get, crear (slug único), actualizar, cambiar disponibilidad, eliminar, listar ingredientes, asociar/quitar ingrediente | ✅ |
+| Router | 10 endpoints: GET list, GET detail, POST, PUT, PATCH disponibilidad, DELETE, GET ingredientes, POST ingrediente, DELETE ingrediente | ✅ |
+| UoW | `uow.productos` tipado como `ProductoRepository` | ✅ |
+| Verificación | 10/10 tests HTTP pasando (200, 201, 204, 401, 404, 409) | ✅ |
+
+**Capabilities entregadas:** `productos-backend`
 
 ### CH-04 — Categorías — Frontend
 
