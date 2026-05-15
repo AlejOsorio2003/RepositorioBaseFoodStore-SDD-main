@@ -71,4 +71,4 @@
 
 - [x] 11.1 Verificar que el flujo completo registro → login → acceso autenticado funciona en el navegador
 - [x] 11.2 Verificar que el refresh silencioso reintenta la petición original sin interrumpir la UX
-- [ ] 11.3 Verificar que logout limpia el store y redirige al login (pendiente — no hay botón logout en UI todavía)
+- [x] 11.3 Verificar que logout limpia el store y redirige al login (✅ Header component con botón logout implementado)

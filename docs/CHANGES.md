@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-15 (CH-08 archivado)
+**Última actualización:** 2026-05-15 (US-001-AUTH archivado)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -11,7 +11,7 @@
 | ID | Change | Estado | Inicio | Evidencia |
 |----|--------|--------|--------|-----------|
 | CH-00 | Setup Infraestructura Base | ✅ Hecho (archivado 2026-04-28) | 2026-04-28 | `openspec/changes/archive/2026-04-28-setup-infraestructura-base/` |
-| CH-01 | Autenticación JWT + RBAC | 🔄 En progreso | 2026-05-11 | `openspec/changes/us-001-auth/` |
+| CH-01 | Autenticación JWT + RBAC | ✅ Hecho (archivado 2026-05-15) | 2026-05-11 | `openspec/changes/archive/2026-05-15-us-001-auth/` |
 | CH-02 | Reestructuración — Alineación a nueva estructura | ✅ Hecho (archivado 2026-05-14) | 2026-05-13 | `openspec/changes/archive/2026-05-14-ch-02-restructuracion/` |
 | CH-03 | Categorías — Backend | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-03-categorias-backend/` |
 | CH-04 | Categorías — Frontend | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-04-categorias-frontend/` |
