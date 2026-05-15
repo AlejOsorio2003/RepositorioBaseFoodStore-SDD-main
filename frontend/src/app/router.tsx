@@ -7,6 +7,7 @@ import { LoginPage } from '@/pages/LoginPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { OrdersPage } from '@/pages/OrdersPage'
 import { RegisterPage } from '@/pages/RegisterPage'
+import { ProductoDetailPage } from '@/pages/ProductoDetailPage'
 
 export const router = createBrowserRouter([
   { path: '/', element: <CatalogPage /> },
@@ -17,5 +18,6 @@ export const router = createBrowserRouter([
   { path: '/checkout', element: <CheckoutPage /> },
   { path: '/orders', element: <OrdersPage /> },
   { path: '/admin', element: <AdminPage /> },
+  { path: '/productos/:id', element: <ProductoDetailPage /> },
   { path: '*', element: <NotFoundPage /> },
 ])
