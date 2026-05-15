@@ -1,5 +1,5 @@
 import { api } from '@/shared/api'
-import type { Producto, ProductoDetail, PaginatedProductos } from './types'
+import type { ProductoDetail, PaginatedProductos } from './types'
 
 export async function fetchProductos(params: {
   page?: number

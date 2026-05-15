@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
+import { Header } from '@/shared/ui'
 import { CategorySidebar } from '@/features/categoria-nav'
 import { ProductoGrid } from '@/features/producto-list'
 import { ProductoDetailModal } from '@/features/producto-detail'
@@ -59,34 +60,37 @@ export function CatalogPage() {
   }
 
   return (
-    <div className="flex min-h-screen bg-[#fef9ef]">
-      <aside className="w-64 shrink-0 border-r border-gray-200 p-4">
-        <CategorySidebar />
-      </aside>
+    <>
+      <Header />
+      <div className="flex min-h-screen bg-[#fef9ef]">
+        <aside className="w-64 shrink-0 border-r border-gray-200 p-4">
+          <CategorySidebar />
+        </aside>
 
-      <main className="flex-1 p-8">
-        {/* Barra de búsqueda */}
-        <div className="mb-6">
-          <input
-            type="text"
-            placeholder="Buscar productos..."
-            value={inputValue}
-            onChange={(e) => setInputValue(e.target.value)}
-            className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#721016] bg-white"
+        <main className="flex-1 p-8">
+          {/* Barra de búsqueda */}
+          <div className="mb-6">
+            <input
+              type="text"
+              placeholder="Buscar productos..."
+              value={inputValue}
+              onChange={(e) => setInputValue(e.target.value)}
+              className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#721016] bg-white"
+            />
+          </div>
+
+          <ProductoGrid
+            params={{ page, size: 12, categoria_id: categoriaId, search: searchParam || undefined }}
+            onSelect={(p: Producto) => setSelectedProductoId(p.id)}
+            onPageChange={handlePageChange}
           />
-        </div>
+        </main>
 
-        <ProductoGrid
-          params={{ page, size: 12, categoria_id: categoriaId, search: searchParam || undefined }}
-          onSelect={(p: Producto) => setSelectedProductoId(p.id)}
-          onPageChange={handlePageChange}
+        <ProductoDetailModal
+          productoId={selectedProductoId}
+          onClose={() => setSelectedProductoId(null)}
         />
-      </main>
-
-      <ProductoDetailModal
-        productoId={selectedProductoId}
-        onClose={() => setSelectedProductoId(null)}
-      />
-    </div>
+      </div>
+    </>
   )
 }

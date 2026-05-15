@@ -1,3 +1,10 @@
+import { Header } from '@/shared/ui'
+
 export function OrdersPage() {
-  return <div className="p-8 font-headline text-2xl">Orders</div>
+  return (
+    <>
+      <Header />
+      <div className="p-8 font-headline text-2xl">Orders</div>
+    </>
+  )
 }

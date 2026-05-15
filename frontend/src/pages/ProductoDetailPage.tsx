@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Link, useParams } from 'react-router-dom'
+import { Header } from '@/shared/ui'
 import { useProducto } from '@/features/producto-list'
 
 export function ProductoDetailPage() {
@@ -33,59 +34,62 @@ export function ProductoDetailPage() {
     .join('')
 
   return (
-    <div className="min-h-screen bg-[#fef9ef] p-8">
-      <div className="max-w-2xl mx-auto bg-white rounded-xl shadow p-6">
-        {producto.imagen_url && !imgError ? (
-          <img
-            src={producto.imagen_url}
-            alt={producto.nombre}
-            onError={() => setImgError(true)}
-            className="w-full h-64 object-cover rounded-lg mb-4"
-          />
-        ) : (
-          <div className="w-full h-64 rounded-lg mb-4 flex items-center justify-center bg-[#D95D2B]">
-            <span className="text-white text-4xl font-bold">{initials}</span>
-          </div>
-        )}
-
-        <h1 className="text-3xl font-bold text-[#721016] mb-2">{producto.nombre}</h1>
-
-        {producto.descripcion && (
-          <p className="text-gray-600 mb-4">{producto.descripcion}</p>
-        )}
-
-        <p className="text-2xl font-semibold text-gray-800 mb-4">
-          {Number(producto.precio_base).toLocaleString('es-AR', {
-            style: 'currency',
-            currency: 'ARS',
-          })}
-        </p>
-
-        {producto.ingredientes.length > 0 && (
-          <div>
-            <h2 className="text-lg font-semibold text-gray-700 mb-2">Ingredientes</h2>
-            <div className="flex flex-wrap gap-2">
-              {producto.ingredientes.map((ing) => (
-                <span
-                  key={ing.id}
-                  className={`px-3 py-1 rounded-full text-sm ${
-                    ing.es_alergeno
-                      ? 'bg-red-100 text-red-700 border border-red-300'
-                      : 'bg-gray-100 text-gray-700'
-                  }`}
-                >
-                  {ing.nombre}
-                  {ing.es_alergeno ? ' ⚠' : ''}
-                </span>
-              ))}
+    <>
+      <Header />
+      <div className="min-h-screen bg-[#fef9ef] p-8">
+        <div className="max-w-2xl mx-auto bg-white rounded-xl shadow p-6">
+          {producto.imagen_url && !imgError ? (
+            <img
+              src={producto.imagen_url}
+              alt={producto.nombre}
+              onError={() => setImgError(true)}
+              className="w-full h-64 object-cover rounded-lg mb-4"
+            />
+          ) : (
+            <div className="w-full h-64 rounded-lg mb-4 flex items-center justify-center bg-[#D95D2B]">
+              <span className="text-white text-4xl font-bold">{initials}</span>
             </div>
-          </div>
-        )}
+          )}
 
-        <Link to="/catalog" className="inline-block mt-6 text-[#721016] hover:underline">
-          ← Volver al catálogo
-        </Link>
+          <h1 className="text-3xl font-bold text-[#721016] mb-2">{producto.nombre}</h1>
+
+          {producto.descripcion && (
+            <p className="text-gray-600 mb-4">{producto.descripcion}</p>
+          )}
+
+          <p className="text-2xl font-semibold text-gray-800 mb-4">
+            {Number(producto.precio_base).toLocaleString('es-AR', {
+              style: 'currency',
+              currency: 'ARS',
+            })}
+          </p>
+
+          {producto.ingredientes.length > 0 && (
+            <div>
+              <h2 className="text-lg font-semibold text-gray-700 mb-2">Ingredientes</h2>
+              <div className="flex flex-wrap gap-2">
+                {producto.ingredientes.map((ing) => (
+                  <span
+                    key={ing.id}
+                    className={`px-3 py-1 rounded-full text-sm ${
+                      ing.es_alergeno
+                        ? 'bg-red-100 text-red-700 border border-red-300'
+                        : 'bg-gray-100 text-gray-700'
+                    }`}
+                  >
+                    {ing.nombre}
+                    {ing.es_alergeno ? ' ⚠' : ''}
+                  </span>
+                ))}
+              </div>
+            </div>
+          )}
+
+          <Link to="/catalog" className="inline-block mt-6 text-[#721016] hover:underline">
+            ← Volver al catálogo
+          </Link>
+        </div>
       </div>
-    </div>
+    </>
   )
 }

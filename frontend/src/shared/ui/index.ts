@@ -1,3 +1,3 @@
 // Feature-Sliced Design — Componentes UI reutilizables
 // Botones, inputs, modales, cards, etc.
-export {}
+export { Header } from './Header'
