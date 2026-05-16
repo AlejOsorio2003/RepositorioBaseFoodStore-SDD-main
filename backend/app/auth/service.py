@@ -101,8 +101,8 @@ def login(data: LoginRequest, uow: UnitOfWork) -> TokenResponse:
 
     if not usuario.is_active:
         raise HTTPException(
-            status_code=status.HTTP_401_UNAUTHORIZED,
-            detail="Credenciales inválidas",
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="ACCOUNT_DISABLED",
         )
 
     # Obtener roles del usuario
