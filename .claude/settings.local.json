@@ -63,7 +63,9 @@
       "Bash(.venv/Scripts/python.exe -c \"import app.main; print\\('OK'\\)\")",
       "Bash(findstr \"\\\\\"dev\\\\\"\")",
       "Bash(Test-Path *)",
-      "mcp__plugin_engram_engram__mem_search"
+      "mcp__plugin_engram_engram__mem_search",
+      "Bash(mv openspec/changes/us-001-auth openspec/changes/archive/2026-05-15-us-001-auth)",
+      "Bash(mv openspec/changes/ch-08-direcciones-entrega openspec/changes/archive/2026-05-15-ch-08-direcciones-entrega)"
     ]
   }
 }
