@@ -1,5 +1,6 @@
-import { useState } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import { useProducto } from '@/features/producto-list'
+import { useCartStore } from '@/shared/store'
 
 interface ProductoDetailModalProps {
   productoId: number | null
@@ -33,6 +34,30 @@ function ProductoDetailModalInner({
 }) {
   const { data: producto, isLoading } = useProducto(productoId)
   const [imgError, setImgError] = useState(false)
+  const [addedFeedback, setAddedFeedback] = useState(false)
+  const feedbackTimer = useRef<ReturnType<typeof setTimeout> | null>(null)
+
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (feedbackTimer.current) clearTimeout(feedbackTimer.current)
+    }
+  }, [])
+
+  const handleAddToCart = () => {
+    if (!producto) return
+    useCartStore.getState().addItem({
+      productoId: producto.id,
+      nombre: producto.nombre,
+      precioUnitario: Number(producto.precio_base),
+      imagenUrl: producto.imagen_url ?? undefined,
+    })
+    setAddedFeedback(true)
+    feedbackTimer.current = setTimeout(() => {
+      setAddedFeedback(false)
+      onClose()
+    }, 1500)
+  }
 
   const initials = producto?.nombre
     ? producto.nombre
@@ -98,6 +123,21 @@ function ProductoDetailModalInner({
                   currency: 'ARS',
                 })}
               </p>
+
+              {/* Agregar al carrito */}
+              <button
+                onClick={handleAddToCart}
+                disabled={!producto.disponible || addedFeedback}
+                className={`w-full py-3 px-4 rounded-lg font-semibold text-base transition-all duration-200 mb-4 ${
+                  addedFeedback
+                    ? 'bg-green-600 text-white'
+                    : producto.disponible
+                      ? 'bg-[#D95D2B] hover:bg-[#c04d1e] text-white active:scale-[0.98]'
+                      : 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                }`}
+              >
+                {addedFeedback ? '¡Agregado!' : 'Agregar al carrito'}
+              </button>
 
               {/* Ingredientes */}
               {producto.ingredientes.length > 0 && (

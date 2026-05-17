@@ -1,15 +1,20 @@
 import { create } from 'zustand'
 
+export type PaymentStatus = 'idle' | 'processing' | 'approved' | 'rejected' | 'error'
+
 interface PaymentState {
-  status: string | null
-  preferenceId: string | null
-  setPayment: (status: string, preferenceId: string) => void
-  clearPayment: () => void
+  status: PaymentStatus
+  mpPaymentId: string | null
+  statusDetail: string | null
+  setPaymentStatus: (status: PaymentStatus, mpPaymentId?: string | null, statusDetail?: string | null) => void
+  reset: () => void
 }
 
 export const usePaymentStore = create<PaymentState>()((set) => ({
-  status: null,
-  preferenceId: null,
-  setPayment: (status, preferenceId) => set({ status, preferenceId }),
-  clearPayment: () => set({ status: null, preferenceId: null }),
+  status: 'idle',
+  mpPaymentId: null,
+  statusDetail: null,
+  setPaymentStatus: (status, mpPaymentId = null, statusDetail = null) =>
+    set({ status, mpPaymentId, statusDetail }),
+  reset: () => set({ status: 'idle', mpPaymentId: null, statusDetail: null }),
 }))

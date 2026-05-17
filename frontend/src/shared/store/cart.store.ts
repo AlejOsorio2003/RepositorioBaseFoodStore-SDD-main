@@ -16,11 +16,15 @@ interface CartState {
   removeItem: (productoId: number) => void
   updateQuantity: (productoId: number, cantidad: number) => void
   clearCart: () => void
+  subtotal: () => number
+  costoEnvio: () => number
+  total: () => number
+  itemCount: () => number
 }
 
 export const useCartStore = create<CartState>()(
   persist(
-    (set) => ({
+    (set, get) => ({
       items: [],
       addItem: (item) =>
         set((state) => {
@@ -45,6 +49,10 @@ export const useCartStore = create<CartState>()(
           ),
         })),
       clearCart: () => set({ items: [] }),
+      subtotal: () => get().items.reduce((acc, i) => acc + i.precioUnitario * i.cantidad, 0),
+      costoEnvio: () => (get().items.length > 0 ? 50 : 0),
+      total: () => get().subtotal() + get().costoEnvio(),
+      itemCount: () => get().items.reduce((acc, i) => acc + i.cantidad, 0),
     }),
     { name: 'cart' },
   ),

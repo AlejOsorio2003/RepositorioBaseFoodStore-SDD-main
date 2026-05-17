@@ -1,74 +1,74 @@
 ## 1. Stores — completar cart, payment y ui
 
-- [ ] 1.1 Agregar `subtotal(): number` a `cart.store.ts` — suma de `precioUnitario * cantidad` por item
-- [ ] 1.2 Agregar `costoEnvio(): number` a `cart.store.ts` — $50 si hay items, $0 si vacío
-- [ ] 1.3 Agregar `total(): number` a `cart.store.ts` — `subtotal() + costoEnvio()`
-- [ ] 1.4 Agregar `itemCount(): number` a `cart.store.ts` — suma de todas las `cantidad`
-- [ ] 1.5 Reescribir `payment.store.ts` — tipar `status` como `'idle' | 'processing' | 'approved' | 'rejected' | 'error'`, agregar `mpPaymentId: string | null`, `statusDetail: string | null`, actualizar `setPaymentStatus` y `reset`
-- [ ] 1.6 Agregar `cartOpen: boolean`, `openCart()`, `closeCart()` a `ui.store.ts`
+- [x] 1.1 Agregar `subtotal(): number` a `cart.store.ts` — suma de `precioUnitario * cantidad` por item
+- [x] 1.2 Agregar `costoEnvio(): number` a `cart.store.ts` — $50 si hay items, $0 si vacío
+- [x] 1.3 Agregar `total(): number` a `cart.store.ts` — `subtotal() + costoEnvio()`
+- [x] 1.4 Agregar `itemCount(): number` a `cart.store.ts` — suma de todas las `cantidad`
+- [x] 1.5 Reescribir `payment.store.ts` — tipar `status` como `'idle' | 'processing' | 'approved' | 'rejected' | 'error'`, agregar `mpPaymentId: string | null`, `statusDetail: string | null`, actualizar `setPaymentStatus` y `reset`
+- [x] 1.6 Agregar `cartOpen: boolean`, `openCart()`, `closeCart()` a `ui.store.ts`
 
 ## 2. Entity pedido
 
-- [ ] 2.1 Crear `frontend/src/entities/pedido/types.ts` con interfaces: `ItemPedidoRequest`, `CrearPedidoRequest`, `DetallePedidoRead`, `HistorialRead`, `PedidoRead`, `PedidoDetail`, `PaginatedPedidos`
-- [ ] 2.2 Crear `frontend/src/entities/pedido/api.ts` con funciones: `crearPedido(data: CrearPedidoRequest)`, `listarPedidos(params?)`, `getPedido(id: number)`, `getHistorial(id: number)`, `cancelarPedido(id: number)`
-- [ ] 2.3 Crear `frontend/src/entities/pedido/index.ts` que re-exporta types y api
-- [ ] 2.4 Agregar `export * from './pedido'` en `frontend/src/entities/index.ts`
+- [x] 2.1 Crear `frontend/src/entities/pedido/types.ts` con interfaces: `ItemPedidoRequest`, `CrearPedidoRequest`, `DetallePedidoRead`, `HistorialRead`, `PedidoRead`, `PedidoDetail`, `PaginatedPedidos`
+- [x] 2.2 Crear `frontend/src/entities/pedido/api.ts` con funciones: `crearPedido(data: CrearPedidoRequest)`, `listarPedidos(params?)`, `getPedido(id: number)`, `getHistorial(id: number)`, `cancelarPedido(id: number)`
+- [x] 2.3 Crear `frontend/src/entities/pedido/index.ts` que re-exporta types y api
+- [x] 2.4 Agregar `export * from './pedido'` en `frontend/src/entities/index.ts`
 
 ## 3. Feature carrito — CartDrawer y hooks
 
-- [ ] 3.1 Crear directorio `frontend/src/features/carrito/`
-- [ ] 3.2 Crear `features/carrito/hooks/useCart.ts` — wrapper sobre `useCartStore` que expone items, subtotal, costoEnvio, total, itemCount, addItem, removeItem, updateQuantity, clearCart
-- [ ] 3.3 Crear `features/carrito/ui/CartDrawer.tsx` — panel lateral con lista de items, botones "Ver carrito" y "Ir al checkout", mensaje si está vacío; se controla con `useUiStore().cartOpen`
-- [ ] 3.4 Crear `features/carrito/index.ts` barril
+- [x] 3.1 Crear directorio `frontend/src/features/carrito/`
+- [x] 3.2 Crear `features/carrito/hooks/useCart.ts` — wrapper sobre `useCartStore` que expone items, subtotal, costoEnvio, total, itemCount, addItem, removeItem, updateQuantity, clearCart
+- [x] 3.3 Crear `features/carrito/ui/CartDrawer.tsx` — panel lateral con lista de items, botones "Ver carrito" y "Ir al checkout", mensaje si está vacío; se controla con `useUiStore().cartOpen`
+- [x] 3.4 Crear `features/carrito/index.ts` barril
 
 ## 4. Feature pedidos — lista, detalle e historial
 
-- [ ] 4.1 Crear directorio `frontend/src/features/pedidos/`
-- [ ] 4.2 Crear `features/pedidos/hooks/usePedidos.ts` — `useQuery` sobre `listarPedidos()` con `refetchInterval: 30_000`
-- [ ] 4.3 Crear `features/pedidos/hooks/usePedidoDetail.ts` — `useQuery` sobre `getPedido(id)` y `getHistorial(id)` con `refetchInterval: 30_000`; `enabled: !!id`
-- [ ] 4.4 Crear `features/pedidos/hooks/useCancelarPedido.ts` — `useMutation` sobre `cancelarPedido(id)` con `onSuccess: invalidateQueries(['pedidos'])`
-- [ ] 4.5 Crear `features/pedidos/ui/PedidoCard.tsx` — card con id, estado (badge de color), total y fecha
-- [ ] 4.6 Crear `features/pedidos/ui/PedidoDetailPanel.tsx` — panel con items del pedido, subtotal, costo envío, total, notas y sección de historial
-- [ ] 4.7 Crear `features/pedidos/ui/HistorialTimeline.tsx` — lista vertical con cada entrada del historial: estado, fecha/hora formateada y notas (si tiene)
-- [ ] 4.8 Crear `features/pedidos/index.ts` barril
+- [x] 4.1 Crear directorio `frontend/src/features/pedidos/`
+- [x] 4.2 Crear `features/pedidos/hooks/usePedidos.ts` — `useQuery` sobre `listarPedidos()` con `refetchInterval: 30_000`
+- [x] 4.3 Crear `features/pedidos/hooks/usePedidoDetail.ts` — `useQuery` sobre `getPedido(id)` y `getHistorial(id)` con `refetchInterval: 30_000`; `enabled: !!id`
+- [x] 4.4 Crear `features/pedidos/hooks/useCancelarPedido.ts` — `useMutation` sobre `cancelarPedido(id)` con `onSuccess: invalidateQueries(['pedidos'])`
+- [x] 4.5 Crear `features/pedidos/ui/PedidoCard.tsx` — card con id, estado (badge de color), total y fecha
+- [x] 4.6 Crear `features/pedidos/ui/PedidoDetailPanel.tsx` — panel con items del pedido, subtotal, costo envío, total, notas y sección de historial
+- [x] 4.7 Crear `features/pedidos/ui/HistorialTimeline.tsx` — lista vertical con cada entrada del historial: estado, fecha/hora formateada y notas (si tiene)
+- [x] 4.8 Crear `features/pedidos/index.ts` barril
 
 ## 5. CartPage
 
-- [ ] 5.1 Implementar `frontend/src/pages/CartPage.tsx` — lista de items del carrito con control de cantidad (+ / -) y botón eliminar por item
-- [ ] 5.2 Agregar panel de totales: subtotal, costo de envío y total usando `useCart()`
-- [ ] 5.3 Agregar botón "Ir al Checkout" — deshabilitado si el carrito está vacío; redirige a `/login?redirect=/checkout` si no hay sesión
-- [ ] 5.4 Mostrar mensaje "Tu carrito está vacío" con enlace al catálogo cuando no hay items
+- [x] 5.1 Implementar `frontend/src/pages/CartPage.tsx` — lista de items del carrito con control de cantidad (+ / -) y botón eliminar por item
+- [x] 5.2 Agregar panel de totales: subtotal, costo de envío y total usando `useCart()`
+- [x] 5.3 Agregar botón "Ir al Checkout" — deshabilitado si el carrito está vacío; redirige a `/login?redirect=/checkout` si no hay sesión
+- [x] 5.4 Mostrar mensaje "Tu carrito está vacío" con enlace al catálogo cuando no hay items
 
 ## 6. CheckoutPage
 
-- [ ] 6.1 Implementar `frontend/src/pages/CheckoutPage.tsx` — ruta protegida (redirige a `/login` si no autenticado)
-- [ ] 6.2 Mostrar resumen del pedido: lista de items, subtotal, costo de envío, total (desde `useCart()`)
-- [ ] 6.3 Crear `useMutation` para `crearPedido` — en `onSuccess`: limpiar carrito (`clearCart()`), redirigir a `/orders`; en `onError`: mostrar mensaje de error sin limpiar carrito
-- [ ] 6.4 Agregar botón "Confirmar pedido" — deshabilitado mientras `isPending`; muestra spinner durante envío
-- [ ] 6.5 Mostrar mensaje de error específico si el backend responde `PRODUCTO_NO_DISPONIBLE`
+- [x] 6.1 Implementar `frontend/src/pages/CheckoutPage.tsx` — ruta protegida (redirige a `/login` si no autenticado)
+- [x] 6.2 Mostrar resumen del pedido: lista de items, subtotal, costo de envío, total (desde `useCart()`)
+- [x] 6.3 Crear `useMutation` para `crearPedido` — en `onSuccess`: limpiar carrito (`clearCart()`), redirigir a `/orders`; en `onError`: mostrar mensaje de error sin limpiar carrito
+- [x] 6.4 Agregar botón "Confirmar pedido" — deshabilitado mientras `isPending`; muestra spinner durante envío
+- [x] 6.5 Mostrar mensaje de error específico si el backend responde `PRODUCTO_NO_DISPONIBLE`
 
 ## 7. OrdersPage
 
-- [ ] 7.1 Implementar `frontend/src/pages/OrdersPage.tsx` — ruta protegida
-- [ ] 7.2 Integrar `usePedidos()` para listar pedidos con polling 30s; mostrar skeleton durante `isLoading`
-- [ ] 7.3 Mostrar lista de `PedidoCard` — al hacer click en una card mostrar `PedidoDetailPanel` (panel lateral o sección expandible)
-- [ ] 7.4 En `PedidoDetailPanel` integrar `usePedidoDetail(id)` con polling 30s
-- [ ] 7.5 Mostrar `HistorialTimeline` dentro del panel de detalle
-- [ ] 7.6 Mostrar botón "Cancelar pedido" solo si `estado_nombre` es `PENDIENTE` o `CONFIRMADO`; al confirmar ejecutar `useCancelarPedido`
-- [ ] 7.7 Mostrar mensaje "No tenés pedidos aún" con enlace al catálogo si la lista está vacía
+- [x] 7.1 Implementar `frontend/src/pages/OrdersPage.tsx` — ruta protegida
+- [x] 7.2 Integrar `usePedidos()` para listar pedidos con polling 30s; mostrar skeleton durante `isLoading`
+- [x] 7.3 Mostrar lista de `PedidoCard` — al hacer click en una card mostrar `PedidoDetailPanel` (panel lateral o sección expandible)
+- [x] 7.4 En `PedidoDetailPanel` integrar `usePedidoDetail(id)` con polling 30s
+- [x] 7.5 Mostrar `HistorialTimeline` dentro del panel de detalle
+- [x] 7.6 Mostrar botón "Cancelar pedido" solo si `estado_nombre` es `PENDIENTE` o `CONFIRMADO`; al confirmar ejecutar `useCancelarPedido`
+- [x] 7.7 Mostrar mensaje "No tenés pedidos aún" con enlace al catálogo si la lista está vacía
 
 ## 8. Integrar CartDrawer en el Header
 
-- [ ] 8.1 En el componente `Header` (o equivalente), agregar ícono de carrito con badge que muestra `itemCount()` usando `useCartStore`
-- [ ] 8.2 Conectar click del ícono con `useUiStore().openCart()`
-- [ ] 8.3 Montar `<CartDrawer />` en el árbol de componentes global (en `App.tsx` o en el layout principal)
+- [x] 8.1 En el componente `Header` (o equivalente), agregar ícono de carrito con badge que muestra `itemCount()` usando `useCartStore`
+- [x] 8.2 Conectar click del ícono con `useUiStore().openCart()`
+- [x] 8.3 Montar `<CartDrawer />` en el árbol de componentes global (en el Header como layout principal)
 
 ## 9. ProductoDetailModal — botón Agregar al carrito
 
-- [ ] 9.1 En `frontend/src/features/producto-detail/ui/ProductoDetailModal.tsx`, agregar botón "Agregar al carrito"
-- [ ] 9.2 El botón llama `useCartStore().addItem({ productoId, nombre, precioUnitario: precio_base, imagenUrl: imagen_url })`
-- [ ] 9.3 Deshabilitar el botón si `producto.disponible === false`
-- [ ] 9.4 Al agregar exitosamente: mostrar feedback visual (cambio de texto a "¡Agregado!" por 1.5s o toast) y cerrar el modal
+- [x] 9.1 En `frontend/src/features/producto-detail/ui/ProductoDetailModal.tsx`, agregar botón "Agregar al carrito"
+- [x] 9.2 El botón llama `useCartStore.getState().addItem({ productoId, nombre, precioUnitario: precio_base, imagenUrl })`
+- [x] 9.3 Deshabilitar el botón si `producto.disponible === false`
+- [x] 9.4 Al agregar exitosamente: mostrar feedback visual "¡Agregado!" por 1.5s y cerrar el modal
 
 ## 10. Verificación
 
