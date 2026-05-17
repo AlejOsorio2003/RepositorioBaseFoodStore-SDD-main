@@ -23,6 +23,10 @@ class EstadoPedido(TimestampMixin, table=True):
     es_terminal: bool = Field(default=False, nullable=False)
     descripcion: Optional[str] = Field(default=None, max_length=255)
 
+    pedidos: Mapped[List["Pedido"]] = Relationship(
+        sa_relationship=relationship("Pedido", back_populates="estado")
+    )
+
 
 class Pedido(TimestampMixin, table=True):
     __tablename__ = "pedidos"
@@ -42,6 +46,9 @@ class Pedido(TimestampMixin, table=True):
     costo_envio: Decimal = Field(max_digits=10, decimal_places=2, default=Decimal("50.00"), nullable=False)
     direccion_snapshot: Optional[str] = Field(default=None)
 
+    estado: Mapped[Optional["EstadoPedido"]] = Relationship(
+        sa_relationship=relationship("EstadoPedido", back_populates="pedidos")
+    )
     detalles: Mapped[List["DetallePedido"]] = Relationship(sa_relationship=relationship("DetallePedido", back_populates="pedido"))
     historial: Mapped[List["HistorialEstadoPedido"]] = Relationship(sa_relationship=relationship("HistorialEstadoPedido", back_populates="pedido"))
     pagos: Mapped[List["Pago"]] = Relationship(sa_relationship=relationship("Pago", back_populates="pedido"))
@@ -76,3 +83,35 @@ class HistorialEstadoPedido(SQLModel, table=True):
     notas: Optional[str] = Field(default=None, max_length=500)
 
     pedido: Mapped[Optional[Pedido]] = Relationship(sa_relationship=relationship("Pedido", back_populates="historial"))
+    estado: Mapped[Optional["EstadoPedido"]] = Relationship(
+        sa_relationship=relationship("EstadoPedido")
+    )
+
+
+def seed_estados_pedido(session) -> None:
+    """Inserta los 6 estados de pedido de forma idempotente."""
+    from sqlmodel import select
+
+    estados_data = [
+        ("PENDIENTE", False, "Pedido creado, esperando confirmación"),
+        ("CONFIRMADO", False, "Pedido confirmado, listo para preparación"),
+        ("EN_PREP", False, "Pedido en preparación"),
+        ("EN_CAMINO", False, "Pedido en camino al domicilio"),
+        ("ENTREGADO", True, "Pedido entregado al cliente"),
+        ("CANCELADO", True, "Pedido cancelado"),
+    ]
+
+    for nombre, es_terminal, descripcion in estados_data:
+        existing = session.exec(
+            select(EstadoPedido).where(EstadoPedido.nombre == nombre)
+        ).first()
+        if existing is None:
+            session.add(
+                EstadoPedido(
+                    nombre=nombre,
+                    es_terminal=es_terminal,
+                    descripcion=descripcion,
+                )
+            )
+
+    session.commit()

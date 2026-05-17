@@ -10,6 +10,11 @@ from app.core.config import settings
 from app.core.error_handler import register_error_handlers
 from app.core.rate_limit import limiter
 
+from sqlmodel import Session
+
+from app.core.database import engine
+from app.pedidos.models import seed_estados_pedido
+
 from app.admin.router import router as admin_router
 from app.auth.router import router as auth_router
 from app.categorias.router import router as categorias_router
@@ -24,6 +29,8 @@ from app.usuarios.router import router as usuarios_router
 
 @asynccontextmanager
 async def lifespan(app: FastAPI) -> AsyncGenerator[None, None]:
+    with Session(engine) as session:
+        seed_estados_pedido(session)
     yield
 
 
