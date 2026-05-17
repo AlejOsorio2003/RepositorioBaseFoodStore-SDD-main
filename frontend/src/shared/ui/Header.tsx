@@ -7,9 +7,8 @@ import { CartDrawer } from '../../features/carrito/ui/CartDrawer'
 export function Header() {
   const navigate = useNavigate()
   const authStore = useAuthStore()
-  const itemCount = useCartStore((s) => s.itemCount)
+  const count = useCartStore((s) => s.itemCount())
   const openCart = useUiStore((s) => s.openCart)
-  const count = itemCount()
 
   const handleLogout = async () => {
     try {

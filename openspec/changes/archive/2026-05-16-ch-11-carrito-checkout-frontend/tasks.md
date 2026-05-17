@@ -72,11 +72,11 @@
 
 ## 10. Verificación
 
-- [ ] 10.1 Abrir el catálogo, hacer click en un producto y agregarlo al carrito → badge del header se actualiza
-- [ ] 10.2 Abrir CartPage → se ven los items, totales correctos, botón "Ir al Checkout" habilitado
-- [ ] 10.3 Ir al Checkout → confirmar pedido → carrito se limpia → redirige a OrdersPage
-- [ ] 10.4 En OrdersPage → aparece el pedido recién creado con estado PENDIENTE
-- [ ] 10.5 Hacer click en el pedido → se muestra el detalle con items y HistorialTimeline
-- [ ] 10.6 Cancelar el pedido desde el detalle → estado cambia a CANCELADO en la UI
-- [ ] 10.7 Intentar ir a `/checkout` sin login → redirige a `/login`
-- [ ] 10.8 CartDrawer se abre desde el header y muestra los items del carrito
+- [x] 10.1 Abrir el catálogo, hacer click en un producto y agregarlo al carrito → badge del header se actualiza
+- [x] 10.2 Abrir CartPage → se ven los items, totales correctos, botón "Ir al Checkout" habilitado
+- [x] 10.3 Ir al Checkout → confirmar pedido → carrito se limpia → redirige a OrdersPage
+- [x] 10.4 En OrdersPage → aparece el pedido recién creado con estado PENDIENTE
+- [x] 10.5 Hacer click en el pedido → se muestra el detalle con items y HistorialTimeline
+- [x] 10.6 Cancelar el pedido desde el detalle → estado cambia a CANCELADO en la UI
+- [x] 10.7 Intentar ir a `/checkout` sin login → redirige a `/login`
+- [x] 10.8 CartDrawer se abre desde el header y muestra los items del carrito

@@ -50,6 +50,7 @@ function ProductoDetailModalInner({
       productoId: producto.id,
       nombre: producto.nombre,
       precioUnitario: Number(producto.precio_base),
+      cantidad: 1,
       imagenUrl: producto.imagen_url ?? undefined,
     })
     setAddedFeedback(true)

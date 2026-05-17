@@ -6,8 +6,9 @@ export function useCancelarPedido() {
 
   return useMutation({
     mutationFn: (id: number) => cancelarPedido(id),
-    onSuccess: () => {
+    onSuccess: (_data, id) => {
       queryClient.invalidateQueries({ queryKey: ['pedidos'] })
+      queryClient.invalidateQueries({ queryKey: ['pedido', id] })
     },
   })
 }

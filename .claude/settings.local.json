@@ -85,7 +85,12 @@
       "Bash(Select-String -Path \"openspec\\\\changes\\\\ch-10-pedidos-backend\\\\tasks.md\" -Pattern \"^\\\\- \\\\[ \\\\]\")",
       "Bash(Measure-Object)",
       "Bash(Select-Object -ExpandProperty Count)",
-      "Bash(Select-Object Name, LastWriteTime)"
+      "Bash(Select-Object Name, LastWriteTime)",
+      "PowerShell(ls \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\frontend\\\\src\\\\features\\\\\")",
+      "PowerShell(ls \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\frontend\\\\src\\\\pages\\\\\")",
+      "PowerShell(ls \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\frontend\\\\src\\\\entities\\\\pedido\\\\\")",
+      "PowerShell(ls \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\frontend\\\\src\\\\features\\\\carrito\\\\\" -Recurse)",
+      "PowerShell(ls \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\frontend\\\\src\\\\features\\\\pedidos\\\\\" -Recurse)"
     ]
   }
 }

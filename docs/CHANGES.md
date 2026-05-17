@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-16 (CH-10 archivado)
+**Última actualización:** 2026-05-16 (CH-11 archivado)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -21,7 +21,7 @@
 | CH-08 | Direcciones de Entrega | ✅ Hecho (archivado 2026-05-15) | 2026-05-15 | `openspec/changes/archive/2026-05-15-ch-08-direcciones-entrega/` |
 | CH-09 | Usuarios — Backend CRUD + Perfil | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-09-usuarios-backend/` |
 | CH-10 | Pedidos — Backend FSM + Audit Trail | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-10-pedidos-backend/` |
-| CH-11 | Pedidos — Carrito + Checkout Frontend | ⏳ Pendiente | — | — |
+| CH-11 | Pedidos — Carrito + Checkout Frontend | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-11-carrito-checkout-frontend/` |
 | CH-12 | Pagos — Backend MercadoPago + Webhooks | ⏳ Pendiente | — | — |
 | CH-13 | Pagos — Frontend sdk-react + Tokenización | ⏳ Pendiente | — | — |
 | CH-14 | Admin — Backend Dashboard + Métricas | ⏳ Pendiente | — | — |
@@ -180,6 +180,27 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Router y App shell | `createBrowserRouter`, todas las rutas, `main.tsx` | ✅ |
 
 **Capabilities entregadas:** `backend-infra`, `frontend-infra`
+
+### CH-11 — Pedidos — Carrito + Checkout Frontend
+
+**Archivado:** 2026-05-16 | **Evidencia:** `openspec/changes/archive/2026-05-16-ch-11-carrito-checkout-frontend/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Stores | `cart.store.ts` (subtotal/costoEnvio/total/itemCount), `payment.store.ts` (status tipado + mpPaymentId), `ui.store.ts` (cartOpen/openCart/closeCart) | ✅ |
+| Entity pedido | `entities/pedido/` — 7 interfaces + 5 funciones API (`crearPedido`, `listarPedidos`, `getPedido`, `getHistorial`, `cancelarPedido`) | ✅ |
+| Feature carrito | `CartDrawer` (panel lateral + totales + acciones), `useCart` hook | ✅ |
+| Feature pedidos | `usePedidos`, `usePedidoDetail`, `useCancelarPedido` (polling 30s), `PedidoCard`, `PedidoDetailPanel`, `HistorialTimeline` | ✅ |
+| CartPage | Lista de items, controles cantidad, panel totales, redirect a login si no autenticado | ✅ |
+| CheckoutPage | Ruta protegida, `crearPedido` mutation, clearCart + redirect en onSuccess, spinner isPending | ✅ |
+| OrdersPage | Ruta protegida, polling 30s, PedidoCard + PedidoDetailPanel + cancelación | ✅ |
+| Header | Ícono carrito con badge `itemCount()` reactivo, monta `<CartDrawer />` | ✅ |
+| ProductoDetailModal | Botón "Agregar al carrito", disabled si no disponible, feedback "¡Agregado!" 1.5s | ✅ |
+| Auth fix | `AuthInitializer` en providers — restaura sesión desde refreshToken al montar la app | ✅ |
+| Router fix | `/` redirige a `/login`; login respeta `?redirect=` param | ✅ |
+| Verificación | 10/10 escenarios browser verificados manualmente | ✅ |
+
+**Capabilities entregadas:** `carrito-frontend`, `checkout-frontend`, `orders-frontend`
 
 ### CH-10 — Pedidos — Backend FSM + Audit Trail
 

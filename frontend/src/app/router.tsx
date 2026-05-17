@@ -1,4 +1,4 @@
-import { createBrowserRouter } from 'react-router-dom'
+import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { AdminPage } from '@/pages/AdminPage'
 import { CartPage } from '@/pages/CartPage'
 import { CatalogPage } from '@/pages/CatalogPage'
@@ -10,7 +10,7 @@ import { RegisterPage } from '@/pages/RegisterPage'
 import { ProductoDetailPage } from '@/pages/ProductoDetailPage'
 
 export const router = createBrowserRouter([
-  { path: '/', element: <CatalogPage /> },
+  { path: '/', element: <Navigate to="/login" replace /> },
   { path: '/login', element: <LoginPage /> },
   { path: '/register', element: <RegisterPage /> },
   { path: '/catalog', element: <CatalogPage /> },
