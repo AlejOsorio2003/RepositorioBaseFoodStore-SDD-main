@@ -12,6 +12,8 @@ from app.core.rate_limit import limiter
 
 from sqlmodel import Session
 
+import app.core.all_models  # noqa: F401 — registers all SQLAlchemy mappers before any router import
+
 from app.core.database import engine
 from app.pedidos.models import seed_estados_pedido
 

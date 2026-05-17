@@ -1,8 +1,7 @@
 from datetime import datetime
 from decimal import Decimal
 
-from pydantic import BaseModel, Field, field_validator
-from pydantic.functional_validators import ValidationInfo
+from pydantic import BaseModel, Field, model_validator
 
 
 class ItemPedidoRequest(BaseModel):
@@ -21,12 +20,11 @@ class AvanzarEstadoRequest(BaseModel):
     nuevo_estado: str
     motivo: str | None = None
 
-    @field_validator("motivo")
-    @classmethod
-    def motivo_requerido_si_cancelado(cls, v: str | None, info: ValidationInfo) -> str | None:
-        if info.data.get("nuevo_estado") == "CANCELADO" and not v:
+    @model_validator(mode="after")
+    def motivo_requerido_si_cancelado(self) -> "AvanzarEstadoRequest":
+        if self.nuevo_estado == "CANCELADO" and not self.motivo:
             raise ValueError("motivo es requerido cuando nuevo_estado es CANCELADO (RN-05)")
-        return v
+        return self
 
 
 class DetallePedidoRead(BaseModel):

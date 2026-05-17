@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-16 (CH-09 archivado)
+**Última actualización:** 2026-05-16 (CH-10 archivado)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -20,7 +20,7 @@
 | CH-07 | Ingredientes + Alérgenos | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-07-ingredientes-alergenos/` |
 | CH-08 | Direcciones de Entrega | ✅ Hecho (archivado 2026-05-15) | 2026-05-15 | `openspec/changes/archive/2026-05-15-ch-08-direcciones-entrega/` |
 | CH-09 | Usuarios — Backend CRUD + Perfil | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-09-usuarios-backend/` |
-| CH-10 | Pedidos — Backend FSM + Audit Trail | ⏳ Pendiente | — | — |
+| CH-10 | Pedidos — Backend FSM + Audit Trail | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-10-pedidos-backend/` |
 | CH-11 | Pedidos — Carrito + Checkout Frontend | ⏳ Pendiente | — | — |
 | CH-12 | Pagos — Backend MercadoPago + Webhooks | ⏳ Pendiente | — | — |
 | CH-13 | Pagos — Frontend sdk-react + Tokenización | ⏳ Pendiente | — | — |
@@ -180,6 +180,23 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Router y App shell | `createBrowserRouter`, todas las rutas, `main.tsx` | ✅ |
 
 **Capabilities entregadas:** `backend-infra`, `frontend-infra`
+
+### CH-10 — Pedidos — Backend FSM + Audit Trail
+
+**Archivado:** 2026-05-16 | **Evidencia:** `openspec/changes/archive/2026-05-16-ch-10-pedidos-backend/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Seed | `seed_estados_pedido()` idempotente — 6 estados (PENDIENTE→CANCELADO) al startup | ✅ |
+| Schemas | `ItemPedidoRequest`, `CrearPedidoRequest`, `AvanzarEstadoRequest` (RN-05 `@model_validator`), `DetallePedidoRead`, `HistorialRead`, `PedidoRead`, `PedidoDetail`, `PaginatedPedidos` | ✅ |
+| Repository | `get_by_id_with_relations`, `list_paginated` (filtros usuario/estado), `get_historial` (ASC), `get_estado_by_nombre` | ✅ |
+| Service | `TRANSICIONES_VALIDAS` FSM dict, `crear_pedido` (snapshot precio+dirección), `listar_pedidos` (RBAC), `get_pedido`, `avanzar_estado` (expire+reload), `get_historial`, `cancelar_pedido` | ✅ |
+| Router | 6 endpoints: POST `/`, GET `/`, GET `/{id}`, PATCH `/{id}/estado`, GET `/{id}/historial`, DELETE `/{id}` | ✅ |
+| Wiring | `pedidos_router` en `main.py` + `import app.core.all_models` antes de routers (fix mapper) | ✅ |
+| Bugs corregidos | Import `ValidationInfo` (Pydantic v2), mapper order (`all_models`), roles `CLIENT`/`PEDIDOS`, identity map cache (`expire`), `@model_validator` RN-05, `ctx` serialización error handler | ✅ |
+| Verificación | 13/13 tests HTTP pasando | ✅ |
+
+**Capabilities entregadas:** `pedidos-backend`
 
 ### CH-09 — Usuarios — Backend CRUD + Perfil
 

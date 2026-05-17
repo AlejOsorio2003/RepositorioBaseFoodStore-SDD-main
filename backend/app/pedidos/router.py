@@ -20,7 +20,7 @@ router = APIRouter()
 def crear_pedido(
     data: CrearPedidoRequest,
     uow: UnitOfWork = Depends(get_uow),
-    current_user: Usuario = Depends(require_role(["CLIENTE"])),
+    current_user: Usuario = Depends(require_role(["CLIENT"])),
 ) -> PedidoRead:
     return service.crear_pedido(uow, data, current_user.id)
 
@@ -31,14 +31,14 @@ def listar_pedidos(
     size: int = Query(20, ge=1, le=100),
     estado: str | None = None,
     uow: UnitOfWork = Depends(get_uow),
-    current_user: Usuario = Depends(require_role(["CLIENTE", "ADMIN", "GESTOR_PEDIDOS"])),
+    current_user: Usuario = Depends(require_role(["CLIENT", "ADMIN", "PEDIDOS"])),
 ) -> PaginatedPedidos:
     user_roles = {ur.rol.nombre for ur in current_user.roles if ur.rol}
-    rol = "CLIENTE"
+    rol = "CLIENT"
     if "ADMIN" in user_roles:
         rol = "ADMIN"
-    elif "GESTOR_PEDIDOS" in user_roles:
-        rol = "GESTOR_PEDIDOS"
+    elif "PEDIDOS" in user_roles:
+        rol = "PEDIDOS"
     return service.listar_pedidos(uow, current_user.id, rol, page, size, estado)
 
 
@@ -46,14 +46,14 @@ def listar_pedidos(
 def get_pedido(
     pedido_id: int,
     uow: UnitOfWork = Depends(get_uow),
-    current_user: Usuario = Depends(require_role(["CLIENTE", "ADMIN", "GESTOR_PEDIDOS"])),
+    current_user: Usuario = Depends(require_role(["CLIENT", "ADMIN", "PEDIDOS"])),
 ) -> PedidoDetail:
     user_roles = {ur.rol.nombre for ur in current_user.roles if ur.rol}
-    rol = "CLIENTE"
+    rol = "CLIENT"
     if "ADMIN" in user_roles:
         rol = "ADMIN"
-    elif "GESTOR_PEDIDOS" in user_roles:
-        rol = "GESTOR_PEDIDOS"
+    elif "PEDIDOS" in user_roles:
+        rol = "PEDIDOS"
     return service.get_pedido(uow, pedido_id, current_user.id, rol)
 
 
@@ -62,7 +62,7 @@ def avanzar_estado(
     pedido_id: int,
     data: AvanzarEstadoRequest,
     uow: UnitOfWork = Depends(get_uow),
-    current_user: Usuario = Depends(require_role(["ADMIN", "GESTOR_PEDIDOS"])),
+    current_user: Usuario = Depends(require_role(["ADMIN", "PEDIDOS"])),
 ) -> PedidoRead:
     return service.avanzar_estado(uow, pedido_id, data, current_user.id)
 
@@ -71,14 +71,14 @@ def avanzar_estado(
 def get_historial(
     pedido_id: int,
     uow: UnitOfWork = Depends(get_uow),
-    current_user: Usuario = Depends(require_role(["CLIENTE", "ADMIN", "GESTOR_PEDIDOS"])),
+    current_user: Usuario = Depends(require_role(["CLIENT", "ADMIN", "PEDIDOS"])),
 ) -> list[HistorialRead]:
     user_roles = {ur.rol.nombre for ur in current_user.roles if ur.rol}
-    rol = "CLIENTE"
+    rol = "CLIENT"
     if "ADMIN" in user_roles:
         rol = "ADMIN"
-    elif "GESTOR_PEDIDOS" in user_roles:
-        rol = "GESTOR_PEDIDOS"
+    elif "PEDIDOS" in user_roles:
+        rol = "PEDIDOS"
     return service.get_historial(uow, pedido_id, current_user.id, rol)
 
 
@@ -86,6 +86,6 @@ def get_historial(
 def cancelar_pedido(
     pedido_id: int,
     uow: UnitOfWork = Depends(get_uow),
-    current_user: Usuario = Depends(require_role(["CLIENTE"])),
+    current_user: Usuario = Depends(require_role(["CLIENT"])),
 ) -> PedidoRead:
     return service.cancelar_pedido(uow, pedido_id, current_user.id)

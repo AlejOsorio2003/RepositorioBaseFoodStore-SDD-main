@@ -157,8 +157,8 @@ def listar_pedidos(
 ) -> PaginatedPedidos:
     repo: PedidoRepository = uow.pedidos  # type: ignore[assignment]
 
-    # Si es CLIENTE, solo sus pedidos; si es ADMIN/GESTOR_PEDIDOS, todos
-    filter_usuario_id = usuario_id if rol == "CLIENTE" else None
+    # Si es CLIENT, solo sus pedidos; si es ADMIN/PEDIDOS, todos
+    filter_usuario_id = usuario_id if rol == "CLIENT" else None
 
     items, total = repo.list_paginated(
         page=page,
@@ -192,7 +192,7 @@ def get_pedido(
 
     # Verificar acceso: propietario o ADMIN/GESTOR_PEDIDOS
     user_roles = {rol}
-    is_admin_or_gestor = bool(user_roles & {"ADMIN", "GESTOR_PEDIDOS"})
+    is_admin_or_gestor = bool(user_roles & {"ADMIN", "PEDIDOS"})
     if pedido.usuario_id != usuario_id and not is_admin_or_gestor:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,
@@ -259,6 +259,9 @@ def avanzar_estado(
     uow.session.add(historial)
     uow.session.flush()
 
+    # Expire the pedido so SQLAlchemy reloads its relationships from DB
+    uow.session.expire(pedido)
+
     # Recargar con relaciones
     pedido_actualizado = repo.get_by_id_with_relations(pedido.id)
     if not pedido_actualizado:
@@ -284,7 +287,7 @@ def get_historial(
         )
 
     user_roles = {rol}
-    is_admin_or_gestor = bool(user_roles & {"ADMIN", "GESTOR_PEDIDOS"})
+    is_admin_or_gestor = bool(user_roles & {"ADMIN", "PEDIDOS"})
     if pedido.usuario_id != usuario_id and not is_admin_or_gestor:
         raise HTTPException(
             status_code=status.HTTP_403_FORBIDDEN,

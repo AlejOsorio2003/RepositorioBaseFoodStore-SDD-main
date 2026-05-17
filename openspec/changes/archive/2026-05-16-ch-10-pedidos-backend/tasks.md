@@ -52,16 +52,16 @@
 
 ## 7. Verificación
 
-- [ ] 7.1 Arrancar servidor y confirmar que no hay errores de importación ni de seed
-- [ ] 7.2 Probar `POST /api/v1/pedidos` con ítems válidos → HTTP 201 con `estado_nombre: "PENDIENTE"`
-- [ ] 7.3 Probar `POST /api/v1/pedidos` con producto no disponible → HTTP 422 `PRODUCTO_NO_DISPONIBLE`
-- [ ] 7.4 Probar `GET /api/v1/pedidos` con token CLIENT → solo sus pedidos
-- [ ] 7.5 Probar `GET /api/v1/pedidos` con token ADMIN → todos los pedidos
-- [ ] 7.6 Probar `GET /api/v1/pedidos/{id}` con propietario → HTTP 200 con `items` y `PedidoDetail`
-- [ ] 7.7 Probar `GET /api/v1/pedidos/{id}` con otro CLIENT → HTTP 403
-- [ ] 7.8 Probar `PATCH /api/v1/pedidos/{id}/estado` con ADMIN: PENDIENTE → CONFIRMADO → HTTP 200
-- [ ] 7.9 Probar `PATCH /api/v1/pedidos/{id}/estado` transición inválida (ENTREGADO → PENDIENTE) → HTTP 422
-- [ ] 7.10 Probar `PATCH /api/v1/pedidos/{id}/estado` CANCELADO sin motivo → HTTP 422
-- [ ] 7.11 Probar `GET /api/v1/pedidos/{id}/historial` → lista ordenada cronológicamente
-- [ ] 7.12 Probar `DELETE /api/v1/pedidos/{id}` con CLIENT propietario en PENDIENTE → HTTP 200 con `estado_nombre: "CANCELADO"`
-- [ ] 7.13 Probar `DELETE /api/v1/pedidos/{id}` con pedido en EN_PREP → HTTP 422 `CANCELACION_NO_PERMITIDA`
+- [x] 7.1 Arrancar servidor y confirmar que no hay errores de importación ni de seed
+- [x] 7.2 Probar `POST /api/v1/pedidos` con ítems válidos → HTTP 201 con `estado_nombre: "PENDIENTE"`
+- [x] 7.3 Probar `POST /api/v1/pedidos` con producto no disponible → HTTP 422 `PRODUCTO_NO_DISPONIBLE`
+- [x] 7.4 Probar `GET /api/v1/pedidos` con token CLIENT → solo sus pedidos
+- [x] 7.5 Probar `GET /api/v1/pedidos` con token ADMIN → todos los pedidos
+- [x] 7.6 Probar `GET /api/v1/pedidos/{id}` con propietario → HTTP 200 con `items` y `PedidoDetail`
+- [x] 7.7 Probar `GET /api/v1/pedidos/{id}` con otro CLIENT → HTTP 403
+- [x] 7.8 Probar `PATCH /api/v1/pedidos/{id}/estado` con ADMIN: PENDIENTE → CONFIRMADO → HTTP 200
+- [x] 7.9 Probar `PATCH /api/v1/pedidos/{id}/estado` transición inválida (ENTREGADO → PENDIENTE) → HTTP 422
+- [x] 7.10 Probar `PATCH /api/v1/pedidos/{id}/estado` CANCELADO sin motivo → HTTP 422
+- [x] 7.11 Probar `GET /api/v1/pedidos/{id}/historial` → lista ordenada cronológicamente
+- [x] 7.12 Probar `DELETE /api/v1/pedidos/{id}` con CLIENT propietario en PENDIENTE → HTTP 200 con `estado_nombre: "CANCELADO"`
+- [x] 7.13 Probar `DELETE /api/v1/pedidos/{id}` con pedido en EN_PREP → HTTP 422 `CANCELACION_NO_PERMITIDA`

@@ -73,7 +73,19 @@
       "Bash(python3 *)",
       "Bash(New-Item -ItemType Directory -Force \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\openspec\\\\changes\\\\ch-10-pedidos-backend\\\\specs\\\\pedidos-backend\")",
       "Bash(Out-Null)",
-      "Bash(Write-Output \"OK\")"
+      "Bash(Write-Output \"OK\")",
+      "Bash(echo \"EXIT:$?\")",
+      "PowerShell(pip show *)",
+      "PowerShell($venv = \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\"; & $venv --version; & $venv -c \"import fastapi; print\\('fastapi OK', fastapi.__version__\\)\")",
+      "PowerShell($venv = \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\backend\\\\.venv\\\\Scripts\\\\python.exe\"; & $venv -c \"import pydantic; print\\(pydantic.VERSION\\); from pydantic import ValidationInfo; print\\('ValidationInfo OK'\\)\" 2>&1)",
+      "PowerShell(Invoke-RestMethod -Uri \"http://localhost:8000/health\" -Method Get -ErrorAction SilentlyContinue)",
+      "PowerShell(Get-Process *)",
+      "PowerShell(curl.exe -s http://localhost:8000/health)",
+      "PowerShell(curl.exe -s -X POST http://localhost:8000/api/v1/auth/login -H \"Content-Type: application/json\" -d '{\"email\":\"cliente@foodstore.com\",\"password\":\"cliente123\"}')",
+      "Bash(Select-String -Path \"openspec\\\\changes\\\\ch-10-pedidos-backend\\\\tasks.md\" -Pattern \"^\\\\- \\\\[ \\\\]\")",
+      "Bash(Measure-Object)",
+      "Bash(Select-Object -ExpandProperty Count)",
+      "Bash(Select-Object Name, LastWriteTime)"
     ]
   }
 }
