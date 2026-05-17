@@ -65,7 +65,15 @@
       "Bash(Test-Path *)",
       "mcp__plugin_engram_engram__mem_search",
       "Bash(mv openspec/changes/us-001-auth openspec/changes/archive/2026-05-15-us-001-auth)",
-      "Bash(mv openspec/changes/ch-08-direcciones-entrega openspec/changes/archive/2026-05-15-ch-08-direcciones-entrega)"
+      "Bash(mv openspec/changes/ch-08-direcciones-entrega openspec/changes/archive/2026-05-15-ch-08-direcciones-entrega)",
+      "Bash(.venv/Scripts/python.exe -c ' *)",
+      "Bash(.venv/Scripts/pip.exe list *)",
+      "PowerShell(curl -s -o $null -w \"%{http_code}\" http://localhost:8000/docs)",
+      "Bash(python3 -c \"import sys,base64,json; payload=sys.stdin.read\\(\\).split\\('.'\\)[1]; payload+='=='*\\(4-len\\(payload\\)%4\\); print\\(json.loads\\(base64.b64decode\\(payload\\)\\)\\)\")",
+      "Bash(python3 *)",
+      "Bash(New-Item -ItemType Directory -Force \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\openspec\\\\changes\\\\ch-10-pedidos-backend\\\\specs\\\\pedidos-backend\")",
+      "Bash(Out-Null)",
+      "Bash(Write-Output \"OK\")"
     ]
   }
 }

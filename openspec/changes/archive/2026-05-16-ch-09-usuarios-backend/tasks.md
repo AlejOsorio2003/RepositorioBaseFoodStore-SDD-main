@@ -45,12 +45,12 @@
 
 ## 8. Verificación
 
-- [ ] 8.1 Arrancar el servidor y confirmar que no hay errores de importación
-- [ ] 8.2 Probar `GET /api/v1/auth/me` con token válido → HTTP 200 con datos del usuario
-- [ ] 8.3 Probar `PUT /api/v1/auth/me` con nombre/teléfono nuevos → HTTP 200 con datos actualizados
-- [ ] 8.4 Probar `PUT /api/v1/auth/me/password` con contraseña correcta → HTTP 204; luego intentar refresh con token anterior → HTTP 401
-- [ ] 8.5 Probar `PUT /api/v1/auth/me/password` con contraseña incorrecta → HTTP 400
-- [ ] 8.6 Probar `GET /api/v1/usuarios` con token ADMIN → HTTP 200 con lista paginada
-- [ ] 8.7 Probar `GET /api/v1/usuarios` con token CLIENT → HTTP 403
-- [ ] 8.8 Probar `PATCH /api/v1/usuarios/{id}/estado` desactivando usuario → HTTP 200; luego intentar login con ese usuario → HTTP 403
-- [ ] 8.9 Probar `PUT /api/v1/usuarios/{id}` cambiando roles → HTTP 200; verificar que refresh tokens del usuario quedan invalidados
+- [x] 8.1 Arrancar el servidor y confirmar que no hay errores de importación
+- [x] 8.2 Probar `GET /api/v1/auth/me` con token válido → HTTP 200 con datos del usuario
+- [x] 8.3 Probar `PUT /api/v1/auth/me` con nombre/teléfono nuevos → HTTP 200 con datos actualizados
+- [x] 8.4 Probar `PUT /api/v1/auth/me/password` con contraseña correcta → HTTP 204; luego intentar refresh con token anterior → HTTP 401
+- [x] 8.5 Probar `PUT /api/v1/auth/me/password` con contraseña incorrecta → HTTP 400
+- [x] 8.6 Probar `GET /api/v1/usuarios` con token ADMIN → HTTP 200 con lista paginada
+- [x] 8.7 Probar `GET /api/v1/usuarios` con token CLIENT → HTTP 403
+- [x] 8.8 Probar `PATCH /api/v1/usuarios/{id}/estado` desactivando usuario → HTTP 200; luego intentar login con ese usuario → HTTP 403
+- [x] 8.9 Probar `PUT /api/v1/usuarios/{id}` cambiando roles → HTTP 200; verificar que refresh tokens del usuario quedan invalidados

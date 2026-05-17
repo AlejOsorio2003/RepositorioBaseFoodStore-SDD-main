@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-15 (US-001-AUTH archivado)
+**Última actualización:** 2026-05-16 (CH-09 archivado)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -19,7 +19,7 @@
 | CH-06 | Productos — CatalogPage Frontend | ✅ Hecho (archivado 2026-05-15) | 2026-05-15 | `openspec/changes/archive/2026-05-15-ch-06-productos-catalogpage-frontend/` |
 | CH-07 | Ingredientes + Alérgenos | ✅ Hecho (archivado 2026-05-14) | 2026-05-14 | `openspec/changes/archive/2026-05-14-ch-07-ingredientes-alergenos/` |
 | CH-08 | Direcciones de Entrega | ✅ Hecho (archivado 2026-05-15) | 2026-05-15 | `openspec/changes/archive/2026-05-15-ch-08-direcciones-entrega/` |
-| CH-09 | Usuarios — Backend CRUD + Perfil | ⏳ Pendiente | — | — |
+| CH-09 | Usuarios — Backend CRUD + Perfil | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-09-usuarios-backend/` |
 | CH-10 | Pedidos — Backend FSM + Audit Trail | ⏳ Pendiente | — | — |
 | CH-11 | Pedidos — Carrito + Checkout Frontend | ⏳ Pendiente | — | — |
 | CH-12 | Pagos — Backend MercadoPago + Webhooks | ⏳ Pendiente | — | — |
@@ -180,6 +180,24 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Router y App shell | `createBrowserRouter`, todas las rutas, `main.tsx` | ✅ |
 
 **Capabilities entregadas:** `backend-infra`, `frontend-infra`
+
+### CH-09 — Usuarios — Backend CRUD + Perfil
+
+**Archivado:** 2026-05-16 | **Evidencia:** `openspec/changes/archive/2026-05-16-ch-09-usuarios-backend/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Schemas | `UsuarioRead`, `UsuarioUpdate`, `UsuarioUpdateEstado`, `PerfilUpdate`, `CambiarPasswordRequest`, `PaginatedUsuarios` | ✅ |
+| Repository | `UsuarioRepository`: `get_by_email`, `get_by_id_with_roles`, `list_paginated` (filtros ILIKE, rol, activo) | ✅ |
+| Service | `get_me`, `update_me`, `change_password` (invalida tokens), `list_usuarios`, `update_usuario` (LAST_ADMIN guard), `toggle_estado` | ✅ |
+| Router autoservicio | `GET/PUT /auth/me`, `PUT /auth/me/password` — integrado en `auth/router.py` | ✅ |
+| Router admin | `GET /usuarios`, `PUT /usuarios/{id}`, `PATCH /usuarios/{id}/estado` — solo ADMIN | ✅ |
+| UoW | `uow.usuarios` tipado como `UsuarioRepository` | ✅ |
+| Fix passlib | Reemplazado `passlib.CryptContext` por `bcrypt` directo (incompatibilidad bcrypt 5.x) | ✅ |
+| Fix identity map | `expire_all()` antes de recarga en `update_usuario` | ✅ |
+| Verificación | 9/9 tests HTTP pasando | ✅ |
+
+**Capabilities entregadas:** `usuarios-backend`, `perfil-usuario`
 
 ### CH-07 — Ingredientes + Alérgenos — Backend
 

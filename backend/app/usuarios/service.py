@@ -99,6 +99,7 @@ class UsuarioService:
             # Invalidar refresh tokens si los roles cambiaron
             _invalidar_refresh_tokens(uow, usuario_id)
 
+        uow.session.expire_all()
         usuario_actualizado = uow.usuarios.get_by_id_with_roles(usuario_id)
         return _usuario_to_read(usuario_actualizado)
 
