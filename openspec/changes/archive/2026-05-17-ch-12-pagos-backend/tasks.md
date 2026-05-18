@@ -68,7 +68,7 @@
 - [ ] 10.1 `POST /api/v1/pagos/crear` con tarjeta aprobada sandbox → retorna 201 con `mp_status: "approved"`
 - [ ] 10.2 `POST /api/v1/pagos/crear` con tarjeta rechazada sandbox → retorna 201 con `mp_status: "rejected"`
 - [ ] 10.3 `POST /api/v1/pagos/webhook?topic=payment&id=<mp_payment_id>` → pedido avanza a CONFIRMADO
-- [ ] 10.4 `GET /api/v1/pagos/{pedido_id}` → retorna PagoResponse con estado actualizado
-- [ ] 10.5 `GET /api/v1/pedidos/{id}` → `PedidoDetail.pago` incluye el estado del pago
-- [ ] 10.6 `POST /api/v1/pagos/webhook?topic=merchant_order&id=1` → retorna `{"status": "ignored"}`
+- [x] 10.4 `GET /api/v1/pagos/{pedido_id}` → retorna PagoResponse con estado actualizado
+- [x] 10.5 `GET /api/v1/pedidos/{id}` → `PedidoDetail.pago` incluye el estado del pago
+- [x] 10.6 `POST /api/v1/pagos/webhook?topic=merchant_order&id=1` → retorna `{"status": "ignored"}`
 - [ ] 10.7 `POST /api/v1/pagos/crear` con `forma_pago_codigo` inexistente → retorna 422

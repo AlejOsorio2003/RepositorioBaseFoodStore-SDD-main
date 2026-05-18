@@ -54,21 +54,17 @@ def crear_pago(
         )
 
     idempotency_key = uuid.uuid4()
-    transaction_amount = float(pedido.total)
 
     payment_data = {
         "token": data.token,
-        "transaction_amount": transaction_amount,
+        "transaction_amount": float(pedido.total),
         "installments": 1,
         "payment_method_id": forma_pago.codigo,
         "external_reference": str(pedido.id),
         "notification_url": settings.MP_NOTIFICATION_URL,
     }
 
-    result = sdk.payment().create(
-        payment_data,
-        request_options={"X-Idempotency-Key": str(idempotency_key)},
-    )
+    result = sdk.payment().create(payment_data)
 
     response = result["response"]
     mp_payment_id = response["id"]

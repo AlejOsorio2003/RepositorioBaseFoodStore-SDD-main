@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-16 (CH-11 archivado)
+**Última actualización:** 2026-05-17 (CH-12 archivado)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -22,7 +22,7 @@
 | CH-09 | Usuarios — Backend CRUD + Perfil | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-09-usuarios-backend/` |
 | CH-10 | Pedidos — Backend FSM + Audit Trail | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-10-pedidos-backend/` |
 | CH-11 | Pedidos — Carrito + Checkout Frontend | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-11-carrito-checkout-frontend/` |
-| CH-12 | Pagos — Backend MercadoPago + Webhooks | ⏳ Pendiente | — | — |
+| CH-12 | Pagos — Backend MercadoPago + Webhooks | ✅ Hecho (archivado 2026-05-17) | 2026-05-17 | `openspec/changes/archive/2026-05-17-ch-12-pagos-backend/` |
 | CH-13 | Pagos — Frontend sdk-react + Tokenización | ⏳ Pendiente | — | — |
 | CH-14 | Admin — Backend Dashboard + Métricas | ⏳ Pendiente | — | — |
 | CH-15 | Admin — Frontend Dashboard + Gestión | ⏳ Pendiente | — | — |
