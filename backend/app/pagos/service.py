@@ -40,14 +40,20 @@ def crear_pago(
             detail="El pedido no pertenece al usuario actual",
         )
 
-    # Buscar forma de pago habilitada
+    # Verificar que el método de pago MP esté habilitado
     forma_pago = uow.session.exec(
         select(FormaPago).where(
-            FormaPago.codigo == data.forma_pago_codigo,
+            FormaPago.codigo == "mercadopago",
             FormaPago.habilitado == True,
         )
     ).first()
     if not forma_pago:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="FORMA_PAGO_INVALIDA",
+        )
+
+    if not data.forma_pago_codigo:
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="FORMA_PAGO_INVALIDA",
@@ -59,14 +65,21 @@ def crear_pago(
         "token": data.token,
         "transaction_amount": float(pedido.total),
         "installments": 1,
-        "payment_method_id": forma_pago.codigo,
+        "payment_method_id": data.forma_pago_codigo,
         "external_reference": str(pedido.id),
-        "notification_url": settings.MP_NOTIFICATION_URL,
+        "payer": {"email": current_user.email},
     }
+    if settings.MP_NOTIFICATION_URL:
+        payment_data["notification_url"] = settings.MP_NOTIFICATION_URL
 
     result = sdk.payment().create(payment_data)
 
     response = result["response"]
+    if "id" not in response:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail=response.get("message", "MP_PAYMENT_ERROR"),
+        )
     mp_payment_id = response["id"]
     mp_status = response["status"]
     mp_status_detail = response.get("status_detail")
@@ -111,7 +124,7 @@ def procesar_webhook(
             uow=uow,
             pedido_id=pago.pedido_id,
             data=AvanzarEstadoRequest(nuevo_estado="CONFIRMADO"),
-            usuario_id=0,
+            usuario_id=None,
         )
 
     uow.session.flush()

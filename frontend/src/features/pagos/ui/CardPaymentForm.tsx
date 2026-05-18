@@ -1,13 +1,18 @@
-import { Payment } from '@mercadopago/sdk-react'
+import { initMercadoPago, CardPayment } from '@mercadopago/sdk-react'
+
+const MP_PUBLIC_KEY = import.meta.env.VITE_MP_PUBLIC_KEY as string | undefined
+
+if (MP_PUBLIC_KEY) {
+  initMercadoPago(MP_PUBLIC_KEY)
+}
 
 interface CardPaymentFormProps {
   onSubmit: (token: string, paymentMethodId: string) => void
+  amount: number
 }
 
-export function CardPaymentForm({ onSubmit }: CardPaymentFormProps) {
-  const publicKey = import.meta.env.VITE_MP_PUBLIC_KEY as string | undefined
-
-  if (!publicKey) {
+export function CardPaymentForm({ onSubmit, amount }: CardPaymentFormProps) {
+  if (!MP_PUBLIC_KEY) {
     return (
       <div className="bg-amber-50 border border-amber-200 text-amber-700 px-4 py-3 rounded-lg text-sm">
         Pagos no disponibles en este entorno
@@ -16,13 +21,11 @@ export function CardPaymentForm({ onSubmit }: CardPaymentFormProps) {
   }
 
   return (
-    <Payment
-      initialization={{ publicKey }}
-      onSubmit={async (param) => {
-        const { formData } = param as unknown as {
-          formData: { token: string; payment_method_id: string }
-        }
-        onSubmit(formData.token, formData.payment_method_id)
+    <CardPayment
+      initialization={{ amount }}
+      onSubmit={async (formData) => {
+        const data = formData as unknown as { token: string; payment_method_id: string }
+        onSubmit(data.token, data.payment_method_id)
       }}
     />
   )

@@ -212,7 +212,7 @@ def avanzar_estado(
     uow: UnitOfWork,
     pedido_id: int,
     data: AvanzarEstadoRequest,
-    usuario_id: int,
+    usuario_id: int | None,
 ) -> PedidoRead:
     repo: PedidoRepository = uow.pedidos  # type: ignore[assignment]
 

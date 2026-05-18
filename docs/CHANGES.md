@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-17 (CH-12 archivado)
+**Última actualización:** 2026-05-18 (CH-13 archivado)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -23,7 +23,7 @@
 | CH-10 | Pedidos — Backend FSM + Audit Trail | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-10-pedidos-backend/` |
 | CH-11 | Pedidos — Carrito + Checkout Frontend | ✅ Hecho (archivado 2026-05-16) | 2026-05-16 | `openspec/changes/archive/2026-05-16-ch-11-carrito-checkout-frontend/` |
 | CH-12 | Pagos — Backend MercadoPago + Webhooks | ✅ Hecho (archivado 2026-05-17) | 2026-05-17 | `openspec/changes/archive/2026-05-17-ch-12-pagos-backend/` |
-| CH-13 | Pagos — Frontend sdk-react + Tokenización | ⏳ Pendiente | — | — |
+| CH-13 | Pagos — Frontend sdk-react + Tokenización | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-13-pagos-frontend/` |
 | CH-14 | Admin — Backend Dashboard + Métricas | ⏳ Pendiente | — | — |
 | CH-15 | Admin — Frontend Dashboard + Gestión | ⏳ Pendiente | — | — |
 
@@ -180,6 +180,41 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Router y App shell | `createBrowserRouter`, todas las rutas, `main.tsx` | ✅ |
 
 **Capabilities entregadas:** `backend-infra`, `frontend-infra`
+
+### CH-13 — Pagos — Frontend sdk-react + Tokenización
+
+**Archivado:** 2026-05-18 | **Evidencia:** `openspec/changes/archive/2026-05-18-ch-13-pagos-frontend/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Entorno | `VITE_MP_PUBLIC_KEY` en `.env.example` | ✅ |
+| Entity pago | `entities/pago/` — `PagoResponse`, `CrearPagoRequest`, `crearPago` | ✅ |
+| Feature pagos | `CardPaymentForm` con `CardPayment` brick de `@mercadopago/sdk-react`, fallback sin key, `initMercadoPago` a nivel módulo | ✅ |
+| PaymentPage | 4 estados (idle/processing/approved/rejected/error), redirect si no autenticado, reset al montar, fetch de monto del pedido | ✅ |
+| Router | Ruta `/payment/:pedidoId` + redirect desde CheckoutPage | ✅ |
+| Bugs corregidos | `initMercadoPago` faltante, `Payment` → `CardPayment` (400 sandbox), `amount` requerido por brick, `publicKey` no va en `initialization` | ✅ |
+| Verificación frontend | 6.1–6.5: brick renderizado, pago aprobado, rechazado, retry, fallback sin key | ✅ |
+| Verificación backend | 6.6–6.8: token aprobado→201 approved, rechazado→201 rejected, forma_pago inválida→422 | ✅ |
+
+**Capabilities entregadas:** `pagos-frontend`, `checkout-frontend`
+
+### CH-12 — Pagos — Backend MercadoPago + Webhooks
+
+**Archivado:** 2026-05-17 | **Evidencia:** `openspec/changes/archive/2026-05-17-ch-12-pagos-backend/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Dependencias | `mercadopago>=2.3.0` en requirements, `MP_ACCESS_TOKEN`, `MP_NOTIFICATION_URL` en config | ✅ |
+| Schemas | `CrearPagoRequest`, `WebhookIPNPayload`, `PagoResponse` | ✅ |
+| Repository | `create`, `get_by_pedido_id`, `get_by_mp_payment_id` | ✅ |
+| Service | `crear_pago` (verificación MP token, payer.email, idempotency), `procesar_webhook` (IPN→CONFIRMADO), `get_pago_by_pedido` | ✅ |
+| Router | `POST /crear`, `POST /webhook`, `GET /{pedido_id}` | ✅ |
+| UoW + wiring | `uow.pagos`, `pagos_router` en main.py, `all_models.py` | ✅ |
+| PedidoDetail | Campo `pago: PagoResponse \| None` en `PedidoDetail` | ✅ |
+| Bugs corregidos | `payment_method_id` incorrecto, `notification_url` vacía crasheaba MP, `payer.email` faltante, `usuario_id=0` violaba FK historial | ✅ |
+| Verificación | 10/10 PASS: approved, rejected, webhook IPN→CONFIRMADO, ignored, get pago, PedidoDetail.pago, 422 forma inválida | ✅ |
+
+**Capabilities entregadas:** `pagos-backend`
 
 ### CH-11 — Pedidos — Carrito + Checkout Frontend
 

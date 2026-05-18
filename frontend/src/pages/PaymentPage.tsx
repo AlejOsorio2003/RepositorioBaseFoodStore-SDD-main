@@ -4,6 +4,7 @@ import { Header } from '@/shared/ui'
 import { useAuthStore } from '@/shared/store/auth.store'
 import { usePaymentStore } from '@/shared/store/payment.store'
 import { CardPaymentForm } from '@/features/pagos'
+import { usePedidoDetail } from '@/features/pedidos'
 import { crearPago } from '@/entities/pago'
 
 type PaymentView = 'idle' | 'processing' | 'approved' | 'rejected' | 'error'
@@ -14,6 +15,8 @@ export function PaymentPage() {
   const user = useAuthStore((s) => s.user)
   const paymentStore = usePaymentStore()
   const [view, setView] = useState<PaymentView>('idle')
+  const { data: pedidoData } = usePedidoDetail(pedidoId ? Number(pedidoId) : null)
+  const amount = pedidoData?.pedido ? Number(pedidoData.pedido.total) : 0
 
   /* Redirigir si no autenticado */
   useEffect(() => {
@@ -94,7 +97,7 @@ export function PaymentPage() {
               </div>
             )}
 
-            <CardPaymentForm onSubmit={handleSubmit} />
+            <CardPaymentForm onSubmit={handleSubmit} amount={amount} />
           </div>
         )}
 
