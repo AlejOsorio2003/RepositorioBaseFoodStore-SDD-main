@@ -33,4 +33,4 @@ def actualizar_stock(uow: UnitOfWork, producto_id: int, data: StockUpdate) -> "P
     if not updated:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Producto no encontrado")
 
-    return ProductoRead.model_validate(updated)
+    return ProductoRead.model_validate(updated, from_attributes=True)
