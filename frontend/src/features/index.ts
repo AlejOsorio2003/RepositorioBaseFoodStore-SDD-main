@@ -2,3 +2,4 @@
 // Contendrá la lógica encapsulada por feature (ej: auth, productos, carrito)
 export { CartDrawer, useCart } from './carrito'
 export * from './pedidos'
+export * from './admin'
