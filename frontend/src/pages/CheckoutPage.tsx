@@ -61,42 +61,42 @@ export function CheckoutPage() {
     <>
       <Header />
       <div className="max-w-2xl mx-auto p-4 sm:p-8">
-        <h1 className="font-headline text-2xl font-bold text-gray-800 mb-6">
+        <h1 className="font-headline text-2xl font-bold text-on-surface mb-6">
           Confirmar Pedido
         </h1>
 
         {/* 6.2 — Resumen del pedido */}
-        <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-4 mb-6">
-          <h2 className="font-headline font-semibold text-gray-800">
+        <div className="bg-white border border-outline-variant rounded-xl p-6 space-y-4 mb-6">
+          <h2 className="font-headline font-semibold text-on-surface">
             Resumen del pedido
           </h2>
 
-          <div className="divide-y divide-gray-100">
+          <div className="divide-y divide-outline-variant/50">
             {items.map((item) => (
               <div
                 key={item.productoId}
                 className="flex justify-between py-2 text-sm"
               >
-                <span className="text-gray-700">
+                <span className="text-on-surface">
                   {item.nombre} x {item.cantidad}
                 </span>
-                <span className="font-medium text-gray-800">
+                <span className="font-medium text-on-surface">
                   {formatPrice(item.precioUnitario * item.cantidad)}
                 </span>
               </div>
             ))}
           </div>
 
-          <div className="border-t border-gray-200 pt-3 space-y-1 text-sm">
-            <div className="flex justify-between text-gray-600">
+          <div className="border-t border-outline-variant pt-3 space-y-1 text-sm">
+            <div className="flex justify-between text-on-surface-variant">
               <span>Subtotal</span>
               <span>{formatPrice(subtotal)}</span>
             </div>
-            <div className="flex justify-between text-gray-600">
+            <div className="flex justify-between text-on-surface-variant">
               <span>Costo de envío</span>
               <span>{formatPrice(costoEnvio)}</span>
             </div>
-            <div className="flex justify-between font-semibold text-gray-800 pt-2 border-t border-gray-200 text-base">
+            <div className="flex justify-between font-semibold text-on-surface pt-2 border-t border-outline-variant text-base">
               <span>Total</span>
               <span>{formatPrice(total)}</span>
             </div>
@@ -105,7 +105,7 @@ export function CheckoutPage() {
 
         {/* 6.5 — Error alert */}
         {errorMessage && (
-          <div className="bg-red-50 border border-red-200 text-red-700 px-4 py-3 rounded-lg text-sm mb-6">
+          <div className="bg-red-50 border border-error/50 text-error px-4 py-3 rounded-lg text-sm mb-6">
             {errorMessage}
           </div>
         )}
@@ -114,7 +114,7 @@ export function CheckoutPage() {
         <button
           onClick={() => mutation.mutate()}
           disabled={mutation.isPending || items.length === 0}
-          className="w-full px-6 py-3 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
+          className="w-full px-6 py-3 bg-primary hover:bg-primary-container disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors flex items-center justify-center gap-2"
         >
           {mutation.isPending ? (
             <>

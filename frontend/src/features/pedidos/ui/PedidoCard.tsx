@@ -33,10 +33,10 @@ export function PedidoCard({ pedido, onClick }: PedidoCardProps) {
   return (
     <div
       onClick={() => onClick(pedido.id)}
-      className="bg-white border border-gray-200 rounded-xl p-4 cursor-pointer hover:shadow-md transition-shadow duration-200"
+      className="bg-white border border-outline-variant rounded-xl p-4 cursor-pointer hover:shadow-card-hover transition-shadow duration-200"
     >
       <div className="flex items-center justify-between mb-2">
-        <span className="font-headline font-semibold text-gray-800">
+        <span className="font-headline font-semibold text-on-surface">
           Pedido #{pedido.id}
         </span>
         <span
@@ -46,8 +46,8 @@ export function PedidoCard({ pedido, onClick }: PedidoCardProps) {
         </span>
       </div>
       <div className="flex items-center justify-between text-sm">
-        <span className="text-gray-500">{formattedDate}</span>
-        <span className="font-semibold text-gray-800">{formattedTotal}</span>
+        <span className="text-on-surface-variant">{formattedDate}</span>
+        <span className="font-semibold text-on-surface">{formattedTotal}</span>
       </div>
     </div>
   )

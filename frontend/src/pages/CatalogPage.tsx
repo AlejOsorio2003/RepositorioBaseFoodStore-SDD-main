@@ -62,8 +62,8 @@ export function CatalogPage() {
   return (
     <>
       <Header />
-      <div className="flex min-h-screen bg-[#fef9ef]">
-        <aside className="w-64 shrink-0 border-r border-gray-200 p-4">
+      <div className="flex min-h-screen bg-background">
+        <aside className="w-64 shrink-0 border-r border-outline-variant p-4">
           <CategorySidebar />
         </aside>
 
@@ -75,7 +75,7 @@ export function CatalogPage() {
               placeholder="Buscar productos..."
               value={inputValue}
               onChange={(e) => setInputValue(e.target.value)}
-              className="w-full max-w-md px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#721016] bg-white"
+              className="w-full max-w-md px-4 py-2 border border-outline-variant rounded-lg focus:outline-none focus:ring-2 focus:ring-primary bg-white"
             />
           </div>
 

@@ -30,13 +30,13 @@ export function CartDrawer() {
         onClick={(e) => e.stopPropagation()}
       >
         {/* Header */}
-        <div className="flex items-center justify-between p-4 border-b border-gray-200">
-          <h2 className="text-lg font-semibold text-gray-900">
+        <div className="flex items-center justify-between p-4 border-b border-outline-variant">
+          <h2 className="text-lg font-semibold text-on-surface">
             Carrito {items.length > 0 && `(${itemCount()} items)`}
           </h2>
           <button
             onClick={closeCart}
-            className="text-gray-400 hover:text-gray-600 transition-colors text-2xl font-light leading-none"
+            className="text-on-surface-variant hover:text-on-surface-variant transition-colors text-2xl font-light leading-none"
             aria-label="Cerrar carrito"
           >
             &times;
@@ -46,10 +46,10 @@ export function CartDrawer() {
         {/* Items list */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
           {items.length === 0 ? (
-            <p className="text-gray-400 text-center py-12">Tu carrito está vacío</p>
+            <p className="text-on-surface-variant text-center py-12">Tu carrito está vacío</p>
           ) : (
             items.map((item) => (
-              <div key={item.productoId} className="flex items-start gap-3 pb-4 border-b border-gray-100 last:border-0">
+              <div key={item.productoId} className="flex items-start gap-3 pb-4 border-b border-outline-variant/50 last:border-0">
                 {/* Imagen thumbnail */}
                 {item.imagenUrl ? (
                   <img
@@ -58,21 +58,21 @@ export function CartDrawer() {
                     className="w-14 h-14 rounded-lg object-cover shrink-0"
                   />
                 ) : (
-                  <div className="w-14 h-14 rounded-lg bg-gray-100 flex items-center justify-center shrink-0">
-                    <span className="text-gray-400 text-xs font-bold">{item.nombre[0]}</span>
+                  <div className="w-14 h-14 rounded-lg bg-surface-container-low flex items-center justify-center shrink-0">
+                    <span className="text-on-surface-variant text-xs font-bold">{item.nombre[0]}</span>
                   </div>
                 )}
 
                 {/* Info */}
                 <div className="flex-1 min-w-0">
-                  <p className="font-medium text-sm text-gray-900 truncate">{item.nombre}</p>
-                  <p className="text-xs text-gray-500 mt-0.5">{formatPrice(item.precioUnitario)} c/u</p>
+                  <p className="font-medium text-sm text-on-surface truncate">{item.nombre}</p>
+                  <p className="text-xs text-on-surface-variant mt-0.5">{formatPrice(item.precioUnitario)} c/u</p>
 
                   {/* Quantity controls */}
                   <div className="flex items-center gap-2 mt-2">
                     <button
                       onClick={() => updateQuantity(item.productoId, Math.max(1, item.cantidad - 1))}
-                      className="w-6 h-6 rounded border border-gray-300 text-gray-600 text-sm flex items-center justify-center hover:bg-gray-100 transition-colors"
+                      className="w-6 h-6 rounded border border-outline-variant text-on-surface-variant text-sm flex items-center justify-center hover:bg-surface-container-low transition-colors"
                       aria-label="Reducir cantidad"
                     >
                       &minus;
@@ -82,7 +82,7 @@ export function CartDrawer() {
                     </span>
                     <button
                       onClick={() => updateQuantity(item.productoId, item.cantidad + 1)}
-                      className="w-6 h-6 rounded border border-gray-300 text-gray-600 text-sm flex items-center justify-center hover:bg-gray-100 transition-colors"
+                      className="w-6 h-6 rounded border border-outline-variant text-on-surface-variant text-sm flex items-center justify-center hover:bg-surface-container-low transition-colors"
                       aria-label="Aumentar cantidad"
                     >
                       +
@@ -92,12 +92,12 @@ export function CartDrawer() {
 
                 {/* Subtotal + remove */}
                 <div className="flex flex-col items-end gap-1">
-                  <p className="text-sm font-semibold text-gray-900 tabular-nums">
+                  <p className="text-sm font-semibold text-on-surface tabular-nums">
                     {formatPrice(item.precioUnitario * item.cantidad)}
                   </p>
                   <button
                     onClick={() => removeItem(item.productoId)}
-                    className="text-xs text-red-500 hover:text-red-700 transition-colors"
+                    className="text-xs text-error hover:text-error transition-colors"
                     aria-label={`Eliminar ${item.nombre}`}
                   >
                     Eliminar
@@ -111,28 +111,28 @@ export function CartDrawer() {
         {/* Totales + acciones */}
         {items.length > 0 && (
           <>
-            <div className="border-t border-gray-200 px-4 py-3 space-y-1.5">
-              <div className="flex justify-between text-sm text-gray-600">
+            <div className="border-t border-outline-variant px-4 py-3 space-y-1.5">
+              <div className="flex justify-between text-sm text-on-surface-variant">
                 <span>Subtotal</span>
                 <span className="tabular-nums">{formatPrice(subtotal())}</span>
               </div>
-              <div className="flex justify-between text-sm text-gray-600">
+              <div className="flex justify-between text-sm text-on-surface-variant">
                 <span>Costo de envío</span>
                 <span className="tabular-nums">{formatPrice(costoEnvio())}</span>
               </div>
-              <div className="flex justify-between font-semibold text-gray-900 pt-1 border-t border-gray-100">
+              <div className="flex justify-between font-semibold text-on-surface pt-1 border-t border-outline-variant/50">
                 <span>Total</span>
                 <span className="tabular-nums">{formatPrice(total())}</span>
               </div>
             </div>
 
-            <div className="border-t border-gray-200 p-4 space-y-2">
+            <div className="border-t border-outline-variant p-4 space-y-2">
               <button
                 onClick={() => {
                   navigate('/cart')
                   closeCart()
                 }}
-                className="w-full py-2.5 px-4 bg-[#721016] hover:bg-[#5a0c11] text-white font-medium rounded-lg transition-colors"
+                className="w-full py-2.5 px-4 bg-primary hover:bg-primary-container text-white font-medium rounded-lg transition-colors"
               >
                 Ver carrito completo
               </button>
@@ -141,7 +141,7 @@ export function CartDrawer() {
                   navigate('/checkout')
                   closeCart()
                 }}
-                className="w-full py-2.5 px-4 bg-[#D95D2B] hover:bg-[#c04d1e] text-white font-medium rounded-lg transition-colors"
+                className="w-full py-2.5 px-4 bg-secondary hover:bg-[#c04d1e] text-white font-medium rounded-lg transition-colors"
               >
                 Ir al checkout
               </button>
@@ -151,13 +151,13 @@ export function CartDrawer() {
 
         {/* Acción cuando está vacío */}
         {items.length === 0 && (
-          <div className="border-t border-gray-200 p-4">
+          <div className="border-t border-outline-variant p-4">
             <button
               onClick={() => {
                 navigate('/catalog')
                 closeCart()
               }}
-              className="w-full py-2.5 px-4 bg-gray-100 hover:bg-gray-200 text-gray-700 font-medium rounded-lg transition-colors"
+              className="w-full py-2.5 px-4 bg-surface-container-low hover:bg-surface-container text-on-surface font-medium rounded-lg transition-colors"
             >
               Ver catálogo
             </button>

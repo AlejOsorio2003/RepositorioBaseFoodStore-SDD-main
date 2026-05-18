@@ -52,6 +52,7 @@ function ToggleSwitch({
 interface ProductoFormValues {
   nombre: string
   descripcion: string
+  imagen_url: string
   precio_base: string
   stock_cantidad: string
   categoria_id: string
@@ -80,6 +81,7 @@ function ProductoModal({
     defaultValues: {
       nombre: producto?.nombre ?? '',
       descripcion: producto?.descripcion ?? '',
+      imagen_url: producto?.imagen_url ?? '',
       precio_base: producto?.precio_base?.toString() ?? '',
       stock_cantidad: producto?.stock_cantidad?.toString() ?? '0',
       categoria_id:
@@ -90,9 +92,10 @@ function ProductoModal({
       const payload: ProductoCreatePayload = {
         nombre: value.nombre,
         descripcion: value.descripcion || undefined,
+        imagen_url: value.imagen_url || undefined,
         precio_base: parseFloat(value.precio_base),
         stock_cantidad: parseInt(value.stock_cantidad) || 0,
-        categoria_id: value.categoria_id ? parseInt(value.categoria_id) : undefined,
+        categoria_ids: value.categoria_id ? [parseInt(value.categoria_id)] : [],
         disponible: value.disponible,
       }
 
@@ -176,6 +179,37 @@ function ProductoModal({
                   className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#721016] focus:border-transparent resize-none"
                   placeholder="Descripción opcional"
                 />
+              </div>
+            )}
+          </form.Field>
+
+          {/* Imagen URL */}
+          <form.Field name="imagen_url">
+            {(field) => (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  URL de imagen
+                </label>
+                <input
+                  type="url"
+                  value={field.state.value}
+                  onChange={(e) => field.handleChange(e.target.value)}
+                  onBlur={field.handleBlur}
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-[#721016] focus:border-transparent"
+                  placeholder="https://ejemplo.com/imagen.jpg"
+                />
+                {field.state.value && (
+                  <div className="mt-2 h-24 w-24 rounded-lg overflow-hidden border border-gray-200 bg-gray-50">
+                    <img
+                      src={field.state.value}
+                      alt="Preview"
+                      className="h-full w-full object-cover"
+                      onError={(e) => {
+                        (e.target as HTMLImageElement).style.display = 'none'
+                      }}
+                    />
+                  </div>
+                )}
               </div>
             )}
           </form.Field>

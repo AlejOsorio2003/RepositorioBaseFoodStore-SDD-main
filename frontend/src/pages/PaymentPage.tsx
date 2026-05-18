@@ -79,20 +79,20 @@ export function PaymentPage() {
     <>
       <Header />
       <div className="max-w-2xl mx-auto p-4 sm:p-8">
-        <h1 className="font-headline text-2xl font-bold text-gray-800 mb-6">
+        <h1 className="font-headline text-2xl font-bold text-on-surface mb-6">
           Pagar Pedido
         </h1>
 
         {/* Estado idle / processing → mostrar formulario */}
         {(view === 'idle' || view === 'processing') && (
-          <div className="bg-white border border-gray-200 rounded-xl p-6">
-            <h2 className="font-headline font-semibold text-gray-800 mb-4">
+          <div className="bg-white border border-outline-variant rounded-xl p-6">
+            <h2 className="font-headline font-semibold text-on-surface mb-4">
               Tarjeta de crédito o débito
             </h2>
 
             {view === 'processing' && (
-              <div className="flex items-center gap-2 text-sm text-gray-600 mb-4">
-                <span className="inline-block w-4 h-4 border-2 border-indigo-600 border-t-transparent rounded-full animate-spin" />
+              <div className="flex items-center gap-2 text-sm text-on-surface-variant mb-4">
+                <span className="inline-block w-4 h-4 border-2 border-primary border-t-transparent rounded-full animate-spin" />
                 Procesando pago...
               </div>
             )}
@@ -115,17 +115,17 @@ export function PaymentPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
               </svg>
             </div>
-            <h2 className="font-headline text-xl font-bold text-gray-800 mb-2">
+            <h2 className="font-headline text-xl font-bold text-on-surface mb-2">
               ¡Tu pago fue aprobado!
             </h2>
-            <p className="text-gray-600 text-sm mb-6">
+            <p className="text-on-surface-variant text-sm mb-6">
               {paymentStore.statusDetail
                 ? `Detalle: ${paymentStore.statusDetail}`
                 : 'El pago se procesó correctamente.'}
             </p>
             <button
               onClick={() => navigate('/orders')}
-              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors"
+              className="px-6 py-3 bg-primary hover:bg-primary-container text-white font-medium rounded-lg transition-colors"
             >
               Ver mi pedido
             </button>
@@ -146,17 +146,17 @@ export function PaymentPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
               </svg>
             </div>
-            <h2 className="font-headline text-xl font-bold text-gray-800 mb-2">
+            <h2 className="font-headline text-xl font-bold text-on-surface mb-2">
               Pago rechazado
             </h2>
-            <p className="text-gray-600 text-sm mb-6">
+            <p className="text-on-surface-variant text-sm mb-6">
               {paymentStore.statusDetail
                 ? `Motivo: ${paymentStore.statusDetail}`
                 : 'La tarjeta fue rechazada. Intentá con otra.'}
             </p>
             <button
               onClick={handleRetry}
-              className="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors"
+              className="px-6 py-3 bg-primary hover:bg-primary-container text-white font-medium rounded-lg transition-colors"
             >
               Intentar con otra tarjeta
             </button>

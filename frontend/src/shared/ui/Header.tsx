@@ -24,15 +24,15 @@ export function Header() {
   }
 
   return (
-    <header className="bg-white border-b border-gray-200 shadow-sm">
+    <header className="bg-white border-b border-outline-variant shadow-sm">
       <div className="px-8 py-4 flex items-center justify-between">
         <div className="flex items-center gap-3">
-          <div className="h-8 w-8 rounded-full bg-indigo-600 flex items-center justify-center">
+          <div className="h-8 w-8 rounded-full bg-primary flex items-center justify-center">
             <span className="text-white text-sm font-semibold">
               {authStore.user.nombre?.[0]?.toUpperCase()}
             </span>
           </div>
-          <span className="text-sm text-gray-700">
+          <span className="text-sm text-on-surface">
             {authStore.user.nombre} {authStore.user.apellido}
           </span>
         </div>
@@ -41,7 +41,7 @@ export function Header() {
           {/* Cart icon with badge */}
           <button
             onClick={openCart}
-            className="relative p-2 text-gray-600 hover:text-gray-900 transition-colors"
+            className="relative p-2 text-on-surface-variant hover:text-on-surface transition-colors"
             aria-label="Abrir carrito"
           >
             <svg
@@ -59,7 +59,7 @@ export function Header() {
               />
             </svg>
             {count > 0 && (
-              <span className="absolute -top-1 -right-1 bg-red-600 text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
+              <span className="absolute -top-1 -right-1 bg-primary text-white text-xs font-bold rounded-full h-5 w-5 flex items-center justify-center">
                 {count > 99 ? '99+' : count}
               </span>
             )}
@@ -67,7 +67,7 @@ export function Header() {
 
           <button
             onClick={handleLogout}
-            className="px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-medium rounded-lg transition-colors duration-200"
+            className="px-4 py-2 bg-primary hover:bg-primary-container text-white font-medium rounded-lg transition-colors duration-200"
           >
             Cerrar sesión
           </button>

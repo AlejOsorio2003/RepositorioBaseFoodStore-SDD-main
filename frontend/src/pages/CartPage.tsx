@@ -38,9 +38,9 @@ export function CartPage() {
       <>
         <Header />
         <div className="min-h-[60vh] flex flex-col items-center justify-center p-8">
-          <div className="w-20 h-20 rounded-full bg-gray-100 flex items-center justify-center mb-4">
+          <div className="w-20 h-20 rounded-full bg-surface-container-low flex items-center justify-center mb-4">
             <svg
-              className="w-10 h-10 text-gray-400"
+              className="w-10 h-10 text-on-surface-variant"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -53,15 +53,15 @@ export function CartPage() {
               />
             </svg>
           </div>
-          <h2 className="font-headline text-2xl font-semibold text-gray-800 mb-2">
+          <h2 className="font-headline text-2xl font-semibold text-on-surface mb-2">
             Tu carrito está vacío
           </h2>
-          <p className="text-gray-500 mb-6">
+          <p className="text-on-surface-variant mb-6">
             Agregá productos desde el catálogo
           </p>
           <Link
             to="/catalog"
-            className="px-6 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-medium rounded-lg transition-colors"
+            className="px-6 py-2.5 bg-primary hover:bg-primary-container text-white font-medium rounded-lg transition-colors"
           >
             Ver catálogo
           </Link>
@@ -75,7 +75,7 @@ export function CartPage() {
     <>
       <Header />
       <div className="max-w-4xl mx-auto p-4 sm:p-8">
-        <h1 className="font-headline text-2xl font-bold text-gray-800 mb-6">
+        <h1 className="font-headline text-2xl font-bold text-on-surface mb-6">
           Tu Carrito ({itemCount} {itemCount === 1 ? 'producto' : 'productos'})
         </h1>
 
@@ -85,7 +85,7 @@ export function CartPage() {
             {items.map((item) => (
               <div
                 key={item.productoId}
-                className="bg-white border border-gray-200 rounded-xl p-4 flex items-center gap-4"
+                className="bg-white border border-outline-variant rounded-xl p-4 flex items-center gap-4"
               >
                 {/* Thumbnail */}
                 {item.imagenUrl ? (
@@ -95,17 +95,17 @@ export function CartPage() {
                     className="w-20 h-20 object-cover rounded-lg"
                   />
                 ) : (
-                  <div className="w-20 h-20 bg-gray-100 rounded-lg flex items-center justify-center text-gray-400 font-bold text-lg shrink-0">
+                  <div className="w-20 h-20 bg-surface-container-low rounded-lg flex items-center justify-center text-on-surface-variant font-bold text-lg shrink-0">
                     {item.nombre[0]?.toUpperCase() ?? '?'}
                   </div>
                 )}
 
                 {/* Info */}
                 <div className="flex-1 min-w-0">
-                  <h3 className="font-medium text-gray-800 truncate">
+                  <h3 className="font-medium text-on-surface truncate">
                     {item.nombre}
                   </h3>
-                  <p className="text-sm text-gray-500">
+                  <p className="text-sm text-on-surface-variant">
                     {formatPrice(item.precioUnitario)} c/u
                   </p>
                 </div>
@@ -117,19 +117,19 @@ export function CartPage() {
                       handleQuantityChange(item.productoId, item.cantidad - 1)
                     }
                     disabled={item.cantidad <= 1}
-                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+                    className="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
                     aria-label="Reducir cantidad"
                   >
                     −
                   </button>
-                  <span className="w-8 text-center font-medium text-gray-800 tabular-nums">
+                  <span className="w-8 text-center font-medium text-on-surface tabular-nums">
                     {item.cantidad}
                   </span>
                   <button
                     onClick={() =>
                       handleQuantityChange(item.productoId, item.cantidad + 1)
                     }
-                    className="w-8 h-8 rounded-full border border-gray-300 flex items-center justify-center text-gray-600 hover:bg-gray-100 transition-colors"
+                    className="w-8 h-8 rounded-full border border-outline-variant flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors"
                     aria-label="Aumentar cantidad"
                   >
                     +
@@ -138,7 +138,7 @@ export function CartPage() {
 
                 {/* Line subtotal */}
                 <div className="text-right min-w-[5rem]">
-                  <p className="font-semibold text-gray-800">
+                  <p className="font-semibold text-on-surface">
                     {formatPrice(item.precioUnitario * item.cantidad)}
                   </p>
                 </div>
@@ -146,7 +146,7 @@ export function CartPage() {
                 {/* Delete */}
                 <button
                   onClick={() => removeItem(item.productoId)}
-                  className="text-gray-400 hover:text-red-600 transition-colors p-1"
+                  className="text-on-surface-variant hover:text-red-600 transition-colors p-1"
                   title="Eliminar"
                 >
                   ✕
@@ -157,20 +157,20 @@ export function CartPage() {
 
           {/* 5.2 — Panel de totales */}
           <div className="w-full lg:w-80">
-            <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-3 sticky top-8">
-              <h2 className="font-headline font-semibold text-gray-800">
+            <div className="bg-white border border-outline-variant rounded-xl p-6 space-y-3 sticky top-8">
+              <h2 className="font-headline font-semibold text-on-surface">
                 Resumen
               </h2>
               <div className="space-y-2 text-sm">
-                <div className="flex justify-between text-gray-600">
+                <div className="flex justify-between text-on-surface-variant">
                   <span>Subtotal</span>
                   <span>{formatPrice(subtotal)}</span>
                 </div>
-                <div className="flex justify-between text-gray-600">
+                <div className="flex justify-between text-on-surface-variant">
                   <span>Costo de envío</span>
                   <span>{formatPrice(costoEnvio)}</span>
                 </div>
-                <div className="flex justify-between font-semibold text-gray-800 pt-2 border-t">
+                <div className="flex justify-between font-semibold text-on-surface pt-2 border-t">
                   <span>Total</span>
                   <span>{formatPrice(total)}</span>
                 </div>
@@ -180,7 +180,7 @@ export function CartPage() {
               <button
                 onClick={handleCheckout}
                 disabled={items.length === 0}
-                className="w-full px-4 py-2.5 bg-indigo-600 hover:bg-indigo-700 disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
+                className="w-full px-4 py-2.5 bg-primary hover:bg-primary-container disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-medium rounded-lg transition-colors"
               >
                 Ir al Checkout
               </button>

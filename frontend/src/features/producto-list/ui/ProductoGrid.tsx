@@ -11,15 +11,15 @@ interface ProductoGridProps {
 
 function SkeletonCard() {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl overflow-hidden animate-pulse">
-      <div className="w-full h-48 bg-gray-200" />
+    <div className="bg-white border border-outline-variant rounded-xl overflow-hidden animate-pulse">
+      <div className="w-full h-48 bg-surface-container" />
       <div className="p-4 space-y-2">
-        <div className="h-4 bg-gray-200 rounded w-3/4" />
-        <div className="h-3 bg-gray-200 rounded w-full" />
-        <div className="h-3 bg-gray-200 rounded w-2/3" />
+        <div className="h-4 bg-surface-container rounded w-3/4" />
+        <div className="h-3 bg-surface-container rounded w-full" />
+        <div className="h-3 bg-surface-container rounded w-2/3" />
         <div className="flex justify-between items-center pt-2">
-          <div className="h-5 bg-gray-200 rounded w-20" />
-          <div className="h-8 bg-gray-200 rounded w-24" />
+          <div className="h-5 bg-surface-container rounded w-20" />
+          <div className="h-8 bg-surface-container rounded w-24" />
         </div>
       </div>
     </div>
@@ -43,7 +43,7 @@ export function ProductoGrid({ params, onSelect, onPageChange }: ProductoGridPro
   if (!data || data.items.length === 0) {
     return (
       <div className="flex items-center justify-center h-64">
-        <p className="text-gray-400 text-lg">No se encontraron productos</p>
+        <p className="text-on-surface-variant text-lg">No se encontraron productos</p>
       </div>
     )
   }
@@ -63,19 +63,19 @@ export function ProductoGrid({ params, onSelect, onPageChange }: ProductoGridPro
           <button
             onClick={() => onPageChange(page - 1)}
             disabled={page <= 1}
-            className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="px-4 py-2 rounded-lg border border-outline-variant text-sm font-medium text-on-surface hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             Anterior
           </button>
 
-          <span className="text-sm text-gray-600">
+          <span className="text-sm text-on-surface-variant">
             Página {page} de {totalPages}
           </span>
 
           <button
             onClick={() => onPageChange(page + 1)}
             disabled={page >= totalPages}
-            className="px-4 py-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 hover:bg-gray-50 disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
+            className="px-4 py-2 rounded-lg border border-outline-variant text-sm font-medium text-on-surface hover:bg-white disabled:opacity-40 disabled:cursor-not-allowed transition-colors"
           >
             Siguiente
           </button>

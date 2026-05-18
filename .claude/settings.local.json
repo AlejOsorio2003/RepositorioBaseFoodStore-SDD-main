@@ -118,7 +118,10 @@
       "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const p=JSON.parse\\(d\\); console.log\\('exports:', JSON.stringify\\(p.exports,null,2\\).substring\\(0,500\\)\\)\")",
       "Bash(node *)",
       "Bash(findstr recharts *)",
-      "Bash(npm run *)"
+      "Bash(npm run *)",
+      "mcp__stitch__list_projects",
+      "mcp__stitch__list_screens",
+      "Bash(xargs grep -l \"upload\\\\|image\\\\|file\")"
     ]
   }
 }

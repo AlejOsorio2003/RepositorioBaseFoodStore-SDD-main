@@ -38,14 +38,14 @@ export function CategorySidebar() {
     return (
       <div className="space-y-2">
         {[1, 2, 3, 4].map((i) => (
-          <div key={i} className="h-8 rounded bg-gray-200 animate-pulse" />
+          <div key={i} className="h-8 rounded bg-surface-container animate-pulse" />
         ))}
       </div>
     )
   }
 
   if (isError) {
-    return <p className="text-red-600 text-sm">Error al cargar categorías</p>
+    return <p className="text-error text-sm">Error al cargar categorías</p>
   }
 
   const raices: Categoria[] = (categorias ?? []).filter((c) => c.parent_id === null)
@@ -56,13 +56,13 @@ export function CategorySidebar() {
 
   function itemClass(id: number | null) {
     const base = 'w-full text-left px-3 py-2 rounded cursor-pointer text-sm transition-colors'
-    if (isActive(id)) return `${base} bg-[#721016] text-white`
-    return `${base} text-gray-700 hover:bg-amber-50`
+    if (isActive(id)) return `${base} bg-primary text-white`
+    return `${base} text-on-surface hover:bg-surface-container-low`
   }
 
   return (
     <div className="w-64 shrink-0">
-      <p className="text-sm font-semibold uppercase tracking-wider text-gray-500 mb-3">
+      <p className="text-sm font-semibold uppercase tracking-wider text-on-surface-variant mb-3">
         Categorías
       </p>
 

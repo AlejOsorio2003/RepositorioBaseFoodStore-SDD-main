@@ -14,7 +14,7 @@ interface CardPaymentFormProps {
 export function CardPaymentForm({ onSubmit, amount }: CardPaymentFormProps) {
   if (!MP_PUBLIC_KEY) {
     return (
-      <div className="bg-amber-50 border border-amber-200 text-amber-700 px-4 py-3 rounded-lg text-sm">
+      <div className="bg-surface-container-low border border-outline text-tertiary px-4 py-3 rounded-lg text-sm">
         Pagos no disponibles en este entorno
       </div>
     )

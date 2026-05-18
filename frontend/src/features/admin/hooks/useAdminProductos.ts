@@ -15,9 +15,10 @@ export interface ProductoAdmin {
 export interface ProductoCreatePayload {
   nombre: string
   descripcion?: string
+  imagen_url?: string
   precio_base: number
   stock_cantidad?: number
-  categoria_id?: number
+  categoria_ids?: number[]
   disponible?: boolean
 }
 

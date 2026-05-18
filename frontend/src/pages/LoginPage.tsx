@@ -36,7 +36,7 @@ export function LoginPage() {
   return (
     <div className="mx-auto flex min-h-screen max-w-md items-center justify-center p-4">
       <div className="w-full rounded-lg bg-white p-8 shadow-md">
-        <h1 className="mb-6 text-center font-headline text-2xl font-bold text-gray-900">
+        <h1 className="mb-6 text-center font-headline text-2xl font-bold text-on-surface">
           Iniciar Sesión
         </h1>
 
@@ -59,7 +59,7 @@ export function LoginPage() {
               <div>
                 <label
                   htmlFor={field.name}
-                  className="mb-1 block text-sm font-medium text-gray-700"
+                  className="mb-1 block text-sm font-medium text-on-surface"
                 >
                   Email
                 </label>
@@ -70,12 +70,12 @@ export function LoginPage() {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full rounded-md border border-outline-variant px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                   placeholder="tu@email.com"
                 />
                 {field.state.meta.isTouched &&
                   field.state.meta.errors.length > 0 && (
-                    <p className="mt-1 text-xs text-red-600">
+                    <p className="mt-1 text-xs text-error">
                       {field.state.meta.errors.join(', ')}
                     </p>
                   )}
@@ -94,7 +94,7 @@ export function LoginPage() {
               <div>
                 <label
                   htmlFor={field.name}
-                  className="mb-1 block text-sm font-medium text-gray-700"
+                  className="mb-1 block text-sm font-medium text-on-surface"
                 >
                   Contraseña
                 </label>
@@ -105,12 +105,12 @@ export function LoginPage() {
                   value={field.state.value}
                   onBlur={field.handleBlur}
                   onChange={(e) => field.handleChange(e.target.value)}
-                  className="w-full rounded-md border border-gray-300 px-3 py-2 text-sm focus:border-indigo-500 focus:outline-none focus:ring-1 focus:ring-indigo-500"
+                  className="w-full rounded-md border border-outline-variant px-3 py-2 text-sm focus:border-primary focus:outline-none focus:ring-1 focus:ring-primary"
                   placeholder="••••••••"
                 />
                 {field.state.meta.isTouched &&
                   field.state.meta.errors.length > 0 && (
-                    <p className="mt-1 text-xs text-red-600">
+                    <p className="mt-1 text-xs text-error">
                       {field.state.meta.errors.join(', ')}
                     </p>
                   )}
@@ -119,7 +119,7 @@ export function LoginPage() {
           </form.Field>
 
           {mutation.isError && (
-            <p className="text-sm text-red-600">
+            <p className="text-sm text-error">
               {(() => {
                 const err = mutation.error as any
                 const msg = err?.response?.data?.detail || err?.response?.data?.error || err?.message
@@ -140,7 +140,7 @@ export function LoginPage() {
               <button
                 type="submit"
                 disabled={!canSubmit || isSubmitting}
-                className="w-full rounded-md bg-indigo-600 px-4 py-2 text-sm font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+                className="w-full rounded-md bg-primary px-4 py-2 text-sm font-medium text-white hover:bg-primary-container focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
               >
                 {isSubmitting ? 'Ingresando...' : 'Ingresar'}
               </button>
@@ -148,11 +148,11 @@ export function LoginPage() {
           </form.Subscribe>
         </form>
 
-        <p className="mt-4 text-center text-sm text-gray-600">
+        <p className="mt-4 text-center text-sm text-on-surface-variant">
           ¿No tenés cuenta?{' '}
           <Link
             to="/register"
-            className="font-medium text-indigo-600 hover:text-indigo-500"
+            className="font-medium text-primary hover:text-primary"
           >
             Registrate
           </Link>

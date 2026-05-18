@@ -27,7 +27,7 @@ const ESTADO_DOT_COLORS: Record<string, string> = {
  */
 export function HistorialTimeline({ historial }: HistorialTimelineProps) {
   if (historial.length === 0) {
-    return <p className="text-sm text-gray-400 py-4 text-center">Sin historial disponible</p>
+    return <p className="text-sm text-on-surface-variant py-4 text-center">Sin historial disponible</p>
   }
 
   return (
@@ -41,7 +41,7 @@ export function HistorialTimeline({ historial }: HistorialTimelineProps) {
           <div key={entry.id} className="relative">
             {/* Línea vertical conectora */}
             {!isLast && (
-              <div className="absolute left-[11px] top-3 bottom-0 w-0.5 bg-gray-200" />
+              <div className="absolute left-[11px] top-3 bottom-0 w-0.5 bg-surface-container" />
             )}
 
             {/* Punto del timeline */}
@@ -52,12 +52,12 @@ export function HistorialTimeline({ historial }: HistorialTimelineProps) {
             </div>
 
             {/* Contenido */}
-            <div className="bg-gray-50 rounded-lg p-3 border border-gray-100">
+            <div className="bg-white rounded-lg p-3 border border-outline-variant/50">
               <div className="flex items-center gap-2 mb-1">
                 <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-semibold ${badgeColor}`}>
                   {entry.estado_nombre}
                 </span>
-                <span className="text-[11px] text-gray-400">
+                <span className="text-[11px] text-on-surface-variant">
                   {new Date(entry.creado_en).toLocaleString('es-AR', {
                     day: '2-digit',
                     month: '2-digit',
@@ -69,7 +69,7 @@ export function HistorialTimeline({ historial }: HistorialTimelineProps) {
               </div>
 
               {entry.notas && (
-                <p className="text-sm text-gray-600 mt-1 italic">
+                <p className="text-sm text-on-surface-variant mt-1 italic">
                   &ldquo;{entry.notas}&rdquo;
                 </p>
               )}

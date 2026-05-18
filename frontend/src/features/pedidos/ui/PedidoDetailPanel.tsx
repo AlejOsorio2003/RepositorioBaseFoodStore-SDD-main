@@ -10,20 +10,20 @@ interface PedidoDetailPanelProps {
 
 function SkeletonPanel() {
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-4 animate-pulse">
-      <div className="h-5 bg-gray-200 rounded w-1/3" />
-      <div className="h-4 bg-gray-200 rounded w-1/4" />
-      <div className="h-4 bg-gray-200 rounded w-full" />
-      <div className="h-4 bg-gray-200 rounded w-full" />
-      <div className="h-4 bg-gray-200 rounded w-3/4" />
+    <div className="bg-white border border-outline-variant rounded-xl p-6 space-y-4 animate-pulse">
+      <div className="h-5 bg-surface-container rounded w-1/3" />
+      <div className="h-4 bg-surface-container rounded w-1/4" />
+      <div className="h-4 bg-surface-container rounded w-full" />
+      <div className="h-4 bg-surface-container rounded w-full" />
+      <div className="h-4 bg-surface-container rounded w-3/4" />
     </div>
   )
 }
 
 function ErrorPanel() {
   return (
-    <div className="bg-white border border-red-200 rounded-xl p-6">
-      <p className="text-red-600 text-sm">Error al cargar el pedido.</p>
+    <div className="bg-white border border-error/30 rounded-xl p-6">
+      <p className="text-error text-sm">Error al cargar el pedido.</p>
     </div>
   )
 }
@@ -70,15 +70,15 @@ export function PedidoDetailPanel({
     estadoColores[pedido.estado_nombre] ?? 'bg-gray-100 text-gray-800'
 
   return (
-    <div className="bg-white border border-gray-200 rounded-xl p-6 space-y-5">
+    <div className="bg-white border border-outline-variant rounded-xl p-6 space-y-5">
       {/* Header */}
       <div className="flex items-center justify-between">
-        <h3 className="font-headline text-lg font-semibold text-gray-800">
+        <h3 className="font-headline text-lg font-semibold text-on-surface">
           Pedido #{pedido.id}
         </h3>
         <button
           onClick={onClose}
-          className="text-gray-400 hover:text-gray-600 text-lg leading-none"
+          className="text-on-surface-variant hover:text-on-surface text-lg leading-none"
         >
           ✕
         </button>
@@ -91,14 +91,14 @@ export function PedidoDetailPanel({
         >
           {pedido.estado_nombre}
         </span>
-        <span className="text-sm text-gray-500">
+        <span className="text-sm text-on-surface-variant">
           {new Date(pedido.created_at).toLocaleDateString('es-AR')}
         </span>
       </div>
 
       {/* Items */}
       <div>
-        <h4 className="font-semibold text-gray-700 mb-2">Items</h4>
+        <h4 className="font-semibold text-on-surface mb-2">Items</h4>
         <div className="space-y-2">
           {pedido.items.map((item, idx) => {
             const itemSubtotal = item.precio_snapshot * item.cantidad
@@ -107,10 +107,10 @@ export function PedidoDetailPanel({
                 key={idx}
                 className="flex items-center justify-between text-sm"
               >
-                <span className="text-gray-700">
+                <span className="text-on-surface">
                   {item.nombre_snapshot} x {item.cantidad}
                 </span>
-                <span className="font-medium text-gray-800">
+                <span className="font-medium text-on-surface">
                   {itemSubtotal.toLocaleString('es-AR', {
                     style: 'currency',
                     currency: 'ARS',
@@ -124,7 +124,7 @@ export function PedidoDetailPanel({
 
       {/* Totales */}
       <div className="border-t pt-3 space-y-1 text-sm">
-        <div className="flex justify-between text-gray-600">
+        <div className="flex justify-between text-on-surface-variant">
           <span>Subtotal</span>
           <span>
             {(pedido.total - pedido.costo_envio).toLocaleString('es-AR', {
@@ -133,7 +133,7 @@ export function PedidoDetailPanel({
             })}
           </span>
         </div>
-        <div className="flex justify-between text-gray-600">
+        <div className="flex justify-between text-on-surface-variant">
           <span>Costo de envío</span>
           <span>
             {pedido.costo_envio.toLocaleString('es-AR', {
@@ -142,7 +142,7 @@ export function PedidoDetailPanel({
             })}
           </span>
         </div>
-        <div className="flex justify-between font-semibold text-gray-800 pt-1 border-t">
+        <div className="flex justify-between font-semibold text-on-surface pt-1 border-t">
           <span>Total</span>
           <span>{formattedTotal}</span>
         </div>
@@ -150,13 +150,13 @@ export function PedidoDetailPanel({
 
       {/* Dirección y notas */}
       {pedido.direccion_snapshot && (
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-on-surface-variant">
           <span className="font-medium">Dirección:</span>{' '}
           {pedido.direccion_snapshot}
         </p>
       )}
       {pedido.notas && (
-        <p className="text-sm text-gray-600">
+        <p className="text-sm text-on-surface-variant">
           <span className="font-medium">Notas:</span> {pedido.notas}
         </p>
       )}
