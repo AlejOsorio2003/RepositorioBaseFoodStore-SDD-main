@@ -75,3 +75,8 @@ class UnitOfWork:
         self.pedidos: PedidoRepository = PedidoRepository(self.session, Pedido)
         self.pagos: PagoRepository = PagoRepository(self.session, Pago)
         self.direcciones: DireccionRepository = DireccionRepository(self.session, DireccionEntrega)
+
+        # Admin (queries raw cross-modulo)
+        from app.admin.repository import AdminRepository
+
+        self.admin: AdminRepository = AdminRepository(self.session)
