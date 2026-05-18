@@ -199,7 +199,13 @@ def get_pedido(
             detail="No tienes permiso para acceder a este pedido",
         )
 
-    return _pedido_to_detail(pedido)
+    from app.pagos.schemas import PagoResponse
+
+    result = _pedido_to_detail(pedido)
+    pago = uow.pagos.get_by_pedido_id(pedido.id)
+    if pago:
+        result.pago = PagoResponse.model_validate(pago)
+    return result
 
 
 def avanzar_estado(

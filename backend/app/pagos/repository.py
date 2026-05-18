@@ -1,6 +1,22 @@
+from sqlmodel import select
+
 from app.core.repository import BaseRepository
 from app.pagos.models import Pago
 
 
 class PagoRepository(BaseRepository[Pago]):
-    pass  # Implementado en CH-12
+    def create(self, pago: Pago) -> Pago:
+        self.session.add(pago)
+        self.session.flush()
+        self.session.refresh(pago)
+        return pago
+
+    def get_by_pedido_id(self, pedido_id: int) -> Pago | None:
+        return self.session.exec(
+            select(Pago).where(Pago.pedido_id == pedido_id)
+        ).first()
+
+    def get_by_mp_payment_id(self, mp_payment_id: int) -> Pago | None:
+        return self.session.exec(
+            select(Pago).where(Pago.mp_payment_id == mp_payment_id)
+        ).first()

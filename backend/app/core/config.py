@@ -10,6 +10,7 @@ class Settings(BaseSettings):
     REFRESH_TOKEN_EXPIRE_DAYS: int = 7
     MP_ACCESS_TOKEN: str = ""
     MP_PUBLIC_KEY: str = ""
+    MP_NOTIFICATION_URL: str = ""
     CORS_ORIGINS: str = "http://localhost:5173"
 
     @property

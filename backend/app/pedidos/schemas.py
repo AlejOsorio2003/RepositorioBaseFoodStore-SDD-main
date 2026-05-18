@@ -3,6 +3,8 @@ from decimal import Decimal
 
 from pydantic import BaseModel, Field, model_validator
 
+from app.pagos.schemas import PagoResponse
+
 
 class ItemPedidoRequest(BaseModel):
     producto_id: int
@@ -58,6 +60,7 @@ class PedidoDetail(PedidoRead):
     items: list[DetallePedidoRead]
     direccion_snapshot: str | None = None
     notas: str | None = None
+    pago: PagoResponse | None = None
 
 
 class PaginatedPedidos(BaseModel):
