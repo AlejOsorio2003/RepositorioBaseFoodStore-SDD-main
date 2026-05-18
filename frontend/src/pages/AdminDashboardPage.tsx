@@ -16,13 +16,14 @@ import { useAdminMetricas } from '@/features/admin'
 const ESTADO_COLORS: Record<string, string> = {
   PENDIENTE: '#f59e0b',
   CONFIRMADO: '#3b82f6',
+  EN_PREP: '#8b5cf6',
   EN_PREPARACION: '#8b5cf6',
   EN_CAMINO: '#06b6d4',
   ENTREGADO: '#22c55e',
   CANCELADO: '#ef4444',
 }
 
-const ESTADOS_ACTIVOS = ['PENDIENTE', 'CONFIRMADO', 'EN_PREPARACION', 'EN_CAMINO']
+const ESTADOS_ACTIVOS = ['PENDIENTE', 'CONFIRMADO', 'EN_PREP', 'EN_PREPARACION', 'EN_CAMINO']
 
 function formatARS(amount: number): string {
   return new Intl.NumberFormat('es-AR', {
@@ -87,6 +88,10 @@ export function AdminDashboardPage() {
     0
   )
 
+  const totalVentasNum = typeof metricas.total_ventas === 'string'
+    ? parseFloat(metricas.total_ventas)
+    : metricas.total_ventas
+
   const pieData = Object.entries(metricas.pedidos_por_estado).map(([estado, value]) => ({
     name: estado,
     value,
@@ -106,7 +111,7 @@ export function AdminDashboardPage() {
         {/* Total ventas */}
         <div className="bg-white rounded-xl p-6 shadow-sm border border-gray-200">
           <p className="text-sm font-medium text-gray-500 mb-1">Total Ventas</p>
-          <p className="text-2xl font-bold text-gray-900">{formatARS(metricas.total_ventas)}</p>
+          <p className="text-2xl font-bold text-gray-900">{formatARS(totalVentasNum)}</p>
         </div>
 
         {/* Stock bajo */}

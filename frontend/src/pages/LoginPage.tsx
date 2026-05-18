@@ -4,6 +4,8 @@ import { Link, useNavigate, useSearchParams } from 'react-router-dom'
 
 import { useAuthStore } from '@/shared/store/auth.store'
 
+const ADMIN_ROLES = ['ADMIN', 'STOCK', 'PEDIDOS']
+
 export function LoginPage() {
   const navigate = useNavigate()
   const [searchParams] = useSearchParams()
@@ -12,7 +14,16 @@ export function LoginPage() {
   const mutation = useMutation({
     mutationFn: ({ email, password }: { email: string; password: string }) =>
       login(email, password),
-    onSuccess: () => navigate(searchParams.get('redirect') ?? '/catalog'),
+    onSuccess: () => {
+      const redirect = searchParams.get('redirect')
+      if (redirect) return navigate(redirect)
+      const user = useAuthStore.getState().user
+      if (user?.roles.some((r) => ADMIN_ROLES.includes(r))) {
+        navigate('/admin')
+      } else {
+        navigate('/catalog')
+      }
+    },
   })
 
   const form = useForm({
@@ -109,7 +120,13 @@ export function LoginPage() {
 
           {mutation.isError && (
             <p className="text-sm text-red-600">
-              Credenciales inválidas. Verificá tu email y contraseña.
+              {(() => {
+                const err = mutation.error as any
+                const msg = err?.response?.data?.detail || err?.response?.data?.error || err?.message
+                if (msg?.includes('Rate limit') || msg?.includes('rate limit')) return 'Demasiados intentos. Esperá unos minutos.'
+                if (msg?.includes('Credenciales') || err?.response?.status === 401) return 'Credenciales inválidas. Verificá tu email y contraseña.'
+                return msg || 'Error al iniciar sesión. Intentá de nuevo.'
+              })()}
             </p>
           )}
 

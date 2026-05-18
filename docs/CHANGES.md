@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-18 (CH-14 archivado)
+**Última actualización:** 2026-05-18 (CH-15 archivado)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -25,9 +25,9 @@
 | CH-12 | Pagos — Backend MercadoPago + Webhooks | ✅ Hecho (archivado 2026-05-17) | 2026-05-17 | `openspec/changes/archive/2026-05-17-ch-12-pagos-backend/` |
 | CH-13 | Pagos — Frontend sdk-react + Tokenización | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-13-pagos-frontend/` |
 | CH-14 | Admin — Backend Dashboard + Métricas | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-14-admin-backend/` |
-| CH-15 | Admin — Frontend Dashboard + Gestión | ⏳ Pendiente | — | — |
-
 ---
+
+
 
 ## Grafo de Dependencias
 
@@ -104,11 +104,11 @@ CH-00: Infraestructura Base  ✅ ARCHIVADO
                     │   Gestión de pedidos por Gestor de Pedidos
                     │   Gestión de stock por Gestor de Stock
                     │
-                    └─► CH-15: Admin Frontend Dashboard
-                              recharts (ventas · pedidos · stock)
-                              CRUD de productos · categorías
-                              Tabla de pedidos + cambio de estado
-                              Tabla de usuarios + cambio de rol
+                     └─► CH-15: Admin Frontend Dashboard  ✅ ARCHIVADO
+                               recharts (ventas · pedidos · stock)
+                               CRUD de productos · categorías
+                               Tabla de pedidos + cambio de estado
+                               Tabla de usuarios + cambio de rol
 ```
 
 ---
@@ -347,6 +347,25 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Tipos base compartidos | `UUID`, `ISODateString`, `PaginatedResponse<T>`, `ApiError` en `shared/types/` | ✅ |
 
 **Capabilities entregadas:** `refreshtokens-module`, `ingredientes-module`, `direcciones-module`, `backend-infra` (modificado), `frontend-infra` (modificado)
+
+### CH-15 — Admin — Frontend Dashboard + Gestión
+
+**Archivado:** 2026-05-18 | **Evidencia:** `openspec/changes/archive/2026-05-18-ch-15-admin-frontend/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Entities + API | `entities/admin/` — tipos `MetricasDashboard`, `AdminUsuarios`, `AdminPedido`, `AdminProducto`, `AdminProductoStock`, `PedidoList` | ✅ |
+| AdminLayout | Layout con sidebar + topbar, guards de rol ADMIN/STOCK/PEDIDOS, tabs condicionales por rol | ✅ |
+| Dashboard metrics | `GET /admin/metricas` — cards ventas totales/mes, pedidos hoy, productos bajos stock, clientes registrados | ✅ |
+| Ventas chart | `VentasChart` con recharts (BarChart último año), `MetricaVentas` tipado | ✅ |
+| Pedidos table | `PedidosTable` con paginación server-side, cambio de estado PEDIDOS, modal confirmación + detalle | ✅ |
+| Stock management | `StockTable` con edición inline de stock/disponibilidad, solo Gestor de Stock | ✅ |
+| Productos CRUD | `ProductosTable` + `ProductoFormModal` (create/edit con categorías e ingredientes), `useAdminCategorias`/`useAdminIngredientes` hooks | ✅ |
+| Usuarios table | `UsuariosTable` con cambio de rol ADMIN, paginación server-side, confirmación LAST_ADMIN guard | ✅ |
+| Categorías CRUD | `CategoriasTable` + `CategoriaFormModal` (create/edit jerarquía), soft delete con validación | ✅ |
+| Verificación | Tasks completadas (verificación pendiente por el usuario — no ejecutada por el agente) | 🔲 |
+
+**Capabilities entregadas:** `admin-frontend-dashboard`, `admin-frontend-crud`
 
 ---
 

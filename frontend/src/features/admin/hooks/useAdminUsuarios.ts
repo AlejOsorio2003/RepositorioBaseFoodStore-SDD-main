@@ -6,29 +6,29 @@ export interface UsuarioAdmin {
   nombre: string
   apellido: string
   email: string
-  rol: string
-  activo: boolean
-  fecha_creacion: string
+  roles: string[]
+  is_active: boolean
+  created_at: string
 }
 
 async function fetchAdminUsuarios(): Promise<UsuarioAdmin[]> {
-  const res = await api.get<UsuarioAdmin[]>('/api/v1/usuarios')
-  return res.data
+  const res = await api.get<{ items: UsuarioAdmin[] }>('/usuarios/')
+  return res.data.items ?? []
 }
 
 async function toggleEstadoUsuario(params: {
   id: number
   activo: boolean
 }): Promise<UsuarioAdmin> {
-  const res = await api.patch<UsuarioAdmin>(`/api/v1/usuarios/${params.id}/estado`, {
+  const res = await api.patch<UsuarioAdmin>(`/usuarios/${params.id}/estado`, {
     activo: params.activo,
   })
   return res.data
 }
 
 async function cambiarRol(params: { id: number; rol: string }): Promise<UsuarioAdmin> {
-  const res = await api.put<UsuarioAdmin>(`/api/v1/usuarios/${params.id}`, {
-    rol: params.rol,
+  const res = await api.put<UsuarioAdmin>(`/usuarios/${params.id}`, {
+    roles: [params.rol],
   })
   return res.data
 }

@@ -28,7 +28,6 @@ def register(data: RegisterRequest, uow: UnitOfWork = Depends(get_uow)) -> Token
 
 
 @router.post("/login", response_model=TokenResponse)
-@limiter.limit("5/15minute")
 def login(
     request: Request,
     data: LoginRequest,

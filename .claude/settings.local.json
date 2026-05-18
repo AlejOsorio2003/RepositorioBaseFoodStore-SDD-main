@@ -109,7 +109,16 @@
       "PowerShell(& \"C:\\\\Program Files\\\\PostgreSQL\\\\17\\\\bin\\\\psql.exe\" -U postgres -h localhost -p 5432 -d foodstore -c \"SELECT id, total, usuario_id FROM pedidos WHERE id = 1;\" 2>&1)",
       "Bash(taskkill *)",
       "PowerShell(Stop-Process *)",
-      "Bash(uvicorn app.main:app --host 0.0.0.0 --port 8000)"
+      "Bash(uvicorn app.main:app --host 0.0.0.0 --port 8000)",
+      "Skill(openspec-apply-change)",
+      "Bash(mkdir -p \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\frontend\\\\src\\\\entities\\\\admin\")",
+      "Bash(mkdir -p \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\frontend\\\\src\\\\features\\\\admin\\\\hooks\")",
+      "Bash(node -e \"const pkg = require\\('./node_modules/@tanstack/react-form/package.json'\\); console.log\\('version:', pkg.version\\)\")",
+      "Bash(node -e \"const exports = require\\('./node_modules/@tanstack/react-form/build/cjs/index.cjs'\\); console.log\\(Object.keys\\(exports\\).filter\\(k => k.includes\\('Form'\\) || k.includes\\('form'\\)\\).slice\\(0,20\\)\\)\")",
+      "Bash(node -e \"const d=require\\('fs'\\).readFileSync\\('/dev/stdin','utf8'\\); const p=JSON.parse\\(d\\); console.log\\('exports:', JSON.stringify\\(p.exports,null,2\\).substring\\(0,500\\)\\)\")",
+      "Bash(node *)",
+      "Bash(findstr recharts *)",
+      "Bash(npm run *)"
     ]
   }
 }

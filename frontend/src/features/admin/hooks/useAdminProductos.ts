@@ -24,14 +24,14 @@ export interface ProductoCreatePayload {
 export interface ProductoUpdatePayload extends Partial<ProductoCreatePayload> {}
 
 async function fetchAdminProductos(): Promise<ProductoAdmin[]> {
-  const res = await api.get('/api/v1/productos')
+  const res = await api.get('/productos')
   // The endpoint may return paginated or array. Handle both.
   const data = res.data
   return Array.isArray(data) ? data : data.items ?? []
 }
 
 async function crearProducto(payload: ProductoCreatePayload): Promise<ProductoAdmin> {
-  const res = await api.post<ProductoAdmin>('/api/v1/productos', payload)
+  const res = await api.post<ProductoAdmin>('/productos', payload)
   return res.data
 }
 
@@ -39,19 +39,19 @@ async function updateProducto(params: {
   id: number
   payload: ProductoUpdatePayload
 }): Promise<ProductoAdmin> {
-  const res = await api.put<ProductoAdmin>(`/api/v1/productos/${params.id}`, params.payload)
+  const res = await api.put<ProductoAdmin>(`/productos/${params.id}`, params.payload)
   return res.data
 }
 
 async function deleteProducto(id: number): Promise<void> {
-  await api.delete(`/api/v1/productos/${id}`)
+  await api.delete(`/productos/${id}`)
 }
 
 async function toggleDisponibilidad(params: {
   id: number
   disponible: boolean
 }): Promise<ProductoAdmin> {
-  const res = await api.patch<ProductoAdmin>(`/api/v1/productos/${params.id}/disponibilidad`, {
+  const res = await api.patch<ProductoAdmin>(`/productos/${params.id}/disponibilidad`, {
     disponible: params.disponible,
   })
   return res.data

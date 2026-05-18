@@ -59,11 +59,11 @@
 
 ## 10. Verificación
 
-- [ ] 10.1 Login como ADMIN → `/admin/dashboard` muestra KPI cards y ambos gráficos recharts con datos reales
-- [ ] 10.2 Login como STOCK → redirige a `/admin/stock`, no ve `/admin/dashboard` ni `/admin/usuarios`
-- [ ] 10.3 Login como PEDIDOS → redirige a `/admin/pedidos`, no ve otras secciones
-- [ ] 10.4 Login como CLIENT → acceder a `/admin` redirige a `/`
-- [ ] 10.5 AdminPedidosPage: seleccionar pedido → panel detalle + historial; botón "Avanzar estado" funciona y actualiza la tabla
-- [ ] 10.6 AdminProductosPage: crear producto → aparece en tabla; editar → cambios reflejados; eliminar → desaparece de tabla; toggle disponibilidad funciona inline
-- [ ] 10.7 AdminStockPage: editar stock de un producto → valor actualizado; ingresar negativo → error inline sin llamada al backend; badge "Stock bajo" visible para productos con stock < 5
-- [ ] 10.8 AdminUsuariosPage: toggle activo funciona; cambio de rol se refleja en el dropdown
+- [x] 10.1 Login como ADMIN → `/admin/dashboard` muestra KPI cards y ambos gráficos recharts con datos reales
+- [x] 10.2 Login como STOCK → redirige a `/admin/stock`, no ve `/admin/dashboard` ni `/admin/usuarios`
+- [x] 10.3 Login como PEDIDOS → redirige a `/admin/pedidos`, no ve otras secciones
+- [x] 10.4 Login como CLIENT → acceder a `/admin` redirige a `/`
+- [x] 10.5 AdminPedidosPage: seleccionar pedido → panel detalle + historial; botón "Avanzar estado" funciona y actualiza la tabla
+- [x] 10.6 AdminProductosPage: crear producto → aparece en tabla; editar → cambios reflejados; eliminar → desaparece de tabla; toggle disponibilidad funciona inline
+- [x] 10.7 AdminStockPage: editar stock de un producto → valor actualizado; ingresar negativo → error inline sin llamada al backend; badge "Stock bajo" visible para productos con stock < 5
+- [x] 10.8 AdminUsuariosPage: toggle activo funciona; cambio de rol se refleja en el dropdown

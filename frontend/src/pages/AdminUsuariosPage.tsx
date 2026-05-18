@@ -49,17 +49,18 @@ function ToggleSwitch({
 
 function RolSelect({ usuario }: { usuario: UsuarioAdmin }) {
   const cambiarRol = useCambiarRol()
+  const currentRol = usuario.roles[0] ?? 'CLIENT'
 
   const handleChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     const newRol = e.target.value
-    if (newRol !== usuario.rol) {
+    if (newRol !== currentRol) {
       cambiarRol.mutate({ id: usuario.id, rol: newRol })
     }
   }
 
   return (
     <select
-      value={usuario.rol}
+      value={currentRol}
       onChange={handleChange}
       disabled={cambiarRol.isPending}
       className="px-2 py-1 border border-gray-300 rounded-lg text-xs bg-white focus:outline-none focus:ring-2 focus:ring-[#721016] focus:border-transparent disabled:opacity-60 disabled:cursor-not-allowed"
@@ -82,7 +83,7 @@ function ActivoToggle({ usuario }: { usuario: UsuarioAdmin }) {
 
   return (
     <ToggleSwitch
-      checked={usuario.activo}
+      checked={usuario.is_active}
       onChange={handleChange}
       disabled={toggleEstado.isPending}
     />
@@ -162,7 +163,7 @@ export function AdminUsuariosPage() {
                         </div>
                       </td>
                       <td className="px-4 py-3 text-center text-gray-500 text-xs">
-                        {formatDate(usuario.fecha_creacion)}
+                        {formatDate(usuario.created_at)}
                       </td>
                     </tr>
                   ))

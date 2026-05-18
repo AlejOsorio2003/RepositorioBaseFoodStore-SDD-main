@@ -71,7 +71,7 @@ function ProductoModal({
   const { data: categorias = [] } = useQuery({
     queryKey: ['categorias'],
     queryFn: () =>
-      api.get<CategoriaOption[]>('/api/v1/categorias').then((r) => r.data),
+      api.get<CategoriaOption[]>('/categorias').then((r) => r.data),
   })
 
   const isEdit = producto !== null

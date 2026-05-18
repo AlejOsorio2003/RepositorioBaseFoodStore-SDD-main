@@ -2,7 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { api } from '@/shared/api/axios'
 
 async function updateStock(params: { id: number; stock_cantidad: number }): Promise<void> {
-  await api.patch(`/api/v1/admin/productos/${params.id}/stock`, {
+  await api.patch(`/admin/productos/${params.id}/stock`, {
     stock_cantidad: params.stock_cantidad,
   })
 }

@@ -14,6 +14,6 @@ export interface MetricasRead {
 }
 
 export async function getMetricas(): Promise<MetricasRead> {
-  const res = await api.get<MetricasRead>('/api/v1/admin/metricas')
+  const res = await api.get<MetricasRead>('/admin/metricas')
   return res.data
 }

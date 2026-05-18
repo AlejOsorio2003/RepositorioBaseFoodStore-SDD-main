@@ -3,30 +3,30 @@ import { api } from '@/shared/api/axios'
 
 export interface PedidoAdmin {
   id: number
-  usuario_nombre: string
-  estado: string
-  fecha_creacion: string
-  total: number
+  estado_nombre: string
+  total: string
+  costo_envio: string
+  created_at: string
 }
 
 export interface HistorialItem {
-  estado: string
-  timestamp: string
-  descripcion?: string
+  estado_nombre: string
+  creado_en: string
+  notas?: string | null
 }
 
 async function fetchAdminPedidos(): Promise<PedidoAdmin[]> {
-  const res = await api.get<PedidoAdmin[]>('/api/v1/pedidos')
-  return res.data
+  const res = await api.get<{ items: PedidoAdmin[] }>('/pedidos/')
+  return res.data.items ?? []
 }
 
 async function fetchHistorialPedido(pedidoId: number): Promise<HistorialItem[]> {
-  const res = await api.get<HistorialItem[]>(`/api/v1/pedidos/${pedidoId}/historial`)
+  const res = await api.get<HistorialItem[]>(`/pedidos/${pedidoId}/historial`)
   return res.data
 }
 
 async function avanzarEstadoPedido(params: { id: number; estado: string }): Promise<void> {
-  await api.patch(`/api/v1/pedidos/${params.id}/estado`, { estado: params.estado })
+  await api.patch(`/pedidos/${params.id}/estado`, { nuevo_estado: params.estado })
 }
 
 export function useAdminPedidos() {

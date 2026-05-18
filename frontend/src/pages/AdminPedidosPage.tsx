@@ -9,6 +9,7 @@ import {
 const ESTADO_BADGE: Record<string, string> = {
   PENDIENTE: 'bg-yellow-100 text-yellow-800',
   CONFIRMADO: 'bg-blue-100 text-blue-800',
+  EN_PREP: 'bg-purple-100 text-purple-800',
   EN_PREPARACION: 'bg-purple-100 text-purple-800',
   EN_CAMINO: 'bg-cyan-100 text-cyan-800',
   ENTREGADO: 'bg-green-100 text-green-800',
@@ -17,8 +18,8 @@ const ESTADO_BADGE: Record<string, string> = {
 
 const FSM_NEXT: Record<string, string> = {
   PENDIENTE: 'CONFIRMADO',
-  CONFIRMADO: 'EN_PREPARACION',
-  EN_PREPARACION: 'EN_CAMINO',
+  CONFIRMADO: 'EN_PREP',
+  EN_PREP: 'EN_CAMINO',
   EN_CAMINO: 'ENTREGADO',
 }
 
@@ -61,8 +62,8 @@ function DetailPanel({
 }) {
   const { data: historial, isLoading: histLoading } = useHistorialPedido(pedido.id)
   const avanzarEstado = useAvanzarEstado()
-  const nextEstado = FSM_NEXT[pedido.estado]
-  const isFinal = ESTADOS_FINALES.includes(pedido.estado)
+  const nextEstado = FSM_NEXT[pedido.estado_nombre]
+  const isFinal = ESTADOS_FINALES.includes(pedido.estado_nombre)
 
   const handleAvanzar = () => {
     if (!nextEstado) return
@@ -94,15 +95,15 @@ function DetailPanel({
           </div>
           <div>
             <span className="text-gray-500">Estado:</span>{' '}
-            <EstadoBadge estado={pedido.estado} />
+            <EstadoBadge estado={pedido.estado_nombre} />
           </div>
           <div>
             <span className="text-gray-500">Fecha:</span>{' '}
-            <span className="text-gray-900">{formatDate(pedido.fecha_creacion)}</span>
+            <span className="text-gray-900">{formatDate(pedido.created_at)}</span>
           </div>
           <div>
             <span className="text-gray-500">Total:</span>{' '}
-            <span className="font-semibold text-gray-900">{formatARS(pedido.total)}</span>
+            <span className="font-semibold text-gray-900">{formatARS(parseFloat(pedido.total))}</span>
           </div>
         </div>
 
@@ -125,7 +126,7 @@ function DetailPanel({
                 : isFinal
                 ? 'Estado final'
                 : nextEstado
-                ? `Avanzar a ${nextEstado.replace(/_/g, ' ')}`
+                ? `Avanzar a ${nextEstado.replace('EN_PREP', 'EN PREPARACIÓN').replace(/_/g, ' ')}`
                 : 'Sin siguiente estado'}
             </button>
           </div>
@@ -155,10 +156,10 @@ function DetailPanel({
                 <li key={idx} className="ml-4">
                   <div className="absolute -left-1.5 mt-1 h-3 w-3 rounded-full border-2 border-white bg-[#721016]" />
                   <div>
-                    <EstadoBadge estado={item.estado} />
-                    <p className="text-xs text-gray-500 mt-0.5">{formatDate(item.timestamp)}</p>
-                    {item.descripcion && (
-                      <p className="text-xs text-gray-600 mt-0.5">{item.descripcion}</p>
+                    <EstadoBadge estado={item.estado_nombre} />
+                    <p className="text-xs text-gray-500 mt-0.5">{formatDate(item.creado_en)}</p>
+                    {item.notas && (
+                      <p className="text-xs text-gray-600 mt-0.5">{item.notas}</p>
                     )}
                   </div>
                 </li>
@@ -175,13 +176,16 @@ function DetailPanel({
 
 export function AdminPedidosPage() {
   const { data: pedidos, isLoading, isError } = useAdminPedidos()
-  const [selectedPedido, setSelectedPedido] = useState<PedidoAdmin | null>(null)
+  const [selectedId, setSelectedId] = useState<number | null>(null)
   const [page, setPage] = useState(1)
 
   const totalPages = pedidos ? Math.ceil(pedidos.length / PAGE_SIZE) : 1
   const paginatedPedidos = pedidos
     ? pedidos.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE)
     : []
+
+  // Siempre leer de la query en vivo para que refleje el estado actualizado tras avanzar
+  const selectedPedido = pedidos?.find((p) => p.id === selectedId) ?? null
 
   return (
     <div className="p-8 h-full flex flex-col">
@@ -234,9 +238,7 @@ export function AdminPedidosPage() {
                           <tr
                             key={pedido.id}
                             onClick={() =>
-                              setSelectedPedido(
-                                selectedPedido?.id === pedido.id ? null : pedido
-                              )
+                              setSelectedId(selectedId === pedido.id ? null : pedido.id)
                             }
                             className={[
                               'cursor-pointer transition-colors',
@@ -246,15 +248,15 @@ export function AdminPedidosPage() {
                             ].join(' ')}
                           >
                             <td className="px-4 py-3 font-mono text-gray-600">#{pedido.id}</td>
-                            <td className="px-4 py-3 text-gray-900">{pedido.usuario_nombre}</td>
+                            <td className="px-4 py-3 text-gray-500 text-xs">Cliente #{pedido.id}</td>
                             <td className="px-4 py-3">
-                              <EstadoBadge estado={pedido.estado} />
+                              <EstadoBadge estado={pedido.estado_nombre} />
                             </td>
                             <td className="px-4 py-3 text-gray-500">
-                              {formatDate(pedido.fecha_creacion)}
+                              {formatDate(pedido.created_at)}
                             </td>
                             <td className="px-4 py-3 text-right font-semibold text-gray-900">
-                              {formatARS(pedido.total)}
+                              {formatARS(parseFloat(pedido.total))}
                             </td>
                           </tr>
                         ))
@@ -297,7 +299,7 @@ export function AdminPedidosPage() {
           <div className="bg-white rounded-xl shadow-sm border border-gray-200 overflow-hidden flex flex-col h-full" style={{ minWidth: '20rem', maxWidth: '20rem' }}>
             <DetailPanel
               pedido={selectedPedido}
-              onClose={() => setSelectedPedido(null)}
+              onClose={() => setSelectedId(null)}
             />
           </div>
         )}
