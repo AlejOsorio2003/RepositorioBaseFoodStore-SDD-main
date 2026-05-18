@@ -31,9 +31,9 @@ export function CheckoutPage() {
       }
       return crearPedido(payload)
     },
-    onSuccess: () => {
+    onSuccess: (data) => {
       clearCart()
-      navigate('/orders')
+      navigate(`/payment/${data.id}`)
     },
     /* 6.3 — onError: no limpiar carrito */
     onError: () => {

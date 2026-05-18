@@ -4,6 +4,7 @@ import { CartPage } from '@/pages/CartPage'
 import { CatalogPage } from '@/pages/CatalogPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
 import { LoginPage } from '@/pages/LoginPage'
+import { PaymentPage } from '@/pages/PaymentPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
 import { OrdersPage } from '@/pages/OrdersPage'
 import { RegisterPage } from '@/pages/RegisterPage'
@@ -16,6 +17,7 @@ export const router = createBrowserRouter([
   { path: '/catalog', element: <CatalogPage /> },
   { path: '/cart', element: <CartPage /> },
   { path: '/checkout', element: <CheckoutPage /> },
+  { path: '/payment/:pedidoId', element: <PaymentPage /> },
   { path: '/orders', element: <OrdersPage /> },
   { path: '/admin', element: <AdminPage /> },
   { path: '/productos/:id', element: <ProductoDetailPage /> },
