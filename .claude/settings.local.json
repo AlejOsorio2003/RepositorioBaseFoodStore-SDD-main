@@ -121,7 +121,10 @@
       "Bash(npm run *)",
       "mcp__stitch__list_projects",
       "mcp__stitch__list_screens",
-      "Bash(xargs grep -l \"upload\\\\|image\\\\|file\")"
+      "Bash(xargs grep -l \"upload\\\\|image\\\\|file\")",
+      "mcp__plugin_engram_engram__mem_get_observation",
+      "PowerShell(netstat *)",
+      "PowerShell(Get-WmiObject *)"
     ]
   }
 }

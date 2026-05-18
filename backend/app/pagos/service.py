@@ -1,3 +1,4 @@
+import logging
 import uuid
 
 import mercadopago
@@ -13,6 +14,7 @@ from app.pedidos.schemas import AvanzarEstadoRequest
 from app.pedidos.service import avanzar_estado
 from app.productos.models import FormaPago
 
+logger = logging.getLogger(__name__)
 sdk = mercadopago.SDK(settings.MP_ACCESS_TOKEN)
 
 
@@ -21,6 +23,7 @@ def crear_pago(
     current_user: Usuario,
     uow: UnitOfWork,
 ) -> PagoResponse:
+    logger.warning("crear_pago called — pedido_id=%s user=%s", data.pedido_id, current_user.id)
     if not settings.MP_ACCESS_TOKEN:
         raise HTTPException(
             status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
@@ -61,6 +64,28 @@ def crear_pago(
 
     idempotency_key = uuid.uuid4()
 
+    # Mock mode: omitir llamada real a MP y devolver pago aprobado
+    if settings.MP_MOCK_MODE:
+        logger.warning("MP_MOCK_MODE activo — devolviendo pago aprobado simulado")
+        pago = Pago(
+            pedido_id=pedido.id,
+            mp_payment_id=999999999,
+            mp_status="approved",
+            mp_status_detail="accredited",
+            external_reference=str(pedido.id),
+            idempotency_key=idempotency_key,
+            monto=float(pedido.total),
+            forma_pago_id=forma_pago.id,
+        )
+        uow.pagos.create(pago)
+        avanzar_estado(
+            uow=uow,
+            pedido_id=pedido.id,
+            data=AvanzarEstadoRequest(nuevo_estado="CONFIRMADO"),
+            usuario_id=None,
+        )
+        return PagoResponse.model_validate(pago)
+
     payment_data = {
         "token": data.token,
         "transaction_amount": float(pedido.total),
@@ -73,12 +98,16 @@ def crear_pago(
         payment_data["notification_url"] = settings.MP_NOTIFICATION_URL
 
     result = sdk.payment().create(payment_data)
+    logger.warning("MP payment result: status=%s response=%s", result.get("status"), result.get("response"))
 
     response = result["response"]
     if "id" not in response:
+        mp_err = response.get("message") or response.get("error") or "MP_PAYMENT_ERROR"
+        mp_cause = response.get("cause", [])
+        logger.error("MP payment failed — message=%s cause=%s full=%s", mp_err, mp_cause, response)
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
-            detail=response.get("message", "MP_PAYMENT_ERROR"),
+            detail={"mp_error": mp_err, "cause": mp_cause},
         )
     mp_payment_id = response["id"]
     mp_status = response["status"]

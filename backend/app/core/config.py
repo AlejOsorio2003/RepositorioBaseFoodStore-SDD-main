@@ -11,6 +11,7 @@ class Settings(BaseSettings):
     MP_ACCESS_TOKEN: str = ""
     MP_PUBLIC_KEY: str = ""
     MP_NOTIFICATION_URL: str = ""
+    MP_MOCK_MODE: bool = False
     CORS_ORIGINS: str = "http://localhost:5173"
 
     @property
