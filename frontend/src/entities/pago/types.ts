@@ -13,4 +13,5 @@ export interface CrearPagoRequest {
   pedido_id: number
   token: string
   forma_pago_codigo: string
+  issuer_id?: string
 }

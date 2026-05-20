@@ -94,6 +94,8 @@ def crear_pago(
         "external_reference": str(pedido.id),
         "payer": {"email": current_user.email},
     }
+    if data.issuer_id:
+        payment_data["issuer_id"] = int(data.issuer_id)
     if settings.MP_NOTIFICATION_URL:
         payment_data["notification_url"] = settings.MP_NOTIFICATION_URL
 

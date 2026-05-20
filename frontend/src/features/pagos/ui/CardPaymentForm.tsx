@@ -7,7 +7,7 @@ if (MP_PUBLIC_KEY) {
 }
 
 interface CardPaymentFormProps {
-  onSubmit: (token: string, paymentMethodId: string) => void
+  onSubmit: (token: string, paymentMethodId: string, issuerId?: string) => void
   amount: number
 }
 
@@ -24,8 +24,8 @@ export function CardPaymentForm({ onSubmit, amount }: CardPaymentFormProps) {
     <CardPayment
       initialization={{ amount }}
       onSubmit={async (formData) => {
-        const data = formData as unknown as { token: string; payment_method_id: string }
-        onSubmit(data.token, data.payment_method_id)
+        const data = formData as unknown as { token: string; payment_method_id: string; issuer_id?: string }
+        onSubmit(data.token, data.payment_method_id, data.issuer_id)
       }}
     />
   )

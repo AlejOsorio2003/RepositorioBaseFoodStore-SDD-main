@@ -7,6 +7,7 @@ class CrearPagoRequest(BaseModel):
     pedido_id: int
     token: str
     forma_pago_codigo: str
+    issuer_id: str | None = None
 
 
 class WebhookIPNPayload(BaseModel):

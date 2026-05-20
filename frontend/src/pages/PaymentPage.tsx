@@ -32,7 +32,7 @@ export function PaymentPage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  const handleSubmit = async (token: string, paymentMethodId: string) => {
+  const handleSubmit = async (token: string, paymentMethodId: string, issuerId?: string) => {
     if (!pedidoId) return
 
     setView('processing')
@@ -43,6 +43,7 @@ export function PaymentPage() {
         pedido_id: Number(pedidoId),
         token,
         forma_pago_codigo: paymentMethodId,
+        issuer_id: issuerId,
       })
 
       if (pago.mp_status === 'approved') {
