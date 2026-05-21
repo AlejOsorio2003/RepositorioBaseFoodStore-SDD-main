@@ -131,6 +131,121 @@ def crear_pago(
     return PagoResponse.model_validate(pago)
 
 
+def crear_preferencia(
+    pedido_id: int,
+    current_user: Usuario,
+    uow: UnitOfWork,
+) -> dict:
+    logger.warning("crear_preferencia called — pedido_id=%s user=%s", pedido_id, current_user.id)
+    if not settings.MP_ACCESS_TOKEN:
+        raise HTTPException(
+            status_code=status.HTTP_503_SERVICE_UNAVAILABLE,
+            detail="MERCADOPAGO_NO_CONFIGURADO",
+        )
+
+    # Buscar pedido y verificar propiedad
+    pedido = uow.pedidos.get_by_id(pedido_id)
+    if not pedido:
+        raise HTTPException(
+            status_code=status.HTTP_404_NOT_FOUND,
+            detail="Pedido no encontrado",
+        )
+    if pedido.usuario_id != current_user.id:
+        raise HTTPException(
+            status_code=status.HTTP_403_FORBIDDEN,
+            detail="El pedido no pertenece al usuario actual",
+        )
+
+    # Verificar forma de pago
+    forma_pago = uow.session.exec(
+        select(FormaPago).where(
+            FormaPago.codigo == "mercadopago",
+            FormaPago.habilitado == True,
+        )
+    ).first()
+    if not forma_pago:
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail="FORMA_PAGO_INVALIDA",
+        )
+
+    idempotency_key = uuid.uuid4()
+
+    # Mock mode: omitir SDK, pago aprobado inmediato
+    if settings.MP_MOCK_MODE:
+        logger.warning("MP_MOCK_MODE activo — preferencia simulada, pago aprobado")
+        pago = Pago(
+            pedido_id=pedido.id,
+            mp_payment_id=999999999,
+            mp_status="approved",
+            mp_status_detail="accredited",
+            external_reference=str(pedido.id),
+            idempotency_key=idempotency_key,
+            monto=float(pedido.total),
+            forma_pago_id=forma_pago.id,
+        )
+        uow.pagos.create(pago)
+        avanzar_estado(
+            uow=uow,
+            pedido_id=pedido.id,
+            data=AvanzarEstadoRequest(nuevo_estado="CONFIRMADO"),
+            usuario_id=None,
+        )
+        return {"preference_id": f"mock-pref-{pedido.id}"}
+
+    # Crear Pago pendiente antes de llamar a MP
+    pago = Pago(
+        pedido_id=pedido.id,
+        mp_status="pending",
+        external_reference=str(pedido.id),
+        idempotency_key=idempotency_key,
+        monto=float(pedido.total),
+        forma_pago_id=forma_pago.id,
+    )
+    uow.pagos.create(pago)
+
+    # Construir items de la preferencia desde los detalles del pedido
+    items = []
+    for detalle in pedido.detalles:
+        items.append({
+            "id": str(detalle.producto_id),
+            "title": detalle.nombre_snapshot,
+            "quantity": detalle.cantidad,
+            "unit_price": float(detalle.precio_snapshot),
+            "currency_id": "ARS",
+        })
+
+    back_urls = {
+        "success": f"{settings.MP_FRONTEND_URL}/payment/{pedido.id}?resultado=aprobado",
+        "failure": f"{settings.MP_FRONTEND_URL}/payment/{pedido.id}?resultado=rechazado",
+        "pending": f"{settings.MP_FRONTEND_URL}/payment/{pedido.id}?resultado=pendiente",
+    }
+
+    preference_data: dict = {
+        "items": items,
+        "external_reference": str(pedido.id),
+        "back_urls": back_urls,
+        "auto_return": "approved",
+    }
+    if settings.MP_NOTIFICATION_URL:
+        preference_data["notification_url"] = settings.MP_NOTIFICATION_URL
+
+    result = sdk.preference().create(preference_data)
+    logger.warning("MP preference result: status=%s response=%s", result.get("status"), result.get("response"))
+
+    response = result["response"]
+    if "id" not in response:
+        mp_err = response.get("message") or response.get("error") or "MP_PREFERENCE_ERROR"
+        logger.error("MP preference failed — message=%s full=%s", mp_err, response)
+        raise HTTPException(
+            status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
+            detail={"mp_error": mp_err},
+        )
+
+    preference_id = response["id"]
+    return {"preference_id": preference_id}
+
+
 def procesar_webhook(
     topic: str,
     mp_id: str,
@@ -145,8 +260,14 @@ def procesar_webhook(
 
     pago = uow.pagos.get_by_mp_payment_id(int(mp_id))
     if not pago:
+        # Fallback: buscar por external_reference (flujo Wallet)
+        external_ref = response.get("external_reference")
+        if external_ref:
+            pago = uow.pagos.get_by_external_reference(external_ref)
+    if not pago:
         return {"status": "not_found"}
 
+    pago.mp_payment_id = int(mp_id)
     pago.mp_status = mp_status
     uow.session.add(pago)
 

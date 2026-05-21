@@ -15,6 +15,14 @@ class WebhookIPNPayload(BaseModel):
     id: str
 
 
+class CrearPreferenciaRequest(BaseModel):
+    pedido_id: int
+
+
+class PreferenciaResponse(BaseModel):
+    preference_id: str
+
+
 class PagoResponse(BaseModel):
     id: int
     pedido_id: int

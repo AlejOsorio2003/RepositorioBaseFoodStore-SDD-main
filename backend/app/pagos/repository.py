@@ -20,3 +20,8 @@ class PagoRepository(BaseRepository[Pago]):
         return self.session.exec(
             select(Pago).where(Pago.mp_payment_id == mp_payment_id)
         ).first()
+
+    def get_by_external_reference(self, external_reference: str) -> Pago | None:
+        return self.session.exec(
+            select(Pago).where(Pago.external_reference == external_reference)
+        ).first()

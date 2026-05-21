@@ -9,6 +9,14 @@ export interface PagoResponse {
   created_at: string
 }
 
+export interface PreferenciaResponse {
+  preference_id: string
+}
+
+export interface CrearPreferenciaRequest {
+  pedido_id: number
+}
+
 export interface CrearPagoRequest {
   pedido_id: number
   token: string
