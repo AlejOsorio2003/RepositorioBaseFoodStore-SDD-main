@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-21 (CH-16 archivado)
+**Última actualización:** 2026-05-21 (CH-17 propuesto)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -27,6 +27,8 @@
 | CH-14 | Admin — Backend Dashboard + Métricas | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-14-admin-backend/` |
 | CH-15 | Admin — Frontend Dashboard + Gestión | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-15-admin-frontend/` |
 | CH-16 | UX Cliente Refactor | ✅ Hecho (archivado 2026-05-21) | 2026-05-21 | `openspec/changes/archive/2026-05-21-ch-16-ux-cliente-refactor/` |
+| CH-17 | Pagos — Opción Cuenta MercadoPago (Wallet) | 📋 Propuesto | 2026-05-21 | `openspec/changes/ch-17-pagos-mp-wallet/` |
+| CH-18 | Display de Cocina (KDS) + Rol COCINA | 📋 Propuesto | — | `openspec/changes/ch-18-display-cocina/` *(pendiente propose)* |
 ---
 
 
@@ -111,6 +113,19 @@ CH-00: Infraestructura Base  ✅ ARCHIVADO
                                CRUD de productos · categorías
                                Tabla de pedidos + cambio de estado
                                Tabla de usuarios + cambio de rol
+
+        CH-13 + CH-16
+          └─► CH-17: Pagos — Cuenta MercadoPago (Wallet)  📋 PROPUESTO
+                    POST /pagos/preferencia (preference_id)
+                    WalletPaymentForm · selector tarjeta/wallet
+                    back_urls + panel de resultado por redirect
+
+        CH-10 + CH-12
+          └─► CH-18: Display de Cocina (KDS)  📋 PROPUESTO
+                    Rol COCINA · seed + RBAC
+                    WS /cocina/ws · GET /cocina/pedidos
+                    FSM: COCINA puede CONFIRMADO→EN_PREP→EN_CAMINO
+                    KDS frontend: 2 columnas · timer urgencia · fallback polling
 ```
 
 ---
