@@ -60,10 +60,10 @@ export function CartPage() {
             Agregá productos desde el catálogo
           </p>
           <Link
-            to="/catalog"
+            to="/"
             className="px-6 py-2.5 bg-primary hover:bg-primary-container text-white font-medium rounded-lg transition-colors"
           >
-            Ver catálogo
+            ← Volver al catálogo
           </Link>
         </div>
       </>

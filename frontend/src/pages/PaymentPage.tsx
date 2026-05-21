@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { useNavigate, useParams } from 'react-router-dom'
+import { useNavigate, useParams, Link } from 'react-router-dom'
 import { Header } from '@/shared/ui'
 import { useAuthStore } from '@/shared/store/auth.store'
 import { usePaymentStore } from '@/shared/store/payment.store'
@@ -80,6 +80,12 @@ export function PaymentPage() {
     <>
       <Header />
       <div className="max-w-2xl mx-auto p-4 sm:p-8">
+        <Link
+          to="/"
+          className="inline-block text-sm text-on-surface-variant hover:text-primary transition-colors mb-2"
+        >
+          ← Volver al catálogo
+        </Link>
         <h1 className="font-headline text-2xl font-bold text-on-surface mb-6">
           Pagar Pedido
         </h1>

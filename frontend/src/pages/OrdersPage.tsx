@@ -28,6 +28,12 @@ export function OrdersPage() {
       <>
         <Header />
         <div className="max-w-4xl mx-auto p-4 sm:p-8">
+          <Link
+            to="/"
+            className="inline-block text-sm text-on-surface-variant hover:text-primary transition-colors mb-2"
+          >
+            ← Volver al catálogo
+          </Link>
           <h1 className="font-headline text-2xl font-bold text-on-surface mb-6">
             Mis Pedidos
           </h1>

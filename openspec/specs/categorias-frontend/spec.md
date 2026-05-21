@@ -1,5 +1,5 @@
 ## Purpose
-Navegación y filtrado del catálogo por categoría jerárquica. Define los tipos de dominio, funciones de API, hooks TanStack Query, componente CategorySidebar y la integración en CatalogPage con selección persistida en URL.
+Navegación y filtrado del catálogo por categoría jerárquica. Define los tipos de dominio, funciones de API, hooks TanStack Query, componentes CategoryChips (reemplazo de CategorySidebar) y la integración en CatalogPage con selección persistida en URL mediante query param `?categoria=`.
 
 ## Requirements
 
@@ -40,57 +40,65 @@ El sistema SHALL proveer `useCategorias()` en `features/categoria-nav/` que cach
 - **WHEN** el servidor retorna error
 - **THEN** `useCategorias()` retorna `{ isError: true }`
 
-### Requirement: Componente CategorySidebar
-El sistema SHALL renderizar un sidebar con la jerarquía de categorías construida desde la lista plana.
+### Requirement: Componente CategoryChips
+El sistema SHALL proveer `CategoryChips` en `features/categoria-nav/ui/CategoryChips.tsx` como reemplazo de `CategorySidebar` para la navegación por categoría. Muestra todas las categorías (raíces y hojas) como chips horizontales scrollables, preservando el mismo mecanismo de query param `?categoria=`.
 
-#### Scenario: Renderiza categorías raíz
-- **WHEN** existen categorías con `parent_id === null`
-- **THEN** se listan como ítems de nivel 1 en el sidebar
+#### Scenario: Renderiza todas las categorías como chips
+- **WHEN** la lista de categorías se carga correctamente
+- **THEN** se renderiza un chip por cada categoría más un chip "Todas" al inicio
 
-#### Scenario: Renderiza subcategorías anidadas
-- **WHEN** una categoría raíz tiene hijos en la lista plana
-- **THEN** los hijos se muestran indentados bajo su padre
-
-#### Scenario: Categoría activa destacada visualmente
+#### Scenario: Chip activo destacado visualmente
 - **WHEN** el query param `?categoria={id}` coincide con una categoría
-- **THEN** ese ítem se renderiza con estilo activo (fondo color primario #721016)
+- **THEN** ese chip se renderiza con estilo activo (fondo color primario #721016, texto blanco)
 
-#### Scenario: Click en categoría actualiza URL
-- **WHEN** el usuario hace click en una categoría del sidebar
+#### Scenario: Click en chip actualiza URL
+- **WHEN** el usuario hace click en un chip de categoría
 - **THEN** se actualiza el query param `?categoria={id}` sin recargar la página
 
-#### Scenario: Opción "Todas" limpia el filtro
-- **WHEN** el usuario selecciona "Todas las categorías"
+#### Scenario: Click en "Todas" limpia el filtro
+- **WHEN** el usuario hace click en el chip "Todas"
 - **THEN** se elimina el query param `?categoria` de la URL
 
+#### Scenario: Estado de carga muestra placeholders
+- **WHEN** los datos de categorías están cargando
+- **THEN** se muestran chips skeleton animados en lugar de chips reales
+
+#### Scenario: Chips son scrollables horizontalmente en pantallas pequeñas
+- **WHEN** la cantidad de chips supera el ancho disponible
+- **THEN** el contenedor permite scroll horizontal sin mostrar scrollbar visible
+
 ### Requirement: CatalogPage con navegación por categoría
-El sistema SHALL reemplazar el placeholder de CatalogPage con una página que integra el sidebar de categorías.
+El sistema SHALL integrar `CategoryChips` en `CatalogPage` en reemplazo del sidebar. El layout pasa de sidebar-izquierda + contenido-derecha a chips-arriba + contenido-full-width.
 
-#### Scenario: Layout con sidebar
-- **WHEN** el usuario navega a `/` o `/catalog`
-- **THEN** se renderiza CatalogPage con sidebar a la izquierda y área de contenido a la derecha
-
-#### Scenario: Categoría seleccionada se muestra en el área de contenido
-- **WHEN** hay un query param `?categoria={id}` válido
-- **THEN** el área de contenido muestra el nombre de la categoría activa
-
-#### Scenario: Sin categoría seleccionada muestra estado vacío
-- **WHEN** no hay query param `?categoria`
-- **THEN** el área de contenido muestra "Seleccioná una categoría" o mensaje equivalente
+#### Scenario: Layout con chips sobre el contenido
+- **WHEN** el usuario navega a `/`
+- **THEN** se renderiza `CatalogPage` con `CategoryChips` horizontal sobre la barra de búsqueda, y `ProductoGrid` ocupa el ancho completo
 
 #### Scenario: Categoría inválida limpia el filtro
 - **WHEN** `?categoria={id}` tiene un id que no existe en la lista
-- **THEN** el sidebar elimina el param y muestra el estado sin selección
+- **THEN** el componente elimina el param y muestra el estado sin selección
 
-### Requirement: CategorySidebar integra con listado de productos
-La `CategorySidebar` SHALL comunicar la categoría seleccionada a `CatalogPage` de modo que el listado de productos se filtre en consecuencia. Esta integración se logra a través del query param `?categoria={id}` ya existente — no hay cambios en el componente `CategorySidebar` en sí.
+### Requirement: CategorySidebar (DEPRECATED — reemplazado por CategoryChips)
+**Reason:** Reemplazado por `CategoryChips` (layout horizontal, CH-16). La sidebar vertical no es idiomática para e-commerce.
+**Migration:** Usar `CategoryChips` exportado desde `features/categoria-nav`. `CategorySidebar` se mantiene en el codebase pero no se usa en ninguna ruta activa.
 
-#### Scenario: Seleccionar categoría filtra los productos
-- **WHEN** el usuario hace click en una categoría en el sidebar
+#### Scenario: (Histórico) Renderiza categorías raíz
+- **WHEN** existían categorías con `parent_id === null`
+- **THEN** se listaban como ítems de nivel 1 en el sidebar
+
+#### Scenario: (Histórico) Renderiza subcategorías anidadas
+- **WHEN** una categoría raíz tenía hijos en la lista plana
+- **THEN** los hijos se mostraban indentados bajo su padre
+
+### Requirement: CategoryChips integra con listado de productos
+La `CategoryChips` SHALL comunicar la categoría seleccionada a `CatalogPage` de modo que el listado de productos se filtre en consecuencia. Esta integración se logra a través del query param `?categoria={id}` ya existente.
+
+#### Scenario: Seleccionar chip filtra los productos
+- **WHEN** el usuario hace click en un chip de categoría
 - **THEN** el query param `?categoria={id}` se actualiza Y `ProductoGrid` re-ejecuta la query con ese `categoria_id`
 
 #### Scenario: Seleccionar "Todas" muestra todos los productos
-- **WHEN** el usuario hace click en "Todas las categorías"
+- **WHEN** el usuario hace click en "Todas"
 - **THEN** el param `?categoria` se elimina Y `ProductoGrid` re-ejecuta sin filtro de categoría
 
 #### Scenario: Cambiar categoría resetea la página y la búsqueda

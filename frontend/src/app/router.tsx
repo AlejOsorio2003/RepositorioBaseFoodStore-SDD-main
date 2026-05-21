@@ -47,10 +47,10 @@ function AdminSuspenseFallback() {
 }
 
 export const router = createBrowserRouter([
-  { path: '/', element: <Navigate to="/login" replace /> },
+  { path: '/', element: <CatalogPage /> },
   { path: '/login', element: <LoginPage /> },
   { path: '/register', element: <RegisterPage /> },
-  { path: '/catalog', element: <CatalogPage /> },
+  { path: '/catalog', element: <Navigate to="/" replace /> },
   { path: '/cart', element: <CartPage /> },
   { path: '/checkout', element: <CheckoutPage /> },
   { path: '/payment/:pedidoId', element: <PaymentPage /> },

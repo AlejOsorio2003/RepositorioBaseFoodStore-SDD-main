@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-18 (CH-15 archivado)
+**Última actualización:** 2026-05-21 (CH-16 archivado)
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -25,6 +25,8 @@
 | CH-12 | Pagos — Backend MercadoPago + Webhooks | ✅ Hecho (archivado 2026-05-17) | 2026-05-17 | `openspec/changes/archive/2026-05-17-ch-12-pagos-backend/` |
 | CH-13 | Pagos — Frontend sdk-react + Tokenización | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-13-pagos-frontend/` |
 | CH-14 | Admin — Backend Dashboard + Métricas | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-14-admin-backend/` |
+| CH-15 | Admin — Frontend Dashboard + Gestión | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-15-admin-frontend/` |
+| CH-16 | UX Cliente Refactor | ✅ Hecho (archivado 2026-05-21) | 2026-05-21 | `openspec/changes/archive/2026-05-21-ch-16-ux-cliente-refactor/` |
 ---
 
 
@@ -366,6 +368,20 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Verificación | Tasks completadas (verificación pendiente por el usuario — no ejecutada por el agente) | 🔲 |
 
 **Capabilities entregadas:** `admin-frontend-dashboard`, `admin-frontend-crud`
+
+### CH-16 — UX Cliente Refactor
+
+**Archivado:** 2026-05-21 | **Evidencia:** `openspec/changes/archive/2026-05-21-ch-16-ux-cliente-refactor/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Router | `/` renderiza `CatalogPage`, `/catalog` redirige a `/` con query params intactos | ✅ |
+| Header | Header siempre visible: rama anónima (FoodStore + carrito + "Iniciar sesión") y autenticada (avatar + nombre + "Mis Pedidos" + carrito + "Cerrar sesión") | ✅ |
+| CategoryChips | Nuevo componente horizontal scrollable con "Todas", skeleton loading, sin scrollbar | ✅ |
+| CatalogPage | Eliminado sidebar, layout full-width con CategoryChips sobre la búsqueda | ✅ |
+| Volver al catálogo | Links `<Link to="/">` en OrdersPage, PaymentPage y CartPage vacío | ✅ |
+
+**Capabilities entregadas:** `ux-cliente-refactor`, `catalog-page` (modificado), `categorias-frontend` (modificado)
 
 ---
 

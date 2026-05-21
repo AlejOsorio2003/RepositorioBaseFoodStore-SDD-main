@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { Header } from '@/shared/ui'
-import { CategorySidebar } from '@/features/categoria-nav'
+import { CategoryChips } from '@/features/categoria-nav'
 import { ProductoGrid } from '@/features/producto-list'
 import { ProductoDetailModal } from '@/features/producto-detail'
 import type { Producto } from '@/entities/producto'
@@ -62,12 +62,13 @@ export function CatalogPage() {
   return (
     <>
       <Header />
-      <div className="flex min-h-screen bg-background">
-        <aside className="w-64 shrink-0 border-r border-outline-variant p-4">
-          <CategorySidebar />
-        </aside>
+      <div className="min-h-screen bg-background">
+        <main className="p-8">
+          {/* CategoryChips horizontales */}
+          <div className="mb-4">
+            <CategoryChips />
+          </div>
 
-        <main className="flex-1 p-8">
           {/* Barra de búsqueda */}
           <div className="mb-6">
             <input
@@ -85,12 +86,12 @@ export function CatalogPage() {
             onPageChange={handlePageChange}
           />
         </main>
-
-        <ProductoDetailModal
-          productoId={selectedProductoId}
-          onClose={() => setSelectedProductoId(null)}
-        />
       </div>
+
+      <ProductoDetailModal
+        productoId={selectedProductoId}
+        onClose={() => setSelectedProductoId(null)}
+      />
     </>
   )
 }

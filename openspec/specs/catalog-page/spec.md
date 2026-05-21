@@ -1,13 +1,13 @@
 ## Purpose
-Extensión de `CatalogPage` con grilla funcional de productos, barra de búsqueda con debounce, paginación persistida en URL, modal de detalle y página standalone de producto en `/productos/:id`.
+Extensión de `CatalogPage` con grilla funcional de productos, barra de búsqueda con debounce, paginación persistida en URL, modal de detalle y página standalone de producto en `/productos/:id`. El layout es full-width con chips de categoría horizontales.
 
 ## Requirements
 
 ### Requirement: CatalogPage muestra grilla de productos
-La `CatalogPage` SHALL renderizar `ProductoGrid` en el área de contenido con los productos filtrados por la categoría activa.
+La `CatalogPage` SHALL renderizar `ProductoGrid` en el área de contenido con los productos filtrados por la categoría activa. El layout es full-width (sin sidebar lateral): los chips de categoría se muestran encima de la barra de búsqueda.
 
-#### Scenario: Productos se filtran por categoría seleccionada
-- **WHEN** el usuario selecciona una categoría en el sidebar
+#### Scenario: Productos se filtran por chip de categoría seleccionado
+- **WHEN** el usuario selecciona un chip de categoría
 - **THEN** `ProductoGrid` muestra sólo productos de esa `categoria_id`
 
 #### Scenario: Sin categoría seleccionada se muestran todos los productos
