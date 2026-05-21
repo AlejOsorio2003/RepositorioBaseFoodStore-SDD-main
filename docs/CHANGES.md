@@ -28,7 +28,7 @@
 | CH-15 | Admin — Frontend Dashboard + Gestión | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-15-admin-frontend/` |
 | CH-16 | UX Cliente Refactor | ✅ Hecho (archivado 2026-05-21) | 2026-05-21 | `openspec/changes/archive/2026-05-21-ch-16-ux-cliente-refactor/` |
 | CH-17 | Pagos — Opción Cuenta MercadoPago (Wallet) | ✅ Hecho (archivado 2026-05-21) | 2026-05-21 | `openspec/changes/archive/2026-05-21-ch-17-pagos-mp-wallet/` |
-| CH-18 | Display de Cocina (KDS) + Rol COCINA | 📋 Propuesto | — | `openspec/changes/ch-18-display-cocina/` *(pendiente propose)* |
+| CH-18 | Display de Cocina (KDS) + Rol COCINA | 📋 Propuesto | 2026-05-21 | `openspec/changes/ch-18-display-cocina/` |
 ---
 
 
