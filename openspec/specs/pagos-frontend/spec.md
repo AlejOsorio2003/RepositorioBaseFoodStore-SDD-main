@@ -14,31 +14,43 @@ El frontend SHALL exponer desde `entities/pago/` los tipos `PagoResponse` y la f
 ---
 
 ### Requirement: PaymentPage — formulario de tarjeta
-El sistema SHALL exponer la ruta `/payment/:pedidoId` con una página protegida (`PaymentPage`) que renderiza el brick `CardPayment` de `@mercadopago/sdk-react`, inicializado con `VITE_MP_PUBLIC_KEY`. El formulario llama a `crearPago()` con el token devuelto por el brick y actualiza el `paymentStore` con el resultado.
+El sistema SHALL exponer la ruta `/payment/:pedidoId` con una página protegida (`PaymentPage`) que, en estado idle sin query params de resultado, renderiza primero un **selector de método de pago** ("Tarjeta" o "Cuenta MP"). Solo al elegir "Tarjeta" se renderiza `CardPaymentForm`. Al elegir "Cuenta MP" se renderiza `WalletPaymentForm`. Si la URL incluye `?resultado=<valor>`, se muestra directamente el panel de resultado correspondiente.
 
 #### Scenario: Usuario no autenticado accede a /payment
 - **WHEN** un usuario no autenticado navega a `/payment/1`
 - **THEN** es redirigido a `/login`
 
-#### Scenario: Pago aprobado
-- **WHEN** el usuario completa el formulario con tarjeta sandbox válida y confirma
-- **THEN** el sistema llama a `POST /api/v1/pagos/crear`, actualiza `paymentStore.status = "approved"` y muestra el panel de éxito con mensaje "¡Tu pago fue aprobado!"
+#### Scenario: Estado idle muestra el selector de método
+- **WHEN** el usuario llega a `/payment/:pedidoId` sin query param `?resultado`
+- **THEN** se muestra el selector con dos opciones: "Tarjeta de crédito/débito" y "Pagar con Mercado Pago"
 
-#### Scenario: Pago rechazado
-- **WHEN** el usuario completa el formulario con tarjeta sandbox rechazada y confirma
-- **THEN** el sistema llama a `POST /api/v1/pagos/crear`, actualiza `paymentStore.status = "rejected"` y muestra panel de error con `mp_status_detail` y opción "Intentar con otra tarjeta"
+#### Scenario: Pago aprobado con tarjeta
+- **WHEN** el usuario elige tarjeta, completa el brick y el resultado es `approved`
+- **THEN** se muestra el panel "¡Tu pago fue aprobado!" con botón "Ver mi pedido"
+
+#### Scenario: Pago rechazado con tarjeta
+- **WHEN** el usuario elige tarjeta y el resultado es `rejected`
+- **THEN** se muestra panel de rechazo con opción "Intentar de nuevo" (vuelve al selector)
+
+#### Scenario: Resultado aprobado por redirect de MP
+- **WHEN** `PaymentPage` monta con `?resultado=aprobado`
+- **THEN** se muestra directamente el panel de éxito, sin selector
+
+#### Scenario: Resultado rechazado por redirect de MP
+- **WHEN** `PaymentPage` monta con `?resultado=rechazado`
+- **THEN** se muestra el panel de rechazo, sin selector
 
 #### Scenario: Error de servidor (503 MP no configurado)
-- **WHEN** el backend retorna 503 `MERCADOPAGO_NO_CONFIGURADO`
-- **THEN** `paymentStore.status = "error"` y se muestra mensaje "El sistema de pagos no está disponible en este momento"
+- **WHEN** el backend retorna 503
+- **THEN** `paymentStore.status = "error"` y se muestra "El sistema de pagos no está disponible"
 
 #### Scenario: Estado aprobado — botón ver pedido
 - **WHEN** el pago fue aprobado y el usuario hace clic en "Ver mi pedido"
 - **THEN** navega a `/orders`
 
 #### Scenario: `VITE_MP_PUBLIC_KEY` vacía
-- **WHEN** la variable de entorno `VITE_MP_PUBLIC_KEY` es cadena vacía o no está definida
-- **THEN** en lugar del brick se muestra el mensaje "Pagos no disponibles en este entorno"
+- **WHEN** la variable de entorno `VITE_MP_PUBLIC_KEY` es cadena vacía
+- **THEN** `CardPaymentForm` muestra "Pagos no disponibles en este entorno"
 
 ---
 

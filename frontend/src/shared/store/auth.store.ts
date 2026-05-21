@@ -2,6 +2,7 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 
 import { api } from '@/shared/api/axios'
+import { useCartStore } from './cart.store'
 
 export interface AuthUser {
   id: number
@@ -49,11 +50,30 @@ export const useAuthStore = create<AuthState>()(
         const { access_token, refresh_token } = res.data
         const user = parseJwt(access_token)
         if (!user) throw new Error('Error al decodificar el token')
+        // Restaurar carrito guardado del usuario que inicia sesión
+        const savedCart = localStorage.getItem(`cart-${user.id}`)
+        if (savedCart) {
+          try {
+            useCartStore.setState({ items: JSON.parse(savedCart) })
+          } catch {
+            // ignorar cart corrupto
+          }
+        }
         set({ accessToken: access_token, refreshToken: refresh_token, user })
       },
 
       logout: async () => {
+        const currentUser = get().user
         const refreshToken = get().refreshToken
+        // Guardar carrito del usuario antes de limpiar
+        if (currentUser) {
+          const items = useCartStore.getState().items
+          if (items.length > 0) {
+            localStorage.setItem(`cart-${currentUser.id}`, JSON.stringify(items))
+          } else {
+            localStorage.removeItem(`cart-${currentUser.id}`)
+          }
+        }
         if (refreshToken) {
           try {
             await api.post('/auth/logout', { refresh_token: refreshToken })
@@ -61,6 +81,7 @@ export const useAuthStore = create<AuthState>()(
             // Idempotente — ignorar errores
           }
         }
+        useCartStore.getState().clearCart()
         set({ accessToken: null, refreshToken: null, user: null })
       },
 

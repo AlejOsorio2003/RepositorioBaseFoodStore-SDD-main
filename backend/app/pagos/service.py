@@ -144,7 +144,7 @@ def crear_preferencia(
         )
 
     # Buscar pedido y verificar propiedad
-    pedido = uow.pedidos.get_by_id(pedido_id)
+    pedido = uow.pedidos.get_by_id_with_relations(pedido_id)
     if not pedido:
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
@@ -167,6 +167,14 @@ def crear_preferencia(
         raise HTTPException(
             status_code=status.HTTP_422_UNPROCESSABLE_ENTITY,
             detail="FORMA_PAGO_INVALIDA",
+        )
+
+    # Idempotencia: si ya hay un pago aprobado, rechazar; si está pendiente, permitir nueva preferencia
+    pago_existente = uow.pagos.get_by_pedido_id(pedido_id)
+    if pago_existente and pago_existente.mp_status == "approved":
+        raise HTTPException(
+            status_code=status.HTTP_409_CONFLICT,
+            detail="Este pedido ya fue pagado",
         )
 
     idempotency_key = uuid.uuid4()
@@ -193,16 +201,17 @@ def crear_preferencia(
         )
         return {"preference_id": f"mock-pref-{pedido.id}"}
 
-    # Crear Pago pendiente antes de llamar a MP
-    pago = Pago(
-        pedido_id=pedido.id,
-        mp_status="pending",
-        external_reference=str(pedido.id),
-        idempotency_key=idempotency_key,
-        monto=float(pedido.total),
-        forma_pago_id=forma_pago.id,
-    )
-    uow.pagos.create(pago)
+    # Crear Pago pendiente solo si no existe uno previo (idempotencia para reintentos)
+    if not pago_existente:
+        pago_nuevo = Pago(
+            pedido_id=pedido.id,
+            mp_status="pending",
+            external_reference=str(pedido.id),
+            idempotency_key=idempotency_key,
+            monto=float(pedido.total),
+            forma_pago_id=forma_pago.id,
+        )
+        uow.pagos.create(pago_nuevo)
 
     # Construir items de la preferencia desde los detalles del pedido
     items = []
@@ -225,8 +234,11 @@ def crear_preferencia(
         "items": items,
         "external_reference": str(pedido.id),
         "back_urls": back_urls,
-        "auto_return": "approved",
     }
+    # auto_return solo funciona con URLs HTTPS en producción
+    frontend_url = settings.MP_FRONTEND_URL
+    if frontend_url.startswith("https://"):
+        preference_data["auto_return"] = "approved"
     if settings.MP_NOTIFICATION_URL:
         preference_data["notification_url"] = settings.MP_NOTIFICATION_URL
 

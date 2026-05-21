@@ -38,11 +38,11 @@
 
 ## 7. Verificación
 
-- [ ] 7.1 `GET /` anónimo → catálogo visible (regresión CH-16)
-- [ ] 7.2 `POST /pagos/preferencia` con JWT CLIENT válido → 201 `{ preference_id: "..." }`
-- [ ] 7.3 `POST /pagos/preferencia` sin JWT → 401
-- [ ] 7.4 `POST /pagos/preferencia` con pedido de otro usuario → 403
-- [ ] 7.5 En el browser: navegar a `/payment/:pedidoId` → ver selector de dos métodos
-- [ ] 7.6 En el browser: elegir "Tarjeta" → brick `CardPayment` visible (flujo CH-13 sin regresión)
-- [ ] 7.7 En el browser: elegir "Cuenta MP" → spinner → brick `Wallet` visible
-- [ ] 7.8 En el browser: `/payment/:pedidoId?resultado=aprobado` → panel de éxito directo sin selector
+- [x] 7.1 `GET /` anónimo → catálogo visible (regresión CH-16)
+- [x] 7.2 `POST /pagos/preferencia` con JWT CLIENT válido → 201 `{ preference_id: "..." }`
+- [x] 7.3 `POST /pagos/preferencia` sin JWT → 401
+- [x] 7.4 `POST /pagos/preferencia` con pedido de otro usuario → 403
+- [x] 7.5 En el browser: navegar a `/payment/:pedidoId` → ver selector de dos métodos
+- [x] 7.6 En el browser: elegir "Tarjeta" → brick `CardPayment` visible (flujo CH-13 sin regresión)
+- [x] 7.7 En el browser: elegir "Cuenta MP" → spinner → brick `Wallet` visible
+- [x] 7.8 En el browser: `/payment/:pedidoId?resultado=aprobado` → panel de éxito directo sin selector

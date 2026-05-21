@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { initMercadoPago, Wallet } from '@mercadopago/sdk-react'
 import { crearPreferencia } from '@/entities/pago'
 
@@ -18,29 +18,38 @@ export function WalletPaymentForm({ pedidoId }: WalletPaymentFormProps) {
   const [state, setState] = useState<WalletState>('loading')
   const [preferenceId, setPreferenceId] = useState<string | null>(null)
   const [errorMsg, setErrorMsg] = useState<string | null>(null)
+  const hasFetched = useRef(false)
+  const cancelledRef = useRef(false)
 
   useEffect(() => {
-    let cancelled = false
+    // El re-mount de StrictMode resetea cancelled para que la respuesta del primer
+    // fetch (que sigue in-flight) pueda actualizar el estado
+    cancelledRef.current = false
+
+    if (hasFetched.current) return
+    hasFetched.current = true
 
     async function fetchPreference() {
       setState('loading')
       try {
         const res = await crearPreferencia({ pedido_id: pedidoId })
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           setPreferenceId(res.preference_id)
           setState('ready')
         }
       } catch (err: unknown) {
-        if (!cancelled) {
+        if (!cancelledRef.current) {
           const error = err as { response?: { data?: { detail?: string } } }
-          setErrorMsg(error?.response?.data?.detail || 'Error al crear la preferencia de pago')
+          const detail = error?.response?.data?.detail
+          const msg = typeof detail === 'string' ? detail : 'Error al crear la preferencia de pago'
+          setErrorMsg(msg)
           setState('error')
         }
       }
     }
 
     fetchPreference()
-    return () => { cancelled = true }
+    return () => { cancelledRef.current = true }
   }, [pedidoId])
 
   /* Mock mode: sin public key → botón simulado */

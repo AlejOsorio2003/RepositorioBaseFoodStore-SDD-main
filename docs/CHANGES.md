@@ -1,6 +1,6 @@
 # Mapa de Cambios — FoodStore
 
-**Última actualización:** 2026-05-21 (CH-17 propuesto)
+**Última actualización:** 2026-05-21
 **Metodología:** Spec-Driven Development (SDD) v5.0
 **Source of truth:** `openspec/` — este archivo es índice de lectura rápida
 
@@ -27,7 +27,7 @@
 | CH-14 | Admin — Backend Dashboard + Métricas | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-14-admin-backend/` |
 | CH-15 | Admin — Frontend Dashboard + Gestión | ✅ Hecho (archivado 2026-05-18) | 2026-05-18 | `openspec/changes/archive/2026-05-18-ch-15-admin-frontend/` |
 | CH-16 | UX Cliente Refactor | ✅ Hecho (archivado 2026-05-21) | 2026-05-21 | `openspec/changes/archive/2026-05-21-ch-16-ux-cliente-refactor/` |
-| CH-17 | Pagos — Opción Cuenta MercadoPago (Wallet) | 📋 Propuesto | 2026-05-21 | `openspec/changes/ch-17-pagos-mp-wallet/` |
+| CH-17 | Pagos — Opción Cuenta MercadoPago (Wallet) | ✅ Hecho (archivado 2026-05-21) | 2026-05-21 | `openspec/changes/archive/2026-05-21-ch-17-pagos-mp-wallet/` |
 | CH-18 | Display de Cocina (KDS) + Rol COCINA | 📋 Propuesto | — | `openspec/changes/ch-18-display-cocina/` *(pendiente propose)* |
 ---
 
@@ -115,7 +115,7 @@ CH-00: Infraestructura Base  ✅ ARCHIVADO
                                Tabla de usuarios + cambio de rol
 
         CH-13 + CH-16
-          └─► CH-17: Pagos — Cuenta MercadoPago (Wallet)  📋 PROPUESTO
+          └─► CH-17: Pagos — Cuenta MercadoPago (Wallet)  ✅ ARCHIVADO
                     POST /pagos/preferencia (preference_id)
                     WalletPaymentForm · selector tarjeta/wallet
                     back_urls + panel de resultado por redirect
@@ -383,6 +383,24 @@ frontend/src/shared/store/auth.store.ts ← acciones login/logout/refreshToken
 | Verificación | Tasks completadas (verificación pendiente por el usuario — no ejecutada por el agente) | 🔲 |
 
 **Capabilities entregadas:** `admin-frontend-dashboard`, `admin-frontend-crud`
+
+### CH-17 — Pagos — Opción Cuenta MercadoPago (Wallet)
+
+**Archivado:** 2026-05-21 | **Evidencia:** `openspec/changes/archive/2026-05-21-ch-17-pagos-mp-wallet/`
+
+| Sección | Entregable | Estado |
+|---------|------------|--------|
+| Config + Schemas | `MP_FRONTEND_URL` en Settings, `CrearPreferenciaRequest`, `PreferenciaResponse` | ✅ |
+| Service backend | `crear_preferencia`: verificación pedido/propiedad, idempotencia pago pendiente, `auto_return` condicional a HTTPS, lazy-load fix `get_by_id_with_relations` | ✅ |
+| Router backend | `POST /pagos/preferencia` — `response_model=PreferenciaResponse`, `status_code=201`, `require_role(["CLIENT"])` | ✅ |
+| Entity pago frontend | `PreferenciaResponse`, `CrearPreferenciaRequest` en types + `crearPreferencia()` en api + barrel | ✅ |
+| WalletPaymentForm | `useRef` guard anti-StrictMode doble call, spinner loading, brick `<Wallet>`, error con botón "Volver", fallback mock sin public key | ✅ |
+| PaymentPage | Selector tarjeta/wallet, lectura `?resultado=` al montar, panel pendiente, retry resetea a selector | ✅ |
+| Cart por usuario | Logout guarda cart en `cart-{userId}`, login restaura desde `cart-{userId}` (carrito aislado por usuario) | ✅ |
+| Verificación API | 7.1 catálogo anónimo 200, 7.2 preferencia 201, 7.3 sin JWT 401, 7.4 otro usuario 403 | ✅ |
+| Verificación browser | 7.5 selector métodos, 7.6 tarjeta sin regresión, 7.7 Wallet brick, 7.8 redirect ?resultado | ✅ |
+
+**Capabilities entregadas:** `pagos-mp-wallet`, `pagos-backend` (extendido), `pagos-frontend` (extendido)
 
 ### CH-16 — UX Cliente Refactor
 
