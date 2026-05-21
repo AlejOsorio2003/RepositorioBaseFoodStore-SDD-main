@@ -124,7 +124,9 @@
       "Bash(xargs grep -l \"upload\\\\|image\\\\|file\")",
       "mcp__plugin_engram_engram__mem_get_observation",
       "PowerShell(netstat *)",
-      "PowerShell(Get-WmiObject *)"
+      "PowerShell(Get-WmiObject *)",
+      "Bash(xargs grep -l \"zustand\\\\|useStore\\\\|create\\(\")",
+      "Bash(xargs grep -l \"carrito\\\\|cart\\\\|items.*pedido\\\\|clearCart\\\\|limpiar\")"
     ]
   }
 }
