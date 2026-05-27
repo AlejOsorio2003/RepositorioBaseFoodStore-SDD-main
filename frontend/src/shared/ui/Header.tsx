@@ -51,6 +51,16 @@ export function Header() {
                 Mis Pedidos
               </Link>
 
+              {/* Cocina — solo visible para el rol COCINA */}
+              {user.roles.includes('COCINA') && (
+                <Link
+                  to="/cocina"
+                  className="text-sm text-on-surface-variant hover:text-on-surface transition-colors font-medium"
+                >
+                  Cocina
+                </Link>
+              )}
+
               {/* Cart icon with badge */}
               <button
                 onClick={openCart}

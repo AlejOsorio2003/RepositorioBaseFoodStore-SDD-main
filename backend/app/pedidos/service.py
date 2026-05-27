@@ -273,6 +273,29 @@ def avanzar_estado(
     if not pedido_actualizado:
         raise HTTPException(status_code=500, detail="Error al actualizar pedido")
 
+    # Broadcast al display de cocina cuando el pedido es confirmado
+    if data.nuevo_estado == "CONFIRMADO":
+        import asyncio
+
+        from app.cocina.ws import manager
+
+        pedido_data = {
+            "type": "nuevo_pedido",
+            "id": pedido_actualizado.id,
+            "estado_nombre": "CONFIRMADO",
+            "created_at": (
+                pedido_actualizado.created_at.isoformat()
+                if pedido_actualizado.created_at
+                else None
+            ),
+        }
+        try:
+            loop = asyncio.get_event_loop()
+            if loop.is_running():
+                asyncio.create_task(manager.broadcast(pedido_data))
+        except RuntimeError:
+            pass  # No event loop disponible
+
     return _pedido_to_read(pedido_actualizado)
 
 

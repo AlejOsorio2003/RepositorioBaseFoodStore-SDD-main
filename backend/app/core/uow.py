@@ -80,3 +80,8 @@ class UnitOfWork:
         from app.admin.repository import AdminRepository
 
         self.admin: AdminRepository = AdminRepository(self.session)
+
+        # Cocina — KDS
+        from app.cocina.repository import CocinaRepository
+
+        self.cocina: CocinaRepository = CocinaRepository(self.session)

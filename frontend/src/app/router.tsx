@@ -3,6 +3,7 @@ import { createBrowserRouter, Navigate } from 'react-router-dom'
 import { CartPage } from '@/pages/CartPage'
 import { CatalogPage } from '@/pages/CatalogPage'
 import { CheckoutPage } from '@/pages/CheckoutPage'
+import { CocinaPage } from '@/pages/CocinaPage'
 import { LoginPage } from '@/pages/LoginPage'
 import { PaymentPage } from '@/pages/PaymentPage'
 import { NotFoundPage } from '@/pages/NotFoundPage'
@@ -28,6 +29,13 @@ const AdminStockPage = lazy(() =>
 const AdminUsuariosPage = lazy(() =>
   import('@/pages/AdminUsuariosPage').then((m) => ({ default: m.AdminUsuariosPage }))
 )
+
+function CocinaRoute() {
+  const user = useAuthStore((s) => s.user)
+  if (!user) return <Navigate to="/login" replace />
+  if (!user.roles.includes('COCINA')) return <Navigate to="/" replace />
+  return <CocinaPage />
+}
 
 function AdminIndexRedirect() {
   const user = useAuthStore((s) => s.user)
@@ -56,6 +64,7 @@ export const router = createBrowserRouter([
   { path: '/payment/:pedidoId', element: <PaymentPage /> },
   { path: '/orders', element: <OrdersPage /> },
   { path: '/productos/:id', element: <ProductoDetailPage /> },
+  { path: '/cocina', element: <CocinaRoute /> },
   {
     path: '/admin',
     // Base guard: user must be authenticated and have at least one admin role
