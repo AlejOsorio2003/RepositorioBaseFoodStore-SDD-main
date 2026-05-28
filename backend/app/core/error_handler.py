@@ -50,3 +50,7 @@ def register_error_handlers(app: FastAPI) -> None:
     @app.exception_handler(DomainError)
     async def domain_error_handler(request: Request, exc: DomainError) -> JSONResponse:
         return _problem_response(exc.status_code, exc.detail, str(request.url.path))
+
+    @app.exception_handler(Exception)
+    async def unhandled_exception_handler(request: Request, exc: Exception) -> JSONResponse:
+        return _problem_response(500, str(exc), str(request.url.path))

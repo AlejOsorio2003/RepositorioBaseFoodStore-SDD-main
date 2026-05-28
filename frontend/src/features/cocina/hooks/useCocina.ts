@@ -1,5 +1,4 @@
 import { useMutation, useQuery, useQueryClient } from '@tanstack/react-query'
-import toast from 'react-hot-toast'
 import { avanzarEstadoCocina, listarPedidosCocina } from '@/entities/cocina'
 
 export function useCocina() {
@@ -16,12 +15,6 @@ export function useCocina() {
       avanzarEstadoCocina(pedidoId, nuevoEstado),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['cocina', 'pedidos'] })
-    },
-    onError: (err: unknown) => {
-      const msg =
-        (err as { response?: { data?: { detail?: string } } })?.response?.data?.detail ??
-        'Error al actualizar estado'
-      toast.error(msg)
     },
   })
 

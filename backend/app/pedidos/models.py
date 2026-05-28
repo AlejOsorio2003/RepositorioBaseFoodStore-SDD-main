@@ -5,7 +5,7 @@ from decimal import Decimal
 from typing import TYPE_CHECKING, Optional, List
 
 from sqlalchemy import Column, ForeignKey, Integer
-from sqlalchemy.dialects.postgresql import ARRAY, INTEGER
+from sqlalchemy.types import JSON
 from sqlalchemy.orm import Mapped, relationship
 from sqlmodel import Field, Relationship, SQLModel
 
@@ -65,7 +65,7 @@ class DetallePedido(SQLModel, table=True):
     cantidad: int = Field(nullable=False)
     personalizacion: Optional[list[int]] = Field(
         default=None,
-        sa_column=Column(ARRAY(INTEGER), nullable=True),
+        sa_column=Column(JSON, nullable=True),
     )
 
     pedido: Mapped[Optional[Pedido]] = Relationship(sa_relationship=relationship("Pedido", back_populates="detalles"))

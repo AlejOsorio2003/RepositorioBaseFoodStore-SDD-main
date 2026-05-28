@@ -126,7 +126,9 @@
       "PowerShell(netstat *)",
       "PowerShell(Get-WmiObject *)",
       "Bash(xargs grep -l \"zustand\\\\|useStore\\\\|create\\(\")",
-      "Bash(xargs grep -l \"carrito\\\\|cart\\\\|items.*pedido\\\\|clearCart\\\\|limpiar\")"
+      "Bash(xargs grep -l \"carrito\\\\|cart\\\\|items.*pedido\\\\|clearCart\\\\|limpiar\")",
+      "Bash(New-Item -ItemType Directory -Force \"E:\\\\Tareas\\\\Cuarto Cuatrimestre\\\\Metodología y Gestion\\\\Parcial\\\\RepositorioBaseFoodStore-SDD-main\\\\backend\\\\app\\\\cocina\")",
+      "Bash(Write-Output \"Done\")"
     ]
   }
 }

@@ -2,7 +2,7 @@ import { api } from '@/shared/api'
 import type { CrearPedidoRequest, PedidoRead, PedidoDetail, HistorialRead, PaginatedPedidos } from './types'
 
 export async function crearPedido(data: CrearPedidoRequest): Promise<PedidoRead> {
-  const response = await api.post<PedidoRead>('/pedidos', data)
+  const response = await api.post<PedidoRead>('/pedidos/', data)
   return response.data
 }
 
@@ -14,7 +14,7 @@ export async function listarPedidos(params?: {
   const { page = 1, size = 20, estado } = params ?? {}
   const query: Record<string, string | number> = { page, size }
   if (estado) query.estado = estado
-  const response = await api.get<PaginatedPedidos>('/pedidos', { params: query })
+  const response = await api.get<PaginatedPedidos>('/pedidos/', { params: query })
   return response.data
 }
 
